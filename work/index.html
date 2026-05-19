@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Customer Data Manager Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #e0e7ff;
+            --primary-dark: #4338ca;
+            --success: #10b981;
+            --success-light: #d1fae5;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --danger-light: #fee2e2;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #mainHeader {
+            background: var(--surface);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-left h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-icon {
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-right button, .header-right a {
+            background: var(--background);
+            border: none;
+            color: var(--text-main);
+            font-size: 1.1rem;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .header-right button:hover, .header-right a:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .header-controls {
+            padding: 16px 20px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .search-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .search-group {
+            display: flex;
+            position: relative;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        .search-group i {
+            position: absolute;
+            left: 16px;
+            color: var(--text-muted);
+        }
+
+        .search-group input {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            outline: none;
+            background-color: var(--background);
+            transition: var(--transition);
+            user-select: text;
+        }
+
+        .search-group input:focus {
+            border-color: var(--primary);
+            background-color: var(--surface);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        }
+
+        .inline-picker-btn {
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .inline-picker-btn input[type="date"] {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0; cursor: pointer;
+        }
+
+        .cycle-sort-btn {
+            background: var(--primary-light);
+            color: var(--primary);
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 14px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            transition: var(--transition);
+        }
+
+        #dataListContainer {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background-color: var(--background);
+        }
+
+        .customer-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 20px;
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .customer-card.done { border-left: 6px solid var(--success); }
+        .customer-card:not(.done) { border-left: 6px solid var(--danger); }
+
+        .card-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex-grow: 1;
+        }
+
+        .card-title-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-details strong {
+            font-size: 1.1rem;
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .card-details .v-badge {
+            font-size: 0.75rem;
+            background: var(--primary-light);
+            padding: 4px 10px;
+            border-radius: 100px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .card-details .amt-display {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 4px 0;
+        }
+
+        .card-meta-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .date-click {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .status-pill {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 8px;
+            letter-spacing: 0.5px;
+        }
+        .status-pill.paid { background: var(--success-light); color: var(--success); }
+        .status-pill.pending { background: var(--danger-light); color: var(--danger); }
+
+        .card-action-trigger {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--background);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+            margin-left: 12px;
+        }
+
+        .card-action-trigger:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+            cursor: pointer;
+            z-index: 999;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .fab:hover {
+            transform: scale(1.1) rotate(90deg);
+        }
+
+        /* SCREEN VIEWS CONTAINER SYSTEM */
+        .app-view-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--background);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            animation: slideInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideInUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .screen-header {
+            background: var(--surface);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .screen-header h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .close-screen-btn {
+            background: var(--background);
+            border: none;
+            width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 1.1rem;
+        }
+
+        .screen-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        /* CUSTOM LOCALE DATE WRAPPER */
+        .native-date-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .native-date-wrapper input[type="date"] {
+            font-family: inherit;
+        }
+
+        /* WIZARD ELEMENTS */
+        .wizard-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 35px;
+            position: relative;
+        }
+
+        .wizard-progress::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 0; width: 100%; height: 2px;
+            background: var(--border);
+            z-index: 1; transform: translateY(-50%);
+        }
+
+        .progress-line-fill {
+            position: absolute;
+            top: 50%; left: 0; height: 2px;
+            background: var(--primary);
+            z-index: 1; transform: translateY(-50%);
+            width: 0%; transition: var(--transition);
+        }
+
+        .step-dot {
+            width: 34px; height: 34px; border-radius: 50%;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 2; font-size: 0.85rem; font-weight: 700;
+            color: var(--text-muted); transition: var(--transition);
+        }
+        .step-dot.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+        }
+        .step-dot.completed {
+            border-color: var(--success);
+            background: var(--success);
+            color: white;
+        }
+
+        .form-step-pane { display: none; }
+        .form-step-pane.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .pane-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .pane-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .form-group-custom {
+            margin-bottom: 20px;
+        }
+        .form-group-custom label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .form-group-custom input, .form-group-custom select {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            font-size: 1.05rem;
+            outline: none;
+            background: var(--surface);
+            transition: var(--transition);
+            user-select: text;
+        }
+        .form-group-custom input:focus, .form-group-custom select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        }
+        .form-group-custom input:disabled {
+            background-color: var(--background);
+            color: var(--text-muted);
+            cursor: not-allowed;
+            border-style: dashed;
+        }
+
+        .wizard-footer-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 40px;
+        }
+
+        .btn-modern {
+            padding: 16px 28px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+        .btn-modern.primary { background: var(--primary); color: white; }
+        .btn-modern.primary:hover { background: var(--primary-dark); }
+        .btn-modern.secondary { background: var(--border); color: var(--text-main); }
+        .btn-modern.secondary:hover { background: #cbd5e1; }
+        .btn-modern:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: var(--surface);
+            padding: 28px;
+            width: 100%;
+            max-width: 420px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            animation: zoomInSheet 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .modal-dismiss-cross-trigger {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: var(--background);
+            border: none; width: 32px; height: 32px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; color: var(--text-muted); font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        .modal-dismiss-cross-trigger:hover {
+            background: var(--danger-light);
+            color: var(--danger);
+        }
+
+        @keyframes zoomInSheet {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .custom-radio-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .custom-radio-option {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .custom-radio-option input[type="radio"] {
+            width: 20px; height: 20px; accent-color: var(--primary);
+        }
+
+        .custom-radio-option.selected {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .custom-radio-option i { font-size: 1.25rem; }
+
+        /* PAYMENT SIMULATOR */
+        .payment-workspace-app {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .pay-app-card {
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            color: white; width: 100%; padding: 28px;
+            border-radius: var(--radius-lg); box-shadow: var(--shadow-md);
+            position: relative; overflow: hidden;
+            text-align: center;
+        }
+
+        .pay-app-currency-input-wrap {
+            display: flex; align-items: center; justify-content: center;
+            gap: 6px; margin-top: 14px; position: relative;
+        }
+
+        .pay-app-currency-input-wrap i {
+            font-size: 2.2rem; opacity: 0.8; color: #a5b4fc;
+        }
+
+        .pay-app-currency-input-wrap input {
+            background: transparent; border: none; outline: none;
+            color: white; font-size: 2.8rem; font-weight: 800;
+            width: 220px; text-align: left; border-bottom: 2px dashed rgba(255,255,255,0.3);
+            padding: 4px; user-select: text;
+        }
+
+        .large-formatted-mirror {
+            font-size: 1.2rem; font-weight: 700; color: #a5b4fc; margin-top: 10px; min-height: 24px;
+        }
+
+        .swipe-track-container {
+            width: 100%; height: 72px; background: #e2e8f0;
+            border-radius: 100px; position: relative;
+            overflow: hidden; display: flex; align-items: center;
+            justify-content: flex-start; border: 1px solid var(--border);
+            padding: 0 6px;
+        }
+
+        .swipe-track-container.active-ready { background: var(--success-light); border-color: var(--success); }
+
+        .swipe-bg-label {
+            position: absolute; font-size: 0.9rem; font-weight: 700;
+            color: var(--text-muted); display: flex; align-items: center; justify-content: center;
+            gap: 10px; pointer-events: none; width: 100%; left: 0; text-align: right;
+        }
+
+        .swipe-handle-thumb {
+            position: absolute; left: 6px; width: 60px; height: 60px;
+            border-radius: 50%; background: var(--primary);
+            box-shadow: var(--shadow-md); display: flex; align-items: center;
+            justify-content: center; cursor: grab; z-index: 10;
+            color: white; font-size: 1.2rem;
+        }
+
+        /* PROCESS TRACKER */
+        .payment-progress-bar-wrap {
+            width: 100%; background: var(--border); height: 8px; border-radius: 100px; overflow: hidden; margin: 16px 0;
+        }
+        .payment-progress-fill-line {
+            width: 0%; height: 100%; background: var(--success); transition: width 1.5s linear;
+        }
+
+        #historyLedgerContainer {
+            margin-top: 20px;
+            display: flex; flex-direction: column; gap: 10px;
+            max-height: 220px; overflow-y: auto; padding-right: 4px;
+        }
+
+        .ledger-row {
+            background: var(--background); border-left: 4px solid var(--primary);
+            padding: 12px; border-radius: var(--radius-sm); font-size: 0.85rem;
+        }
+
+        .processing-modal-box {
+            display: flex; flex-direction: column; align-items: center;
+            gap: 16px; text-align: center;
+        }
+        .spinner-radar {
+            width: 50px; height: 50px; border: 4px solid var(--primary-light);
+            border-top-color: var(--primary); border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <!-- APP HEADER -->
+    <header id="mainHeader">
+        <div class="header-left">
+            <i class="fas fa-wallet header-icon"></i>
+            <h3 id="TitleDisplay">Manager<h3/>
+           
+            
+        </div>
+        <div class="header-right">
+            <!-- DATA HTML NAVIGATION ICON link -->
+            <a href="data.html" title="View Extended Data Tables"><i class="fas fa-database" style="color: var(--primary);"></i></a>
+             <h6 id="appTitleDisplay"></h6>
+            <button id="logoutSessionBtn" title="Logout Session"><i class="fas fa-power-off" style="color: var(--danger);"></i></button>
+        </div>
+    </header>
+
+    <!-- CONTROL PANEL GRID -->
+    <div class="header-controls">
+        <div class="search-row">
+            <div class="search-group">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search by Name, Amount or Date...">
+            </div>
+            <div class="inline-picker-btn" title="Filter by Specific Date">
+                <i class="fas fa-calendar-day"></i>
+                <input type="date" id="masterDatePicker" onchange="filterByDateDirect(this.value)">
+            </div>
+            <button class="cycle-sort-btn" id="cycleSortTrigger" onclick="cycleSortStateEngine()">
+                <i class="fas fa-sort-amount-down"></i> <span id="sortStateLabel">Recent</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN DASHBOARD CONTENT AREA -->
+    <div id="dataListContainer">
+        <div id="dataList">
+            <p style="text-align:center; color: var(--text-muted); padding: 40px 0;">Initializing Core Data Engine Elements...</p>
+        </div>
+    </div>
+
+    <!-- FAB ICON -->
+    <div class="fab" onclick="openAddWizardScreen()" title="Create New Customer Asset"><i class="fas fa-plus"></i></div>
+
+    <!-- WIZARD: ADD CUSTOMER FULLSCREEN SCREEN -->
+    <div id="addWizardScreen" class="app-view-screen">
+        <div class="screen-header">
+            <h2>New Customer Setup</h2>
+            <button class="close-screen-btn" onclick="closeAddWizardScreen()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="screen-content">
+            <div class="wizard-progress">
+                <div class="progress-line-fill" id="wizardProgressFill"></div>
+                <div class="step-dot active" id="dotStep1">1</div>
+                <div class="step-dot" id="dotStep2">2</div>
+                <div class="step-dot" id="dotStep3">3</div>
+                <div class="step-dot" id="dotStep4">4</div>
+            </div>
+
+            <form id="wizardFormInstance" onsubmit="event.preventDefault();">
+                <div class="form-step-pane active" id="paneStep1">
+                    <div class="pane-title">Select Timeline</div>
+                    <div class="pane-desc">Choose record timeline mapping. Display configuration matches your region.</div>
+                    <div class="form-group-custom">
+                        <label>Record Date *</label>
+                        <div class="native-date-wrapper">
+                            <input type="date" id="addDate" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-step-pane" id="paneStep2">
+                    <div class="pane-title">Select Location</div>
+                    <div class="pane-desc">Map the customer asset profile to a tracking village sector.</div>
+                    <div class="form-group-custom">
+                        <label>Village Location *</label>
+                        <select id="addVillage" required></select>
+                    </div>
+                </div>
+
+                <div class="form-step-pane" id="paneStep3">
+                    <div class="pane-title">Financial Matrix</div>
+                    <div class="pane-desc">Input base ledger liability or payment requirement asset amount.</div>
+                    <div class="form-group-custom">
+                        <label>Amount (₹) *</label>
+                        <input type="number" id="addAmount" placeholder="Enter Amount" required>
+                    </div>
+                </div>
+
+                <div class="form-step-pane" id="paneStep4">
+                    <div class="pane-title">Customer Identity</div>
+                    <div class="pane-desc">Provide complete legal identification properties.</div>
+                    <div class="form-group-custom">
+                        <label>First Name *</label>
+                        <input type="text" id="addFirstName" placeholder="E.g., Amit" required>
+                    </div>
+                    <div class="form-group-custom">
+                        <label>Last Name *</label>
+                        <input type="text" id="addLastName" placeholder="E.g., Pooniya" required>
+                    </div>
+                </div>
+
+                <div class="wizard-footer-nav">
+                    <button type="button" class="btn-modern secondary" id="wizardBackBtn" onclick="navigateWizardStep(-1)" disabled>Back</button>
+                    <button type="button" class="btn-modern primary" id="wizardNextBtn" onclick="navigateWizardStep(1)">Continue</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ACTION VIEW ICON ROUTER -->
+    <div id="gestureActionScreen" class="app-view-screen">
+        <div class="screen-header">
+            <h2 id="gestureScreenTitle">Manage Record Configuration</h2>
+            <button class="close-screen-btn" onclick="closeGestureActionScreen()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="screen-content">
+            <div class="custom-radio-list">
+                <div class="custom-radio-option" id="optRadioEdit" onclick="selectGestureMode('EDIT')">
+                    <input type="radio" name="gestureModeGroup" value="EDIT">
+                    <i class="fas fa-edit" style="color: var(--warning);"></i>
+                    <div>
+                        <strong>Modify Information Profile</strong>
+                        <div style="font-size:0.8rem; color:var(--text-muted);">Edit fields & view history logs</div>
+                    </div>
+                </div>
+                <div class="custom-radio-option" id="optRadioPayment" onclick="selectGestureMode('PAYMENT')">
+                    <input type="radio" name="gestureModeGroup" value="PAYMENT">
+                    <i class="fas fa-credit-card" style="color: var(--success);"></i>
+                    <div>
+                        <strong>Execute Payment Gateway Processing</strong>
+                        <div style="font-size:0.8rem; color:var(--text-muted);">Adjust balances or close transactions</div>
+                    </div>
+                </div>
+                <div class="custom-radio-option" id="optRadioDelete" onclick="selectGestureMode('DELETE')">
+                    <input type="radio" name="gestureModeGroup" value="DELETE">
+                    <i class="fas fa-trash-alt" style="color: var(--danger);"></i>
+                    <div>
+                        <strong>Purge Data Element</strong>
+                        <div style="font-size:0.8rem; color:var(--text-muted);">Permanently drop from cloud servers</div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-modern primary" style="width:100%; margin-top:12px;" onclick="executeGestureRouteSelection()">Proceed with Selection</button>
+        </div>
+    </div>
+
+    <!-- FULLSCREEN WORKSPACE: RECORD MODIFY/EDIT ENGINE CANVAS (AMOUNT LOCKED) -->
+    <div id="editPaneScreen" class="app-view-screen">
+        <div class="screen-header">
+            <h2>Modify Customer Record Canvas</h2>
+            <button class="close-screen-btn" onclick="closeEditPaneScreen()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="screen-content">
+            <form id="editDirectForm" onsubmit="event.preventDefault();" style="max-width: 600px; margin: 0 auto;">
+                <div class="form-group-custom">
+                    <label>First Name</label>
+                    <input type="text" id="editFirstName" required>
+                </div>
+                <div class="form-group-custom">
+                    <label>Last Name</label>
+                    <input type="text" id="editLastName" required>
+                </div>
+                <div class="form-group-custom">
+                    <label>Village Sector</label>
+                    <select id="editVillage" required></select>
+                </div>
+                <div class="form-group-custom">
+                    <label>Timeline Date</label>
+                    <div class="native-date-wrapper">
+                        <input type="date" id="editDate" required>
+                    </div>
+                </div>
+                <div class="form-group-custom">
+                    <label>Amount (₹) —</label>
+                    <input type="number" id="editAmount"  title="Financial profiles must be amended inside the Payment Gateway terminal.">
+                </div>
+                <button type="button" class="btn-modern primary" style="width:100%;" onclick="processDataUpdateOperation()">Commit Structural Upgrades</button>
+            </form>
+            <div style="max-width: 600px; margin: 30px auto 0 auto;">
+                <h4 style="font-size:0.9rem; color:var(--text-muted); font-weight:700; border-bottom:1px solid var(--border); padding-bottom:6px;">📋 Action Log Matrix</h4>
+                <div id="historyLedgerContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAYMENT TERMINAL CANVAS -->
+    <div id="paymentGatewayScreen" class="app-view-screen">
+        <div class="screen-header">
+            <h2>Payment Terminal Simulator</h2>
+            <button class="close-screen-btn" onclick="closePaymentGatewayScreen()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="screen-content" style="display:flex; align-items:center; justify-content:center;">
+            <div class="payment-workspace-app" style="width:100%; max-width:540px;">
+                <div class="pay-app-card">
+                    <div style="font-size:0.85rem; text-transform:uppercase; letter-spacing:1px; opacity:0.7;" id="payAppProfileLabel">Customer Transaction Card</div>
+                    <div id="payAppProfileBalance" style="font-size:1.1rem; font-weight:600; margin-top:4px;">Pending: ₹0</div>
+                    
+                    <div class="pay-app-currency-input-wrap">
+                        <i class="fas fa-rupee-sign"></i>
+                        <input type="number" id="payAppTransactionInput" placeholder="0" oninput="handlePaymentInputMirrorFormat()" value="0">
+                    </div>
+                    <div class="large-formatted-mirror" id="payInputMirrorDisplay">₹0</div>
+                </div>
+
+                <div class="swipe-track-container" id="swipeTrackRoot">
+                    <div class="swipe-bg-label">
+                        <span>  SWIPE RIGHT TO PROCESS TRANSACTION</span> <i class="fas fa-chevron-right"></i>
+                    </div>
+                    <div class="swipe-handle-thumb" id="swipeHandleElement">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION MODAL CLUSTER SYSTEM -->
+    <div id="cloudActionProcessModal" class="modal">
+        <div class="modal-content">
+            
+            <!-- TRANSACTIONS SWIPE BREAKDOWN SUMMARY MODAL (WITH CROSS CLOSER) -->
+            <div id="swipeSummaryReportBlock" style="display:none;">
+                <button class="modal-dismiss-cross-trigger" onclick="closeModalWindow('cloudActionProcessModal')" title="Cancel Operation"><i class="fas fa-times"></i></button>
+                <h3 style="margin-bottom:12px; color: var(--primary); padding-right:30px;"><i class="fas fa-receipt"></i> Transaction Summary</h3>
+                <p id="swipeSummaryFormText" style="font-size:1rem; line-height:1.5; color:var(--text-main); margin-bottom:16px; background: var(--background); padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--border);"></p>
+                
+                <div id="swipeProgressElementContainer" style="display:none;">
+                    <div style="font-size:0.8rem; font-weight:600; color:var(--text-muted);">Synchronizing Cloud Ledger Registers...</div>
+                    <div class="payment-progress-bar-wrap">
+                        <div class="payment-progress-fill-line" id="swipeConfirmationProgressBarFill"></div>
+                    </div>
+                </div>
+
+                <button class="btn-modern primary" id="swipeSummaryExecuteBtn" style="width:100%;" onclick="confirmAndExecuteSwipePayloadCloudSync()">Confirm & Sync Ledger</button>
+            </div>
+
+            <!-- Delete Dialogue Confirmation -->
+            <div id="confirmPromptBlock" style="display:none;">
+                                   <button class=" modal-dismiss-cross-trigger" style="flex:1;" onclick="closeModalWindow('cloudActionProcessModal')"><i class="fas fa-times"></i></button>
+                <h3 style="margin-bottom:12px;">Destructive Action Validation</h3>
+                <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">Are you confident you want to delete this customer permanently from servers?</p>
+                <div style="display:flex; gap:12px;">
+
+                    <button class="btn-modern primary" style="flex:1; background:var(--danger);" onclick="commitDataPurgeExecution()">Sure it's a wrong entry </button>
+                </div>
+            </div>
+
+            <!-- Alert Popup Window Block -->
+            <div id="alertFeedbackNoticeBlock" style="display:none; text-align:center;">
+                <div id="alertIconSphere" style="width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 14px auto; font-size:1.6rem;"></div>
+                <h3 id="alertHeaderTitle" style="margin-bottom:8px;">Notification</h3>
+                <p id="alertBodyParagraph" style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;"></p>
+                <button class="btn-modern primary" style="width:100%;" id="alertFeedbackDismissBtn" onclick="closeModalWindow('cloudActionProcessModal')">OK</button>
+            </div>
+
+            <!-- Loader Progress Block -->
+            <div id="processingEngineStatusBlock" style="display:none;" class="processing-modal-box">
+                <div class="spinner-radar"></div>
+                <h4 id="processingBoxLabel">Communicating with Cluster Array...</h4>
+                <p style="font-size:0.8rem; color:var(--text-muted);">Synchronizing changes to cloud ledger matrix...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TERMINATED SESSION OVERRIDE POPUP (WITH DISMISS CROSS CLOSER) -->
+    <div id="sessionOverrideNoticeModal" class="modal" style="display:none;">
+        <div class="modal-content" style="text-align: center;">
+            <button class="modal-dismiss-cross-trigger" onclick="closeModalWindow('sessionOverrideNoticeModal')" title="Dismiss Warning"><i class="fas fa-times"></i></button>
+            <div style="width:56px; height:56px; background:var(--danger-light); color:var(--danger); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 14px auto; font-size:1.5rem;">
+                <i class="fas fa-sign-out-alt"></i>
+            </div>
+            <h3 style="margin-bottom:8px; padding-top:6px;">Session Termination Matrix</h3>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">Your workspace parameters will be cleared completely. Click OK to confirm window reload references.</p>
+            <div style="display:flex; gap:12px;">
+               
+                <button class="btn-modern primary" style="flex:1; background:var(--danger);" onclick="executeSessionPurgeReloadSequence()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SETUP CREDENTIAL MODAL -->
+    <div id="setupWizardModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h3 style="margin-bottom:12px;">⚙️ Cluster Connection Gateway</h3>
+            <form id="setupWizardForm">
+                <div class="form-group-custom">
+                    <label>Work Session Timeline Profile</label>
+                    <select id="setupSeason" required>
+                       
+                     
+    <option value="2025-26">2025-26</option>
+                        <option value="2026-27">2026-27</option>
+                        <option value="2027-28">2027-28</option>
+                       <option value="2028-29">2028-29</option>
+                     <option value="2024-25">2024-25</option>
+                    </select>
+                </div>
+                <div class="form-group-custom">
+                    <label>GitHub Security Personal Access Token</label>
+                    <input type="password" id="setupToken" placeholder="ghp_xxxxxxxxxxxx" required>
+                </div>
+                <button type="submit" class="btn-modern primary" style="width:100%;">Establish Dashboard Stream</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // --- STATE AND CORE ENGINE CONTROLLERS ---
+        let CURRENT_SEASON = localStorage.getItem('season') || "";
+        let GITHUB_TOKEN = localStorage.getItem('who') || "";
+        const GITHUB_USERNAME = "mitpooniya";
+        const GITHUB_REPO = "work";
+        let API_BASE_URL = "";
+        let currentSha = null;
+        let globalCachedDataObject = { customers: [], history: [] };
+        const VILLAGE_LIST = ["Dungrana", "Kalana", "Rakhi", "Gunjasari", "Other"];
+
+        // Sorting Configurations
+        let currentSortingCycleState = 0; 
+        let activeRecordScopeId = null;
+        let selectedGestureActionType = null;
+        let wizardCurrentStep = 1;
+        
+        let stagedSwipeUpdatePayload = null;
+
+        // Visual String Parser for Domestic Indian Subcontinent Date Layout Grid
+        function parseInputToUIDateText(isoString) {
+            if (!isoString) return "";
+            const segment = isoString.split('-');
+            if (segment.length === 3) return `${segment[2]}/${segment[1]}/${segment[0]}`;
+            return isoString;
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initSessionSecurityCheck();
+            initSwipeSystemCoreEngine();
+        });
+
+        function initSessionSecurityCheck() {
+            if (!CURRENT_SEASON || !GITHUB_TOKEN) {
+                document.getElementById('setupToken').value = GITHUB_TOKEN;
+                document.getElementById('setupWizardModal').style.display = 'flex';
+            } else {
+                document.getElementById('setupWizardModal').style.display = 'none';
+                bootstrapAppCoreSystem();
+            }
+        }
+
+        document.getElementById('setupWizardForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const inputSeason = document.getElementById('setupSeason').value;
+            const inputToken = document.getElementById('setupToken').value.trim();
+            localStorage.setItem('season', inputSeason);
+            localStorage.setItem('who', inputToken);
+            CURRENT_SEASON = inputSeason;
+            GITHUB_TOKEN = inputToken;
+            document.getElementById('setupWizardModal').style.display = 'none';
+            bootstrapAppCoreSystem();
+        });
+
+        function triggerCustomAlertNotice(title, body, isSuccess, callback = null) {
+            document.getElementById('confirmPromptBlock').style.display = 'none';
+            document.getElementById('processingEngineStatusBlock').style.display = 'none';
+            document.getElementById('swipeSummaryReportBlock').style.display = 'none';
+            
+            const iconBox = document.getElementById('alertIconSphere');
+            if (isSuccess) {
+                iconBox.style.background = 'var(--success-light)';
+                iconBox.style.color = 'var(--success)';
+                iconBox.innerHTML = '<i class="fas fa-check-circle"></i>';
+            } else {
+                iconBox.style.background = 'var(--danger-light)';
+                iconBox.style.color = 'var(--danger)';
+                iconBox.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+            }
+            
+            document.getElementById('alertHeaderTitle').textContent = title;
+            document.getElementById('alertBodyParagraph').textContent = body;
+            
+            const dismissBtn = document.getElementById('alertFeedbackDismissBtn');
+            dismissBtn.onclick = () => {
+                closeModalWindow('cloudActionProcessModal');
+                if(callback) callback();
+            };
+            
+            document.getElementById('alertFeedbackNoticeBlock').style.display = 'block';
+            openModalWindow('cloudActionProcessModal');
+        }
+
+        document.getElementById('logoutSessionBtn').addEventListener('click', () => {
+            document.getElementById('sessionOverrideNoticeModal').style.display = 'flex';
+        });
+
+        function executeSessionPurgeReloadSequence() {
+            localStorage.removeItem('season');
+            window.location.reload();
+        }
+
+        function bootstrapAppCoreSystem() {
+            document.getElementById('appTitleDisplay').textContent = ` (${CURRENT_SEASON|| 20})`;
+            API_BASE_URL = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${CURRENT_SEASON}/customer.json`;
+            populateVillageSelectors();
+            loadCloudDataFeed();
+        }
+
+        function cycleSortStateEngine() {
+            currentSortingCycleState = (currentSortingCycleState + 1) % 4;
+            const labels = ["Recent", "Alphabetical", "Old ➔ New", "Amount: Low ➔ High"];
+            const icons = ["fa-sort-amount-down", "fa-font", "fa-arrow-up-9-1", "fa-arrow-up-wide-short"];
+            
+            document.getElementById('sortStateLabel').textContent = labels[currentSortingCycleState];
+            const iconElement = document.querySelector('#cycleSortTrigger i');
+            iconElement.className = `fas ${icons[currentSortingCycleState]}`;
+            
+            applyMasterSearchFilters();
+        }
+
+        function populateVillageSelectors() {
+            const selectOptions = ['addVillage', 'editVillage'];
+            selectOptions.forEach(elementId => {
+                const select = document.getElementById(elementId);
+                select.innerHTML = `<option value="" disabled selected>Select Target Sector</option>`;
+                VILLAGE_LIST.forEach(v => {
+                    const opt = document.createElement('option');
+                    opt.value = v; opt.textContent = v;
+                    select.appendChild(opt);
+                });
+            });
+        }
+
+        document.getElementById('searchInput').addEventListener('input', applyMasterSearchFilters);
+
+        function filterByDateDirect(dateVal) {
+            if(!dateVal) return;
+            const queryData = globalCachedDataObject.customers || [];
+            const targetedMatches = queryData.filter(user => user.date === dateVal);
+            renderCustomerDataGrid({ customers: targetedMatches });
+        }
+
+        function applyMasterSearchFilters() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            let matrixDataset = [...(globalCachedDataObject.customers || [])];
+
+            if (query) {
+                matrixDataset = matrixDataset.filter(user => {
+                    const fullName = `${user.firstName || ''} ${user.lastName || ''}`.toLowerCase();
+                    const formattedDate = parseInputToUIDateText(user.date);
+                    return fullName.includes(query) || 
+                           (user.village || '').toLowerCase().includes(query) || 
+                           String(user.amount || '').includes(query) ||
+                           formattedDate.includes(query);
+                });
+            }
+
+            if (currentSortingCycleState === 0) {
+                matrixDataset.sort((a, b) => new Date(b.date) - new Date(a.date));
+            } else if (currentSortingCycleState === 1) {
+                matrixDataset.sort((a, b) => {
+                    const strA = `${a.firstName || ''}`.toLowerCase();
+                    const strB = `${b.firstName || ''}`.toLowerCase();
+                    return strA.localeCompare(strB, 'hi');
+                });
+            } else if (currentSortingCycleState === 2) {
+                matrixDataset.sort((a, b) => new Date(a.date) - new Date(b.date));
+            } else if (currentSortingCycleState === 3) {
+                matrixDataset.sort((a, b) => (parseFloat(a.amount) || 0) - (parseFloat(b.amount) || 0));
+            }
+
+            renderCustomerDataGrid({ customers: matrixDataset });
+        }
+
+        function renderCustomerDataGrid(dataPackage) {
+            const container = document.getElementById('dataList');
+            container.innerHTML = '';
+            let targetList = dataPackage.customers || [];
+
+            if (targetList.length === 0) {
+                container.innerHTML = '<p style="text-align:center; padding:40px; color:var(--text-muted);">No records match criteria.</p>';
+                return;
+            }
+
+            targetList.forEach(user => {
+                const card = document.createElement('div');
+                card.className = `customer-card ${user.paymentDone ? 'done' : ''}`;
+                
+                card.innerHTML = `
+                    <div class="card-details">
+                        <div class="card-title-row">
+                            <strong>${user.firstName} ${user.lastName}</strong>
+                            <span class="v-badge">${user.village}</span>
+                        </div>
+                        <span class="amt-display">₹ ${(parseFloat(user.amount)||0).toLocaleString('en-IN')}</span>
+                        <div class="card-meta-row">
+                            <span class="date-click" onclick="filterByDateDirect('${user.date}')">
+                                <i class="fas fa-calendar-alt"></i> ${parseInputToUIDateText(user.date)}
+                            </span>
+                            <span class="status-pill ${user.paymentDone ? 'paid' : 'pending'}">
+                                ${user.paymentDone ? '✓ PAID' : '⏳ PENDING'}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-action-trigger" title="Manage Record Properties">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                `;
+
+                card.querySelector('.card-action-trigger').addEventListener('click', () => {
+                    activeRecordScopeId = user.id;
+                    openGestureActionScreen(user);
+                });
+
+                container.appendChild(card);
+            });
+        }
+
+        // --- SUBMISSION ENTRY WIZARD MATRIX ---
+        function openAddWizardScreen() {
+            document.getElementById('addDate').valueAsDate = new Date();
+            wizardCurrentStep = 1;
+            renderWizardPaneState();
+            document.getElementById('addWizardScreen').style.display = 'flex';
+        }
+
+        function closeAddWizardScreen() {
+            document.getElementById('addWizardScreen').style.display = 'none';
+            document.getElementById('wizardFormInstance').reset();
+        }
+
+        function navigateWizardStep(direction) {
+            if(direction === 1 && !validateCurrentStepFormPane()) {
+                alert("Please complete the required field in this step.");
+                return;
+            }
+            
+            wizardCurrentStep += direction;
+            if (wizardCurrentStep > 4) {
+                commitNewUserCloudStorage();
+                return;
+            }
+            renderWizardPaneState();
+        }
+
+        function validateCurrentStepFormPane() {
+            if(wizardCurrentStep === 1) return document.getElementById('addDate').value !== "";
+            if(wizardCurrentStep === 2) return document.getElementById('addVillage').value !== "";
+            if(wizardCurrentStep === 3) return document.getElementById('addAmount').value !== "";
+            if(wizardCurrentStep === 4) return document.getElementById('addFirstName').value.trim() !== "" && document.getElementById('addLastName').value.trim() !== "";
+            return true;
+        }
+
+        function renderWizardPaneState() {
+            for(let i=1; i<=4; i++) {
+                document.getElementById(`paneStep${i}`).style.display = 'none';
+                document.getElementById(`dotStep${i}`).className = 'step-dot';
+                if(i < wizardCurrentStep) document.getElementById(`dotStep${i}`).classList.add('completed');
+            }
+            document.getElementById(`paneStep${wizardCurrentStep}`).style.display = 'block';
+            document.getElementById(`dotStep${wizardCurrentStep}`).classList.add('active');
+            document.getElementById('wizardProgressFill').style.width = `${((wizardCurrentStep - 1) / 3) * 100}%`;
+            document.getElementById('wizardBackBtn').disabled = (wizardCurrentStep === 1);
+            document.getElementById('wizardNextBtn').textContent = (wizardCurrentStep === 4) ? "Finish & Save" : "Continue";
+        }
+
+        function openGestureActionScreen(userObject) {
+            document.getElementById('gestureScreenTitle').textContent = `Manage: ${userObject.firstName} ${userObject.lastName}`;
+            selectedGestureActionType = null;
+            document.querySelectorAll('.custom-radio-option').forEach(el => el.classList.remove('selected'));
+            document.querySelectorAll('input[name="gestureModeGroup"]').forEach(rad => rad.checked = false);
+            document.getElementById('gestureActionScreen').style.display = 'flex';
+        }
+
+        function closeGestureActionScreen() { document.getElementById('gestureActionScreen').style.display = 'none'; }
+        function openEditPaneScreen() { document.getElementById('editPaneScreen').style.display = 'flex'; }
+        function closeEditPaneScreen() { document.getElementById('editPaneScreen').style.display = 'none'; }
+        function openPaymentGatewayScreen() { document.getElementById('paymentGatewayScreen').style.display = 'flex'; }
+        function closePaymentGatewayScreen() { document.getElementById('paymentGatewayScreen').style.display = 'none'; }
+        function openModalWindow(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModalWindow(id) { document.getElementById(id).style.display = 'none'; }
+
+        function selectGestureMode(mode) {
+            selectedGestureActionType = mode;
+            document.querySelectorAll('.custom-radio-option').forEach(el => el.classList.remove('selected'));
+            document.querySelectorAll('input[name="gestureModeGroup"]').forEach(rad => {
+                if(rad.value === mode) rad.checked = true;
+            });
+            document.getElementById(`optRadio${mode.charAt(0) + mode.slice(1).toLowerCase()}`).classList.add('selected');
+        }
+
+        function executeGestureRouteSelection() {
+            if(!selectedGestureActionType) { alert("Please specify an operations route."); return; }
+            closeGestureActionScreen();
+            
+            const targetedUser = globalCachedDataObject.customers.find(u => u.id === activeRecordScopeId);
+            if(!targetedUser) return;
+
+            if (selectedGestureActionType === 'EDIT') {
+                // Populate multiple fields inside user modify profile context screen
+                document.getElementById('editFirstName').value = targetedUser.firstName || "";
+                document.getElementById('editLastName').value = targetedUser.lastName || "";
+                document.getElementById('editVillage').value = targetedUser.village || "";
+                document.getElementById('editDate').value = targetedUser.date || "";
+                document.getElementById('editAmount').value = targetedUser.amount || 0; // Read-only asset
+                
+                renderLedgerLogsPane(targetedUser.id);
+                openEditPaneScreen();
+            } else if (selectedGestureActionType === 'PAYMENT') {
+                document.getElementById('payAppProfileLabel').textContent = `${targetedUser.firstName} ${targetedUser.lastName}`;
+                document.getElementById('payAppProfileBalance').textContent = `Pending Liability: ₹${targetedUser.amount.toLocaleString('en-IN')}`;
+                document.getElementById('payAppTransactionInput').value = targetedUser.amount;
+                handlePaymentInputMirrorFormat();
+                openPaymentGatewayScreen();
+            } else if (selectedGestureActionType === 'DELETE') {
+                document.getElementById('alertFeedbackNoticeBlock').style.display = 'none';
+                document.getElementById('processingEngineStatusBlock').style.display = 'none';
+                document.getElementById('swipeSummaryReportBlock').style.display = 'none';
+                document.getElementById('confirmPromptBlock').style.display = 'block';
+                openModalWindow('cloudActionProcessModal');
+            }
+        }
+
+        function renderLedgerLogsPane(userId) {
+            const container = document.getElementById('historyLedgerContainer');
+            container.innerHTML = '';
+            const historyStack = (globalCachedDataObject.history || []).filter(h => h.userId === userId).sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+            
+            if(historyStack.length === 0) {
+                container.innerHTML = '<p style="font-size:0.8rem; color:var(--text-muted);">No records stored inside historical ledger clusters.</p>';
+                return;
+            }
+            historyStack.forEach(h => {
+                const div = document.createElement('div');
+                div.className = 'ledger-row';
+                div.innerHTML = `<strong>${h.type}:</strong> ${h.message} <div style="font-size:0.7rem; color:var(--text-muted); margin-top:4px;">${new Date(h.timestamp).toLocaleString()}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        // --- INTERACTIVE SWIPE ENGINE & MATRIX LOGIC ARRAY ---
+        let swipeStartX = 0;
+        let isDraggingSwipeHandle = false;
+
+        function handlePaymentInputMirrorFormat() {
+            const val = parseFloat(document.getElementById('payAppTransactionInput').value) || 0;
+            document.getElementById('payInputMirrorDisplay').textContent = `₹ ${val.toLocaleString('en-IN')}`;
+            
+            const handle = document.getElementById('swipeHandleElement');
+            if (val <= 0) {
+                handle.style.opacity = '0.4'; handle.style.cursor = 'not-allowed';
+            } else {
+                handle.style.opacity = '1'; handle.style.cursor = 'grab';
+            }
+        }
+
+        function initSwipeSystemCoreEngine() {
+            const handle = document.getElementById('swipeHandleElement');
+            const rootTrack = document.getElementById('swipeTrackRoot');
+
+            const startSwipeGesture = (clientX) => {
+                const inputVal = parseFloat(document.getElementById('payAppTransactionInput').value) || 0;
+                if(inputVal <= 0) return;
+                isDraggingSwipeHandle = true;
+                swipeStartX = clientX;
+                handle.style.transition = 'none';
+            };
+
+            const moveSwipeGesture = (clientX) => {
+                if (!isDraggingSwipeHandle) return;
+                let deltaX = clientX - swipeStartX;
+                const trackWidth = rootTrack.offsetWidth;
+                const maxSwipeDistance = trackWidth - handle.offsetWidth - 12;
+
+                if (deltaX < 0) deltaX = 0;
+                if (deltaX > maxSwipeDistance) deltaX = maxSwipeDistance;
+
+                handle.style.transform = `translateX(${deltaX}px)`;
+                
+                if (deltaX >= maxSwipeDistance - 10) {
+                    rootTrack.classList.add('active-ready');
+                } else {
+                    rootTrack.classList.remove('active-ready');
+                }
+            };
+
+            const endSwipeGesture = (clientX) => {
+                if (!isDraggingSwipeHandle) return;
+                isDraggingSwipeHandle = false;
+                rootTrack.classList.remove('active-ready');
+
+                const trackWidth = rootTrack.offsetWidth;
+                const maxSwipeDistance = trackWidth - handle.offsetWidth - 12;
+                
+                let finalDeltaX = (clientX && typeof clientX === 'number') ? (clientX - swipeStartX) : 0;
+                if(!clientX) {
+                    const transformMatrix = window.getComputedStyle(handle).transform;
+                    if(transformMatrix && transformMatrix !== 'none') {
+                        finalDeltaX = parseFloat(transformMatrix.split(',')[4]) || 0;
+                    }
+                }
+
+                handle.style.transition = 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)';
+
+                if (finalDeltaX >= maxSwipeDistance - 25) {
+                    handle.style.transform = `translateX(${maxSwipeDistance}px)`;
+                    processSwipeFinancialCalculations();
+                } else {
+                    handle.style.transform = 'translateX(0px)';
+                }
+            };
+
+            handle.addEventListener('touchstart', (e) => startSwipeGesture(e.touches[0].clientX));
+            window.addEventListener('touchmove', (e) => moveSwipeGesture(e.touches[0].clientX));
+            window.addEventListener('touchend', (e) => endSwipeGesture());
+
+            handle.addEventListener('mousedown', (e) => startSwipeGesture(e.clientX));
+            window.addEventListener('mousemove', (e) => moveSwipeGesture(e.clientX));
+            window.addEventListener('mouseup', (e) => endSwipeGesture(e.clientX));
+        }
+
+        function processSwipeFinancialCalculations() {
+            const userInputVal = parseInt(document.getElementById('payAppTransactionInput').value) || 0;
+            if(userInputVal <= 0) { resetSwipeThumbTrack(); return; }
+
+            const dataObject = JSON.parse(JSON.stringify(globalCachedDataObject));
+            const index = dataObject.customers.findIndex(u => u.id === activeRecordScopeId);
+            if (index === -1) { resetSwipeThumbTrack(); return; }
+
+            const targetUser = dataObject.customers[index];
+            const originalServerAmount = targetUser.amount;
+            
+            let messageSummaryText = "";
+            let historyLogText = "";
+            
+            if (userInputVal === originalServerAmount) {
+                targetUser.paymentDone = true;
+                messageSummaryText = `The input amount matches the records on the server exactly. User amount was paid completely. Total balance remains ₹${originalServerAmount}.`;
+                historyLogText = `Full Payment cleared. Status set to true. Balance kept at: ₹${userInputVal}`;
+            } else {
+                targetUser.amount = userInputVal;
+                targetUser.paymentDone = false;
+                messageSummaryText = `The input value differs from current registers. User amount changed from ₹${originalServerAmount} to ₹${userInputVal}. Payment status remains pending.`;
+                historyLogText = `Overwrote balance configuration from ₹${originalServerAmount} to ₹${userInputVal}`;
+            }
+
+            if (!dataObject.history) dataObject.history = [];
+            dataObject.history.push({
+                userId: targetUser.id,
+                type: 'Gateway Action',
+                message: historyLogText,
+                timestamp: new Date().toISOString()
+            });
+
+            stagedSwipeUpdatePayload = { data: dataObject, desc: `Process billing mutation for ${targetUser.firstName}` };
+
+            closePaymentGatewayScreen();
+            resetSwipeThumbTrack();
+
+            document.getElementById('confirmPromptBlock').style.display = 'none';
+            document.getElementById('processingEngineStatusBlock').style.display = 'none';
+            document.getElementById('alertFeedbackNoticeBlock').style.display = 'none';
+            
+            document.getElementById('swipeSummaryFormText').textContent = messageSummaryText;
+            document.getElementById('swipeProgressElementContainer').style.display = 'none';
+            document.getElementById('swipeConfirmationProgressBarFill').style.width = '0%';
+            document.getElementById('swipeSummaryExecuteBtn').style.display = 'inline-flex';
+            
+            document.getElementById('swipeSummaryReportBlock').style.display = 'block';
+            openModalWindow('cloudActionProcessModal');
+        }
+
+        function resetSwipeThumbTrack() {
+            const handle = document.getElementById('swipeHandleElement');
+            handle.style.transition = 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)';
+            handle.style.transform = 'translateX(0px)';
+        }
+
+        async function confirmAndExecuteSwipePayloadCloudSync() {
+            if(!stagedSwipeUpdatePayload) return;
+            
+            document.getElementById('swipeSummaryExecuteBtn').style.display = 'none';
+            document.getElementById('swipeProgressElementContainer').style.display = 'block';
+            
+            const fillLine = document.getElementById('swipeConfirmationProgressBarFill');
+            setTimeout(() => { fillLine.style.width = '100%'; }, 50);
+
+            const statusSuccess = await syncPayloadDataToGitHubCloud(stagedSwipeUpdatePayload.data, stagedSwipeUpdatePayload.desc);
+            stagedSwipeUpdatePayload = null;
+
+            setTimeout(() => {
+                closeModalWindow('cloudActionProcessModal');
+                if(statusSuccess) {
+                    triggerCustomAlertNotice("Success", "Transaction ledger has been updated and synchronized with cloud databases successfully.", true);
+                } else {
+                    triggerCustomAlertNotice("Sync Error", "Could not complete transaction. Please check network validation streams.", false);
+                }
+            }, 1600);
+        }
+
+        // --- NETWORK PERSISTENCE MIDDLEWARE LINK ---
+        async function loadCloudDataFeed() {
+            if(!CURRENT_SEASON) return;
+            const container = document.getElementById('dataList');
+            container.innerHTML = '<p style="text-align:center; color: var(--text-muted); padding: 40px 0;"><i class="fas fa-circle-notch fa-spin"></i> Synchronizing ledger data...</p>';
+            const res = await fetchCloudNetworkStorage();
+            globalCachedDataObject = res;
+            applyMasterSearchFilters();
+        }
+
+        async function fetchCloudNetworkStorage() {
+            try {
+                const response = await fetch(API_BASE_URL, {
+                    headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
+                });
+                if (response.status === 404) return { customers: [], history: [] };
+                if (!response.ok) throw new Error(`Data Stream Disconnected`);
+                const data = await response.json();
+                currentSha = data.sha;
+                return JSON.parse(decodeURIComponent(escape(atob(data.content))));
+            } catch (err) {
+                document.getElementById('dataList').innerHTML = `<p style="color:var(--danger); text-align:center; padding:20px;">Cloud synchronization failure. Validate Token Access Arrays.</p>`;
+                return { customers: [], history: [] };
+            }
+        }
+
+        async function syncPayloadDataToGitHubCloud(dataPackage, logMsg = "Routine structural update") {
+            const rawBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(dataPackage, null, 2))));
+            const payload = { message: logMsg, content: rawBase64, sha: currentSha };
+            try {
+                const response = await fetch(API_BASE_URL, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if(!response.ok) throw new Error("Abort push operation matrix");
+                const res = await response.json();
+                currentSha = res.content.sha;
+                globalCachedDataObject = dataPackage;
+                applyMasterSearchFilters();
+                return true;
+            } catch(e) {
+                return false;
+            }
+        }
+
+        async function commitNewUserCloudStorage() {
+            const date = document.getElementById('addDate').value;
+            const village = document.getElementById('addVillage').value;
+            const amount = parseInt(document.getElementById('addAmount').value);
+            const firstName = document.getElementById('addFirstName').value.trim();
+            const lastName = document.getElementById('addLastName').value.trim();
+
+            closeAddWizardScreen();
+            
+            document.getElementById('confirmPromptBlock').style.display = 'none';
+            document.getElementById('swipeSummaryReportBlock').style.display = 'none';
+            document.getElementById('alertFeedbackNoticeBlock').style.display = 'none';
+            document.getElementById('processingEngineStatusBlock').style.display = 'flex';
+            document.getElementById('processingBoxLabel').textContent = "Deploying customer profile node blocks...";
+            openModalWindow('cloudActionProcessModal');
+
+            const newId = '_' + Math.random().toString(36).substr(2, 9);
+            const newUserObj = { id: newId, firstName, lastName, amount, village, date, paymentDone: false };
+
+            const dataObject = JSON.parse(JSON.stringify(globalCachedDataObject));
+            if(!dataObject.customers) dataObject.customers = [];
+            if(!dataObject.history) dataObject.history = [];
+
+            dataObject.customers.push(newUserObj);
+            dataObject.history.push({
+                userId: newId, type: 'User Spawning',
+                message: `Initialization parameter created with balance: ₹${amount} allocated at ${village} sector`,
+                timestamp: new Date().toISOString()
+            });
+
+            const success = await syncPayloadDataToGitHubCloud(dataObject, `Construct structural customer node ${firstName}`);
+            closeModalWindow('cloudActionProcessModal');
+            
+            if(success) {
+                triggerCustomAlertNotice("Registration Successful", `Customer profile node for "${firstName} ${lastName}" has been created securely.`, true);
+            } else {
+                triggerCustomAlertNotice("Registration Error", "Failed to deploy new customer data element onto cloud nodes.", false);
+            }
+        }
+
+        async function processDataUpdateOperation() {
+            const editFn = document.getElementById('editFirstName').value.trim();
+            const editLn = document.getElementById('editLastName').value.trim();
+            const editVg = document.getElementById('editVillage').value;
+            const dt = document.getElementById('editDate').value;
+            
+            if(!editFn || !editLn || !editVg || !dt) { alert("Please compile all mandatory text inputs."); return; }
+
+            closeEditPaneScreen();
+            
+            document.getElementById('confirmPromptBlock').style.display = 'none';
+            document.getElementById('swipeSummaryReportBlock').style.display = 'none';
+            document.getElementById('alertFeedbackNoticeBlock').style.display = 'none';
+            document.getElementById('processingEngineStatusBlock').style.display = 'flex';
+            document.getElementById('processingBoxLabel').textContent = "Rewriting properties on database grid...";
+            openModalWindow('cloudActionProcessModal');
+
+            const dataObject = JSON.parse(JSON.stringify(globalCachedDataObject));
+            const idx = dataObject.customers.findIndex(u => u.id === activeRecordScopeId);
+            if(idx === -1) { closeModalWindow('cloudActionProcessModal'); return; }
+
+            const oldRecord = dataObject.customers[idx];
+            let changesTextLog = [];
+
+            if(oldRecord.firstName !== editFn) changesTextLog.push(`First Name modified from "${oldRecord.firstName}" to "${editFn}"`);
+            if(oldRecord.lastName !== editLn) changesTextLog.push(`Last Name modified from "${oldRecord.lastName}" to "${editLn}"`);
+            if(oldRecord.village !== editVg) changesTextLog.push(`Village moved from ${oldRecord.village} to ${editVg}`);
+            if(oldRecord.date !== dt) changesTextLog.push(`Timeline date shifted from ${oldRecord.date} to ${dt}`);
+
+            if(changesTextLog.length > 0) {
+                oldRecord.firstName = editFn;
+                oldRecord.lastName = editLn;
+                oldRecord.village = editVg;
+                oldRecord.date = dt;
+                
+                if(!dataObject.history) dataObject.history = [];
+                dataObject.history.push({
+                    userId: activeRecordScopeId,
+                    type: 'Standard Manual Updates',
+                    message: changesTextLog.join('; '),
+                    timestamp: new Date().toISOString()
+                });
+
+                const status = await syncPayloadDataToGitHubCloud(dataObject, `Update profile identities for ID: ${activeRecordScopeId}`);
+                closeModalWindow('cloudActionProcessModal');
+                if(status) {
+                    triggerCustomAlertNotice("Updated Successfully", "The customer information profiles have been altered successfully.", true);
+                } else {
+                    triggerCustomAlertNotice("Update Failed", "An error occurred while saving modified profile parameters.", false);
+                }
+            } else {
+                closeModalWindow('cloudActionProcessModal');
+            }
+        }
+
+        async function commitDataPurgeExecution() {
+            closeModalWindow('cloudActionProcessModal');
+            
+            document.getElementById('confirmPromptBlock').style.display = 'none';
+            document.getElementById('swipeSummaryReportBlock').style.display = 'none';
+            document.getElementById('alertFeedbackNoticeBlock').style.display = 'none';
+            document.getElementById('processingEngineStatusBlock').style.display = 'flex';
+            document.getElementById('processingBoxLabel').textContent = "Dropping entity from system arrays...";
+            openModalWindow('cloudActionProcessModal');
+            
+            const dataObject = JSON.parse(JSON.stringify(globalCachedDataObject));
+            dataObject.customers = (dataObject.customers || []).filter(u => u.id !== activeRecordScopeId);
+            dataObject.history = (dataObject.history || []).filter(h => h.userId !== activeRecordScopeId);
+
+            const status = await syncPayloadDataToGitHubCloud(dataObject, `Purged profile registry ID: ${activeRecordScopeId}`);
+            closeModalWindow('cloudActionProcessModal');
+            if(status) {
+                triggerCustomAlertNotice("Deleted", "Customer entry dropped from standard records database.", true);
+            } else {
+                triggerCustomAlertNotice("Error", "Could not execute destructive data clear on servers.", false);
+            }
+        }
+    </script>
+</body>
+</html>
