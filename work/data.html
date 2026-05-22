@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ग्राहक डेटा विश्लेषण - प्रीमियम डैशबोर्ड</title>
+    <title>Database - ANALYSIS</title>
     
     <!-- Google Fonts & Font Awesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,12 +53,10 @@ body {
     padding-bottom: 100px;
 }
 
-/* --- Premium Custom Scrollbar --- */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
-/* --- Header Styles --- */
 #mainHeader {
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(20px);
@@ -107,14 +105,12 @@ body {
 
 .header-right .wallet-btn:active { transform: scale(0.9); }
 
-/* --- Layout Container --- */
 .app-container {
     padding: 20px;
     max-width: 500px;
     margin: 0 auto;
 }
 
-/* --- Grid Menu Controls --- */
 .menu-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -136,6 +132,8 @@ body {
     transition: var(--transition);
     position: relative;
     overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .menu-card::before {
@@ -152,7 +150,6 @@ body {
 
 .menu-card.full-span { grid-column: span 2; min-height: 120px; }
 
-/* Dynamic Card Colors */
 .card-revenue { background: linear-gradient(135deg, #4f46e5, #6366f1); color: white; }
 .card-revenue .icon-box { background: rgba(255,255,255,0.2); color: white; }
 .card-revenue .card-title { color: rgba(255,255,255,0.8); }
@@ -176,7 +173,6 @@ body {
 .card-title { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
 .card-value { font-size: 1.5rem; font-weight: 700; margin-top: auto; }
 
-/* --- Full Screen Canvas / Bottom Sheets --- */
 .full-canvas {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -210,7 +206,6 @@ body {
 .canvas-header h2 { font-size: 1.2rem; font-weight: 700; color: var(--text-main); }
 .canvas-body { padding: 20px; flex: 1; overflow-y: auto; }
 
-/* --- Controls & Advanced Filters --- */
 .search-container {
     background: var(--card-bg);
     border-radius: var(--radius-md);
@@ -245,11 +240,11 @@ body {
     color: var(--text-main); margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;
 }
 
-/* --- List Items UI --- */
 .data-list { display: flex; flex-direction: column; gap: 12px; }
 .list-item {
     background: var(--card-bg); border-radius: var(--radius-md); padding: 16px;
     box-shadow: var(--shadow-sm); display: flex; justify-content: space-between; align-items: center;
+    user-select: none; -webkit-user-select: none;
 }
 .item-info h4 { font-size: 0.95rem; font-weight: 600; color: var(--text-main); margin-bottom: 4px; }
 .item-info p { font-size: 0.8rem; color: var(--text-muted); display: flex; gap: 8px; }
@@ -258,7 +253,6 @@ body {
 .item-amount.pending { color: var(--danger); }
 .item-amount.paid { color: var(--success); }
 
-/* --- Metric Row --- */
 .metric-row {
     display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px;
 }
@@ -268,7 +262,6 @@ body {
 .metric-box label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
 .metric-box p { font-size: 1.2rem; font-weight: 700; color: var(--text-main); margin-top: 4px; }
 
-/* --- FAB Button --- */
 .fab-btn {
     position: fixed; bottom: 30px; right: 30px;
     background: linear-gradient(135deg, var(--primary), #6366f1);
@@ -279,7 +272,12 @@ body {
 }
 .fab-btn:active { transform: scale(0.9) rotate(90deg); }
 
-/* --- Step Wizard Form System --- */
+.stepper-wrapper { display: flex; justify-content: space-between; margin-bottom: 30px; position: relative; padding: 0 10px; }
+.stepper-wrapper::before { content: ''; position: absolute; top: 50%; left: 10px; right: 10px; height: 3px; background: #e2e8f0; z-index: 1; transform: translateY(-50%); }
+.step-indicator { width: 35px; height: 35px; border-radius: 50%; background: #e2e8f0; color: #64748b; display: flex; align-items: center; justify-content: center; font-weight: 700; position: relative; z-index: 2; transition: var(--transition); font-size: 0.9rem; border: 3px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+.step-indicator.active { background: var(--primary); color: white; transform: scale(1.1); }
+.step-indicator.completed { background: var(--success); color: white; border-color: #d1fae5; }
+
 .step-container { display: none; animation: fadeIn 0.4s ease-in-out forwards; }
 .step-container.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -299,7 +297,6 @@ body {
 .wiz-next { background: var(--primary); color: white; }
 .wiz-back { background: #e2e8f0; color: var(--text-main); }
 
-/* --- Process / Alert Popups --- */
 .popup-overlay {
     position: fixed; top:0; left:0; width:100%; height:100%;
     background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px);
@@ -310,13 +307,13 @@ body {
     width: 100%; max-width: 360px; text-align: center; box-shadow: var(--shadow-md);
 }
 .popup-card i.spinner { font-size: 2.5rem; color: var(--primary); animation: spin 1s linear infinite; }
-@keyframes spin { 100% { transform: rotate(300deg); } }
+@keyframes spin { 100% { transform: rotate(360deg); } }
 
-#pdfExportTemplate { position: absolute; left: -9999px; top: -9999px; width: 790px; background: #ffffff; color: #000000; padding: 40px; }
-#pdfExportTemplate table { width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 30px; }
+#pdfExportTemplate { position: absolute; left: -9999px; top: -9999px; width: 790px; background: #ffffff; color: #000000; padding: 0; }
+#pdfExportTemplate table { width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 15px; }
 #pdfExportTemplate th, #pdfExportTemplate td { border: 1px solid #cbd5e1; padding: 10px; text-align: left; font-size: 14px; }
 #pdfExportTemplate th { background-color: #f1f5f9; font-weight: bold; }
-.pdf-page-container { width: 100%; background: #ffffff; box-sizing: border-box; page-break-after: always; }
+.pdf-page-container { width: 100%; background: #ffffff; box-sizing: border-box; display: block; overflow: hidden; padding: 40px; }
 </style>
 </head>
 <body>
@@ -333,14 +330,14 @@ body {
     </header>
 
     <div class="app-container">
-        <!-- Dashboard Premium Menu Grid -->
+        <!-- Dashboard Menu Grid -->
         <div class="menu-grid">
             
             <div class="menu-card card-revenue full-span" onclick="openCanvas('canvasRevenue')">
                 <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                     <div>
                         <p class="card-title">कुल रेवेन्यू चक्र</p>
-                        <h2 class="card-value" id="totalAmount">₹0</h2>
+                        <h2 class="card-value counter-anim" id="totalAmount" data-val="0">₹0</h2>
                     </div>
                     <div class="icon-box"><i class="fas fa-indian-rupee-sign"></i></div>
                 </div>
@@ -350,7 +347,7 @@ body {
                 <div class="icon-box"><i class="fas fa-user-clock"></i></div>
                 <div>
                     <p class="card-title">बकाया खाते</p>
-                    <h2 class="card-value" id="pendingCustomersCount">0</h2>
+                    <h2 class="card-value counter-anim" id="pendingCustomersCount" data-val="0">0</h2>
                 </div>
             </div>
 
@@ -358,7 +355,7 @@ body {
                 <div class="icon-box"><i class="fas fa-user-check"></i></div>
                 <div>
                     <p class="card-title">चुकाए गए खाते</p>
-                    <h2 class="card-value" id="totalCustomers">0</h2>
+                    <h2 class="card-value counter-anim" id="totalCustomers" data-val="0">0</h2>
                 </div>
             </div>
 
@@ -366,7 +363,7 @@ body {
                 <div class="icon-box"><i class="fas fa-print"></i></div>
                 <div>
                     <p class="card-title">प्रिंट ड्यू लिस्ट</p>
-                    <h2 class="card-value" id="pendingAmountCard">₹0</h2>
+                    <h2 class="card-value counter-anim" id="pendingAmountCard" data-val="0">₹0</h2>
                 </div>
             </div>
 
@@ -384,7 +381,7 @@ body {
     <!-- Floating Action Button for Step Form -->
     <button class="fab-btn" onclick="openCanvas('canvasStepWizard')"><i class="fas fa-plus"></i></button>
 
-    <!-- ================= CANVAS 1: REVENUE DETAILS ================= -->
+    <!-- CANVAS 1: REVENUE DETAILS -->
     <div id="canvasRevenue" class="full-canvas">
         <div class="canvas-header">
             <button class="canvas-close" onclick="closeCanvas('canvasRevenue')"><i class="fas fa-arrow-left"></i></button>
@@ -392,21 +389,25 @@ body {
         </div>
         <div class="canvas-body">
             <div class="metric-row">
-                <div class="metric-box"><label>कुल राजस्व</label><p id="mTotalRevenue">₹0</p></div>
-                <div class="metric-box"><label>प्राप्त नकद काउंटर</label><p id="mTotalCash">₹0</p></div>
+                <div class="metric-box"><label>कुल राजस्व</label><p class="counter-anim" id="mTotalRevenue" data-val="0">₹0</p></div>
+                <div class="metric-box"><label>प्राप्त नकद काउंटर</label><p class="counter-anim" id="mTotalCash" data-val="0">₹0</p></div>
             </div>
             <div class="metric-row">
-                <div class="metric-box"><label>कुल चुकाई राशि</label><p id="mTpaidamount">₹0</p></div>
-                <div class="metric-box"><label>कुल बकाया भुगतान</label><p style="color:var(--danger);" id="mPendingAmount">₹0</p></div>
+                <div class="metric-box"><label>कुल चुकाई राशि</label><p class="counter-anim" id="mTpaidamount" data-val="0">₹0</p></div>
+                <div class="metric-box"><label>कुल बकाया भुगतान</label><p style="color:var(--danger);" class="counter-anim" id="mPendingAmount" data-val="0">₹0</p></div>
             </div>
             <div class="metric-row">
-                <div class="metric-box"><label>कुल परिचालन खर्च</label><p style="color:var(--warning);" id="mTotalExpenses">₹0</p></div>
-                <div class="metric-box"><label>पूर्णता दर</label><p style="color:var(--success);" id="mCompletionRate">0%</p></div>
+                <div class="metric-box"><label>कुल परिचालन खर्च</label><p style="color:var(--warning);" class="counter-anim" id="mTotalExpenses" data-val="0">₹0</p></div>
+                <div class="metric-box"><label>पूर्णता दर</label><p style="color:var(--success);" class="counter-anim" id="mCompletionRate" data-val="0">0%</p></div>
+            </div>
+            <div class="metric-row">
+                <div class="metric-box"><label>कुल डीजल खर्च</label><p class="counter-anim" id="mTotalDiesel" data-val="0">₹0</p></div>
+                <div class="metric-box"><label>कुल अन्य खर्च</label><p class="counter-anim" id="mTotalOther" data-val="0">₹0</p></div>
             </div>
         </div>
     </div>
 
-    <!-- ================= CANVAS 2: PENDING CUSTOMERS ================= -->
+    <!-- CANVAS 2: PENDING CUSTOMERS -->
     <div id="canvasPending" class="full-canvas">
         <div class="canvas-header">
             <button class="canvas-close" onclick="closeCanvas('canvasPending')"><i class="fas fa-arrow-left"></i></button>
@@ -418,23 +419,18 @@ body {
                 <input type="text" id="pendingSearch" placeholder="नाम या गाँव खोजें...">
             </div>
             
-            <!-- Village Chips Scroll -->
-            <div class="chip-scroller" id="pendingVillageChips">
-                <!-- Dynamic Chips -->
-            </div>
+            <div class="chip-scroller" id="pendingVillageChips"></div>
 
             <button class="sort-toggle-btn" onclick="togglePendingSort()">
                 <span><i class="fas fa-sort-amount-down"></i> राशि: कम से अधिक क्रम</span>
                 <i class="fas fa-chevron-right" id="sortIcon"></i>
             </button>
 
-            <div class="data-list" id="pendingRecordsContainer">
-                <!-- Items Dynamic -->
-            </div>
+            <div class="data-list" id="pendingRecordsContainer"></div>
         </div>
     </div>
 
-    <!-- ================= CANVAS 3: PAID CUSTOMERS ================= -->
+    <!-- CANVAS 3: PAID CUSTOMERS -->
     <div id="canvasPaid" class="full-canvas">
         <div class="canvas-header">
             <button class="canvas-close" onclick="closeCanvas('canvasPaid')"><i class="fas fa-arrow-left"></i></button>
@@ -445,13 +441,11 @@ body {
                 <i class="fas fa-search" style="color:var(--text-muted)"></i>
                 <input type="text" id="paidSearch" placeholder="खोजें...">
             </div>
-            <div class="data-list" id="paidRecordsContainer">
-                <!-- Items Dynamic (Newly paid on top) -->
-            </div>
+            <div class="data-list" id="paidRecordsContainer"></div>
         </div>
     </div>
 
-    <!-- ================= CANVAS 4: PRINT DUE & FINANCE REPORT ================= -->
+    <!-- CANVAS 4: PRINT DUE & FINANCE REPORT -->
     <div id="canvasPrintDue" class="full-canvas">
         <div class="canvas-header">
             <button class="canvas-close" onclick="closeCanvas('canvasPrintDue')"><i class="fas fa-arrow-left"></i></button>
@@ -463,7 +457,7 @@ body {
                     <div class="icon-box" style="margin-bottom:0; background:var(--danger-light); color:var(--danger);"><i class="fas fa-file-pdf"></i></div>
                     <div>
                         <h4 style="font-size:1rem; font-weight:700;">समस्त विलेज बकाया रिपोर्ट</h4>
-                        <p style="font-size:0.8rem; color:var(--text-muted);">QR कोड सहित A4 मास्टर पीडीएफ जनरेट करें</p>
+                        <p style="font-size:0.8rem; color:var(--text-muted);">बिना किसी फालतू नियमों के, सीधे QR कोड और विलेज सूची से शुरू करें</p>
                     </div>
                 </div>
             </div>
@@ -473,22 +467,28 @@ body {
                     <div class="icon-box" style="margin-bottom:0; background:var(--primary-light); color:var(--primary);"><i class="fas fa-file-invoice-dollar"></i></div>
                     <div>
                         <h4 style="font-size:1rem; font-weight:700;">विस्तृत वित्तीय लेजर रिपोर्ट</h4>
-                        <p style="font-size:0.8rem; color:var(--text-muted);">दैनिक प्रविष्टि एवं भुगतान समरी एक्सपोर्ट</p>
+                        <p style="font-size:0.8rem; color:var(--text-muted);">खूबसूरत इन्फोग्राफिक्स, प्रविष्टियों और चुकता सूची का एकीकरण</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ================= CANVAS 5: STEP-BY-STEP ENTER DETAILS ================= -->
+    <!-- CANVAS 5: STEP-BY-STEP ENTER DETAILS -->
     <div id="canvasStepWizard" class="full-canvas">
         <div class="canvas-header">
             <button class="canvas-close" onclick="closeWizard()"><i class="fas fa-times"></i></button>
             <h2>दैनिक <span style="color: green; margin:10px ;">₹</span> एंट्री </h2>
         </div>
         <div class="canvas-body">
+            <div class="stepper-wrapper">
+                <div class="step-indicator active" id="ind-1">1</div>
+                <div class="step-indicator" id="ind-2">2</div>
+                <div class="step-indicator" id="ind-3">3</div>
+                <div class="step-indicator" id="ind-4">4</div>
+            </div>
+
             <form id="moneyUpdateForm">
-                <!-- Step 1: Date -->
                 <div class="step-container active" id="step1">
                     <h3 class="wizard-title">एंट्री की तिथि का चयन</h3>
                     <div class="wizard-input-wrap">
@@ -500,12 +500,11 @@ body {
                     </div>
                 </div>
 
-                <!-- Step 2: Cash Input -->
                 <div class="step-container" id="step2">
                     <h3 class="wizard-title">नकद राशि को डालें </h3>
                     <div class="wizard-input-wrap">
                         <label class="wizard-label" id="cashFormattedLabel">कुल नकद राशि (₹0)</label>
-                        <input type="number" id="inCash"  placeholder="₹ राशि दर्ज करें" required oninput="formatWizardAmount(this, 'cashFormattedLabel')">
+                        <input type="number" id="inCash" placeholder="₹ राशि दर्ज करें" oninput="formatWizardAmount(this, 'cashFormattedLabel')">
                     </div>
                     <div class="wizard-nav">
                         <button type="button" class="wiz-btn wiz-back" onclick="navigateStep(1)">पीछे</button>
@@ -513,7 +512,6 @@ body {
                     </div>
                 </div>
 
-                <!-- Step 3: Diesel Exp -->
                 <div class="step-container" id="step3">
                     <h3 class="wizard-title">डीजल परिचालन व्यय</h3>
                     <div class="wizard-input-wrap">
@@ -526,7 +524,6 @@ body {
                     </div>
                 </div>
 
-                <!-- Step 4: Other Exp -->
                 <div class="step-container" id="step4">
                     <h3 class="wizard-title">अन्य खर्चे डालें</h3>
                     <div class="wizard-input-wrap">
@@ -542,7 +539,7 @@ body {
         </div>
     </div>
 
-    <!-- ================= CANVAS 6: ONE PLACE DATE TRANSACTION LOOKUP ================= -->
+    <!-- CANVAS 6: DATE TRANSACTION LOOKUP -->
     <div id="canvasDayLedger" class="full-canvas">
         <div class="canvas-header">
             <button class="canvas-close" onclick="closeCanvas('canvasDayLedger')"><i class="fas fa-arrow-left"></i></button>
@@ -571,16 +568,13 @@ body {
                 </div>
 
                 <h4 style="font-size:1rem; font-weight:700; margin:20px 0 10px 0;">🎯 इस तिथि के पंजीकृत ग्राहक लिस्ट</h4>
-                <div class="data-list" id="lDayCustomersList">
-                    <!-- Dynamic Rows -->
-                </div>
+                <div class="data-list" id="lDayCustomersList"></div>
             </div>
         </div>
     </div>
 
-
-    <!-- Alert Redirect Modal (When Credentials Not Found) -->
-    <div id="redirectPopup" class="popup-overlay" style="align-items: center;">
+    <!-- Modals & Overlays -->
+    <div id="redirectPopup" class="popup-overlay">
         <div class="popup-card">
             <i class="fas fa-exclamation-triangle" style="font-size:2.5rem; color:var(--danger); margin-bottom:15px;"></i>
             <h3>सेटअप क्रेडेंशियल अनुपलब्ध</h3>
@@ -589,30 +583,33 @@ body {
         </div>
     </div>
 
-    <!-- PDF Processing Overlay with Cancel System -->
-    <div id="pdfProgressPopup" class="popup-overlay" style="align-items: center;">
+    <div id="pdfProgressPopup" class="popup-overlay">
         <div class="popup-card">
             <i class="fas fa-circle-notch spinner"></i>
-            <h3 style="margin-top:15px;" id="pdfProgressTitle">मास्टर रिपोर्ट जनरेट हो रही है</h3>
-            <p style="color:var(--text-muted); font-size:0.85rem; margin:8px 0 20px 0;">Devanagari कैरेक्टर मैपिंग और रेंडरिंग की जा रही है, कृपया ब्राउज़र बंद न करें।</p>
+            <h3 style="margin-top:15px;" id="pdfProgressTitle">रिपोर्ट जनरेट हो रही है</h3>
+            <p style="color:var(--text-muted); font-size:0.85rem; margin:8px 0 20px 0;">Devanagari कैरेक्टर मैपिंग और रेंडरिंग की जा रही है, कृपया प्रतीक्षा करें।</p>
             <button class="wiz-btn wiz-back" style="width:100%; background:#fef2f2; color:var(--danger);" onclick="cancelPdfGeneration()">प्रक्रिया रद्द करें</button>
         </div>
     </div>
 
+    <div id="successPopup" class="popup-overlay">
+        <div class="popup-card">
+            <i class="fas fa-check-circle" style="font-size:3.5rem; color:var(--success); margin-bottom:15px;"></i>
+            <h3 style="margin-top:10px; color:var(--text-main);">सफलतापूर्वक सेव हुआ</h3>
+            <p id="successPopupMessage" style="color:var(--text-muted); font-size:0.9rem; margin:10px 0 20px 0;"></p>
+            <button class="wiz-btn wiz-next" style="width:100%; background:var(--success);" onclick="document.getElementById('successPopup').style.display = 'none';">ठीक है</button>
+        </div>
+    </div>
 
     <!-- Hidden Core Engine Template for Multi-page Canvas Export -->
     <div id="pdfExportTemplate"></div>
 
-
-    <!-- ================= HARDCORE JAVASCRIPT LOGIC SYNC ================= -->
     <script>
-    
     let GITHUB_USERNAME = "mitpooniya"; 
     let CUSTOMER_REPO = "work"; 
     let CURRENT_SEASON = localStorage.getItem('season') || "";
     let GITHUB_TOKEN = localStorage.getItem('who') || "";
     
-    // QR Code Payment Endpoint Configuration
     let GLOBAL_QR_PAYMENT_URL = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=mitpooniya@oksbi&pn=SUMIT&aid=uGICAgMCfqsrNcg";
 
     let CUSTOMER_FILE_PATH = `${CURRENT_SEASON}/customer.json`; 
@@ -631,22 +628,49 @@ body {
     let isPdfCancelled = false;
 
     window.addEventListener('DOMContentLoaded', () => {
-        // REQUIREMENT 1: If credentials are missing, do not show forms. Direct prompt to redirect.
-        
         if(!localStorage.getItem('season') || !localStorage.getItem('who')) {
-            document.getElementById('redirectPopup').style.color = "var(--text-main)";
             document.getElementById('redirectPopup').style.display = 'flex';
         } else {
-            document.getElementById('moneyDate').valueAsDate = new Date();
+            resetDatePickerToToday();
             runAnalysis();
         }
     });
+
+    function resetDatePickerToToday() {
+        document.getElementById('moneyDate').valueAsDate = new Date();
+    }
 
     function openCanvas(id) { document.getElementById(id).classList.add('active'); }
     function closeCanvas(id) { document.getElementById(id).classList.remove('active'); }
 
     function decodeFromBase64(base64) { return decodeURIComponent(escape(atob(base64))); }
     function encodeToBase64(content) { return btoa(unescape(encodeURIComponent(content))); }
+
+    function animateValueCounter(element, targetVal, isPrice = true, duration = 1500) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            const currentCount = Math.floor(progress * targetVal);
+            
+            if (isPrice) {
+                element.textContent = `₹${currentCount.toLocaleString('en-IN')}`;
+            } else {
+                element.textContent = currentCount.toLocaleString('en-IN') + (element.id === 'mCompletionRate' ? '%' : '');
+            }
+            
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            } else {
+                if (isPrice) {
+                    element.textContent = `₹${targetVal.toLocaleString('en-IN')}`;
+                } else {
+                    element.textContent = targetVal.toLocaleString('en-IN') + (element.id === 'mCompletionRate' ? '%' : '');
+                }
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
 
     async function fetchFileContent(url, filePath) {
         try {
@@ -678,10 +702,16 @@ body {
         const villageStats = {};
         let totalInCash = 0;
         let totalExpenses = 0;
+        let totalDiesel = 0;
+        let totalOther = 0;
         
         moneyData.data.forEach(entry => {
             totalInCash += parseFloat(entry.inCash) || 0;
-            totalExpenses += (parseFloat(entry.dieselExp) || 0) + (parseFloat(entry.otherExp) || 0);
+            const dExp = parseFloat(entry.dieselExp) || 0;
+            const oExp = parseFloat(entry.otherExp) || 0;
+            totalDiesel += dExp;
+            totalOther += oExp;
+            totalExpenses += (dExp + oExp);
         });
 
         data.forEach(user => {
@@ -707,40 +737,38 @@ body {
         });
 
         const totalRevenue = totalCustomerAmount + totalInCash; 
-        const completionRate = (totalCustomerAmount) > 0 ? ((paidAmount / totalCustomerAmount) * 100).toFixed(1) : 0;
+        const completionRate = (totalCustomerAmount) > 0 ? Math.round((paidAmount / totalCustomerAmount) * 100) : 0;
 
         return {
             summary: {
                 totalCustomers, pendingCustomersCount, tpaidamount: paidAmount,
                 totalAmount: totalRevenue, pendingAmount, paidAmount,
-                completionRate, totalInCash, totalExpenses
+                completionRate, totalInCash, totalExpenses, totalDiesel, totalOther
             },
             villageStats
         };
     }
 
     function renderSummary(summary) {
-        // Upper Dashboard Matrix Setup
-        document.getElementById('totalAmount').textContent = `₹${summary.totalAmount.toLocaleString('en-IN')}`;
-        document.getElementById('pendingCustomersCount').textContent = summary.pendingCustomersCount;
-        document.getElementById('totalCustomers').textContent = globalCustomerData.filter(u=>u.paymentDone).length;
-        document.getElementById('pendingAmountCard').textContent = `₹${summary.pendingAmount.toLocaleString('en-IN')}`;
+        animateValueCounter(document.getElementById('totalAmount'), summary.totalAmount, true);
+        animateValueCounter(document.getElementById('pendingCustomersCount'), summary.pendingCustomersCount, false);
+        animateValueCounter(document.getElementById('totalCustomers'), globalCustomerData.filter(u=>u.paymentDone).length, false);
+        animateValueCounter(document.getElementById('pendingAmountCard'), summary.pendingAmount, true);
 
-        // Canvas Specific Matrix Data Setup
-        document.getElementById('mTotalRevenue').textContent = `₹${summary.totalAmount.toLocaleString('en-IN')}`;
-        document.getElementById('mTotalCash').textContent = `₹${summary.totalInCash.toLocaleString('en-IN')}`;
-        document.getElementById('mTpaidamount').textContent = `₹${summary.tpaidamount.toLocaleString('en-IN')}`;
-        document.getElementById('mPendingAmount').textContent = `₹${summary.pendingAmount.toLocaleString('en-IN')}`;
-        document.getElementById('mTotalExpenses').textContent = `₹${summary.totalExpenses.toLocaleString('en-IN')}`;
-        document.getElementById('mCompletionRate').textContent = `${summary.completionRate}%`;
+        animateValueCounter(document.getElementById('mTotalRevenue'), summary.totalAmount, true);
+        animateValueCounter(document.getElementById('mTotalCash'), summary.totalInCash, true);
+        animateValueCounter(document.getElementById('mTpaidamount'), summary.tpaidamount, true);
+        animateValueCounter(document.getElementById('mPendingAmount'), summary.pendingAmount, true);
+        animateValueCounter(document.getElementById('mTotalExpenses'), summary.totalExpenses, true);
+        animateValueCounter(document.getElementById('mCompletionRate'), summary.completionRate, false);
+        animateValueCounter(document.getElementById('mTotalDiesel'), summary.totalDiesel, true);
+        animateValueCounter(document.getElementById('mTotalOther'), summary.totalOther, true);
     }
 
-    // ================= DYNAMIC PENDING CUSTOMERS MASTER LIST & CHIPS =================
     function buildVillageChips() {
         const container = document.getElementById('pendingVillageChips');
         container.innerHTML = '';
         
-        // Add default 'All' Selection Chip
         let allChip = document.createElement('div');
         allChip.className = `filter-chip ${activePendingVillageFilter === 'All' ? 'active' : ''}`;
         allChip.textContent = "सारे गाँव";
@@ -790,7 +818,6 @@ body {
             });
         }
 
-        // Sorting Logic Implementation
         filtered.sort((a, b) => {
             return activePendingSortLowToHigh ? (parseFloat(a.amount)||0) - (parseFloat(b.amount)||0) : (parseFloat(b.amount)||0) - (parseFloat(a.amount)||0);
         });
@@ -803,7 +830,6 @@ body {
         filtered.forEach(user => {
             const row = document.createElement('div');
             row.className = 'list-item';
-            // Setup default registration date display if not found
             let regDate = user.date || 'N/A';
             try { if(user.date) regDate = new Date(user.date).toLocaleDateString('hi-IN'); } catch(e){}
 
@@ -820,16 +846,12 @@ body {
 
     document.getElementById('pendingSearch').addEventListener('input', updatePendingUI);
 
-    // ================= PAID CUSTOMERS UI =================
     function updatePaidUI() {
         const searchVal = document.getElementById('paidSearch').value.toLowerCase().trim();
         const container = document.getElementById('paidRecordsContainer');
         container.innerHTML = '';
 
-        // Requirement Check: Newly paid updated on top. Filter by paymentDone
         let paidUsers = globalCustomerData.filter(u => u.paymentDone);
-        
-        // Simulating reverse stack or modification index sorting for newly added items
         paidUsers.reverse(); 
 
         if(searchVal) {
@@ -859,13 +881,12 @@ body {
     }
     document.getElementById('paidSearch').addEventListener('input', updatePaidUI);
 
-
-    // ================= MULTI-PAGE ADVANCED PDF EXPORT SYSTEM WITH INTERMEDIARY POPUP =================
     function cancelPdfGeneration() {
         isPdfCancelled = true;
         document.getElementById('pdfProgressPopup').style.display = 'none';
     }
 
+    /* --- CUSTOMIZATION 1, 2, 3 & 4: PENDING BAKAYA REPORT --- */
     document.getElementById('printMasterPdfTrigger').addEventListener('click', async () => {
         isPdfCancelled = false;
         document.getElementById('pdfProgressTitle').textContent = "मास्टर ड्यू लिस्ट पीडीएफ जनरेट हो रहा है";
@@ -874,92 +895,86 @@ body {
         const template = document.getElementById('pdfExportTemplate');
         template.innerHTML = ''; 
 
-        const villages = [...new Set(globalCustomerData.map(u => (u.village || 'अज्ञात गाँव').trim()))];
-        let totalGlobalPending = 0;
-        let blocksHtml = '';
+        const rawVillages = [...new Set(globalCustomerData.map(u => (u.village || 'अज्ञात गाँव').trim()))];
+        
+        // केवल उन्हीं गाँवों को फिल्टर करें जिनमें बकाया (Pending) ग्राहक हैं (Rule 3)
+        const villagesWithPending = rawVillages.filter(vName => {
+            return globalCustomerData.some(u => (u.village || 'अज्ञात गाँव').trim() === vName && !u.paymentDone);
+        });
 
-        // Requirement Sync: Adding registration date structure inside printed pending customer rows
-        villages.forEach(villageName => {
+        let villageBlocksHtml = '';
+        let globalCustomerSerial = 1;
+
+        villagesWithPending.forEach((villageName) => {
             const pendingInVillage = globalCustomerData.filter(u => 
                 (u.village || 'अज्ञात गाँव').trim() === villageName && !u.paymentDone
             ).sort((a, b) => (b.amount || 0) - (a.amount || 0));
 
-            if (pendingInVillage.length > 0) {
-                let villageSum = 0;
-                let rows = '';
-                
-                pendingInVillage.forEach((user, idx) => {
-                    const amt = parseFloat(user.amount) || 0;
-                    villageSum += amt;
-                    totalGlobalPending += amt;
-                    let rDate = user.date || 'N/A';
-                    try { if(user.date) rDate = new Date(user.date).toLocaleDateString('hi-IN'); } catch(e){}
+            let villageSum = 0;
+            let rows = '';
+            
+            pendingInVillage.forEach((user) => {
+                const amt = parseFloat(user.amount) || 0;
+                villageSum += amt;
+                let rDate = user.date || 'N/A';
+                try { if(user.date) rDate = new Date(user.date).toLocaleDateString('hi-IN'); } catch(e){}
 
-                    rows += `
-                        <tr>
-                            <td>${idx + 1}</td>
-                            <td>${user.firstName || ''} ${user.lastName || ''}</td>
-                            <td>${rDate}</td>
-                            <td>₹${amt.toLocaleString('en-IN')}</td>
-                            <td>${villageName}</td>
-                        </tr>
-                    `;
-                });
-
-                blocksHtml += `
-                    <div class="pdf-page-container" style="font-family: 'Noto Sans Devanagari'; padding: 15px 0;">
-                        <h2 style="color: #1e3a8a; border-bottom: 2px solid #1e3a8a; padding-bottom:6px; margin-bottom:12px;">📍 गाँव: ${villageName}</h2>
-                        <p style="font-size:14px; margin: 4px 0;"><strong>गाँव की कुल बकाया राशि:</strong> <span style="color:#dc2626; font-weight:bold;">₹${villageSum.toLocaleString('en-IN')}</span></p>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th style="width:10%">क्र.सं.</th>
-                                    <th style="width:35%">ग्राहक का नाम</th>
-                                    <th style="width:20%">पंजीकरण तिथि</th>
-                                    <th style="width:20%">बकाया राशि</th>
-                                    <th style="width:15%">गाँव</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${rows}
-                            </tbody>
-                        </table>
-                    </div>
+                rows += `
+                    <tr>
+                        <td style="padding:12px; border:1px solid #e2e8f0;">${globalCustomerSerial++}</td>
+                        <td style="padding:12px; border:1px solid #e2e8f0; font-weight:600; color:#1e293b;">${user.firstName || ''} ${user.lastName || ''}</td>
+                        <td style="padding:12px; border:1px solid #e2e8f0; color:#64748b;">${rDate}</td>
+                        <td style="padding:12px; border:1px solid #e2e8f0; font-weight:700; color:#ef4444;">₹${amt.toLocaleString('en-IN')}</td>
+                    </tr>
                 `;
-            }
+            });
+
+            // प्रत्येक विलेज ब्लॉक के लिए सुंदर और कलरफुल हेडर + क्यूआर कोड लेआउट
+            villageBlocksHtml += `
+                <div class="pdf-page-container" style="font-family: 'Noto Sans Devanagari'; background: #ffffff; margin-bottom:20px; border-bottom:3px solid #e2e8f0;">
+                    <div style="background: linear-gradient(135deg, #1e1b4b, #312e81); padding:24px; border-radius:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; color:#ffffff; box-shadow:0 10px 15px -3px rgba(0,0,0,0.1);">
+                        <div style="width:70%;">
+                            <h2 style="margin:0; font-size:22px; font-weight:700; color:#f3f4f6;">📍 ग्राम: ${villageName}</h2>
+                            <p style="margin:8px 0 0 0; font-size:14px; color:#c7d2fe; font-weight:500; line-height:1.4;">
+                                ⚠️ सूचना: यदि आपका भुगतान अभी तक बकाया है, तो कृपया नीचे दिए गए QR कोड को स्कैन करके त्वरित भुगतान करें।
+                            </p>
+                            <h4 style="margin:12px 0 0 0; color:#fca5a5; font-size:16px; font-weight:700;">ग्राम संचित कुल बकाया: ₹${villageSum.toLocaleString('en-IN')}</h4>
+                        </div>
+                        <div style="width:25%; text-align:right;">
+                            <img src="${GLOBAL_QR_PAYMENT_URL}" style="width:110px; height:110px; border:3px solid #ffffff; border-radius:12px; padding:4px; background:#fff;">
+                        </div>
+                    </div>
+                    <table style="width:100%; border-collapse:collapse; box-shadow:0 4px 6px -1px rgba(0,0,0,0.05);">
+                        <thead>
+                            <tr style="background-color:#4f46e5; color:#ffffff;">
+                                <th style="width:10%; padding:14px; text-align:left; border-top-left-radius:8px;">क्र.सं.</th>
+                                <th style="width:45%; padding:14px; text-align:left;">ग्राहक का नाम</th>
+                                <th style="width:25%; padding:14px; text-align:left;">पंजीकरण तिथि</th>
+                                <th style="width:20%; padding:14px; text-align:left; border-top-right-radius:8px;">बकाया राशि</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rows}
+                        </tbody>
+                    </table>
+                </div>
+            `;
         });
 
-        if(!blocksHtml) {
-            document.getElementById('pdfProgressPopup').style.display = 'none';
-            alert('सिस्टम में कोई भी बकाया ग्राहक मौजूद नहीं है!');
-            return;
-        }
+        // पीडीएफ बिना किसी एक्स्ट्रा नियम वाले पेज के सीधे पहले विलेज से शुरू होगी
+        template.innerHTML = `<div style="background: #ffffff;">${villageBlocksHtml}</div>`;
 
-        // REQUIREMENT SYNC: First page attached with QR code image for fast due clearing scans
-        template.innerHTML = `
-            <div style="padding: 10px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #000; padding-bottom:15px; margin-bottom:15px;">
-                    <div>
-                        <h1 style="color: #111827; margin:0; font-size:24px;">समस्त विलेज बकाया रिपोर्ट </h1>
-                        <p style="margin:4px 0 0 0; font-size:13px; color:#64748b;">सत्र: ${CURRENT_SEASON} | दिनांक: ${new Date().toLocaleDateString('hi-IN')}</p>
-                    </div>
-                    <div style="text-align:center;">
-                        <img src="${GLOBAL_QR_PAYMENT_URL}" style="width:90px; height:90px; border:1px solid #cbd5e1; padding:4px;" alt="Scan to Clear Due">
-                        <p style="font-size:9px; font-weight:700; margin-top:2px; color:#1e3a8a;">बकाया चुकता हेतु स्कैन करें</p>
-                    </div>
-                </div>
-                
-                <p style="text-align: center; font-size:16px; background:#f1f5f9; padding:8px; border-radius:6px; margin-bottom:25px;"><strong>कुल बकाया राशि (All System Pending):</strong> <span style="color:#dc2626; font-weight:bold;">₹${totalGlobalPending.toLocaleString('en-IN')}</span></p>
-                <div style="margin-top:20px;">
-                    ${blocksHtml}
-                </div>
-            </div>
-        `;
+        const pageContainers = template.querySelectorAll('.pdf-page-container');
+        pageContainers.forEach(page => {
+            const currentHeight = page.offsetHeight;
+            const safeTargetBoundary = Math.ceil(currentHeight / 1185) * 1185; 
+            page.style.minHeight = safeTargetBoundary + 'px';
+        });
 
-        if(!isPdfCancelled) await triggerMultiPagePdf(`all villages report .pdf`);
+        if(!isPdfCancelled) await triggerMultiPagePdf(`समस्त_ग्राम_बकाया_रिपोर्ट.pdf`);
     });
 
-    // ================= FINANCIAL MASTER LEDGER PRINT TRIGGER =================
+    /* --- CUSTOMIZATION 5 & 6: MERGED COLORFUL FINANCE REPORT --- */
     document.getElementById('printFinanceReportTrigger').addEventListener('click', async () => {
         isPdfCancelled = false;
         document.getElementById('pdfProgressTitle').textContent = "फाइनेंशियल लेजर स्टेटमेंट जनरेट हो रहा है";
@@ -968,13 +983,57 @@ body {
         const template = document.getElementById('pdfExportTemplate');
         const sm = globalAnalysisResult.summary;
 
-        const paidUsers = globalCustomerData.filter(user => user.paymentDone);
-        let paidRows = '';
-        paidUsers.forEach((u, i) => {
-            paidRows += `<tr><td>${i+1}</td><td>${u.firstName || ''} ${u.lastName || ''}</td><td>${u.village || 'गाँव'}</td><td style="color:#16a34a; font-weight:500;">₹${(parseFloat(u.amount)||0).toLocaleString('en-IN')}</td></tr>`;
-        });
-        if(!paidRows) paidRows = '<tr><td colspan="4" style="text-align:center; color:#94a3b8;">कोई रिकॉर्ड नहीं।</td></tr>';
+        // भाग 1: वित्तीय मुख्य डिटेल्स (खूबसूरत रंगीन इन्फोग्राफिक कार्ड्स)
+        let pageOneInfographicsHtml = `
+            <div class="pdf-page-container" style="font-family: 'Noto Sans Devanagari'; background: #ffffff;">
+                <div style="background: linear-gradient(135deg, #0f172a, #1e293b); padding:30px; border-radius:20px; text-align:center; margin-bottom:30px; color:#ffffff;">
+                    <h2 style="margin:0; font-size:26px; font-weight:800; letter-spacing:0.5px; color:#38bdf8;">व्यावसायिक विस्तृत वित्तीय लेजर रिपोर्ट</h2>
+                    <p style="color:#94a3b8; font-size:13px; margin-top:8px; font-weight:500;">सत्र चक्र कोड: ${CURRENT_SEASON} | रिपोर्ट जनरेशन तिथि: ${new Date().toLocaleDateString('hi-IN')}</p>
+                </div>
 
+                <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+                    <div style="flex: 1; background: linear-gradient(135deg, #4f46e5, #6366f1); color: white; padding: 24px; border-radius: 16px; box-shadow: 0 10px 15px -3px rgba(79,70,229,0.3);">
+                        <span style="font-size: 11px; text-transform: uppercase; opacity: 0.9; font-weight:600; letter-spacing:0.5px;">कुल सकल राजस्व (Gross Revenue)</span>
+                        <h3 style="font-size: 26px; margin: 8px 0 0 0; font-weight: 800;">₹${sm.totalAmount.toLocaleString('en-IN')}</h3>
+                    </div>
+                    <div style="flex: 1; background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 24px; border-radius: 16px; box-shadow: 0 10px 15px -3px rgba(16,185,129,0.3);">
+                        <span style="font-size: 11px; text-transform: uppercase; opacity: 0.9; font-weight:600; letter-spacing:0.5px;">कुल प्राप्त भुगतान (Paid Collection)</span>
+                        <h3 style="font-size: 26px; margin: 8px 0 0 0; font-weight: 800;">₹${sm.tpaidamount.toLocaleString('en-IN')}</h3>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 20px; margin-bottom: 30px;">
+                    <div style="flex: 1; background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 24px; border-radius: 16px; box-shadow: 0 10px 15px -3px rgba(239,68,68,0.3);">
+                        <span style="font-size: 11px; text-transform: uppercase; opacity: 0.9; font-weight:600; letter-spacing:0.5px;">सिस्टम शुद्ध बकाया (Pending Due)</span>
+                        <h3 style="font-size: 26px; margin: 8px 0 0 0; font-weight: 800;">₹${sm.pendingAmount.toLocaleString('en-IN')}</h3>
+                    </div>
+                    <div style="flex: 1; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 24px; border-radius: 16px; box-shadow: 0 10px 15px -3px rgba(245,158,11,0.3);">
+                        <span style="font-size: 11px; text-transform: uppercase; opacity: 0.9; font-weight:600; letter-spacing:0.5px;">नकद काउंटर योग (Cash Pool)</span>
+                        <h3 style="font-size: 26px; margin: 8px 0 0 0; font-weight: 800;">₹${sm.totalInCash.toLocaleString('en-IN')}</h3>
+                    </div>
+                </div>
+
+                <div style="background: #f8fafc; border-radius: 16px; padding: 24px; border: 1px solid #e2e8f0; margin-bottom: 30px; box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);">
+                    <h4 style="margin: 0 0 15px 0; color:#1e293b; font-size:16px; border-bottom:2px solid #cbd5e1; padding-bottom:8px; font-weight:700;"><i class="fas fa-gas-pump" style="color:#f59e0b; margin-right:8px;"></i> परिचालन व्यय पृथक्करण विवरण</h4>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div style="text-align:center; width:33.33%;">
+                            <span style="font-size:13px; color:#64748b; font-weight:500;">कुल सकल व्यय</span>
+                            <p style="font-size:20px; font-weight:700; color:#b45309; margin:4px 0 0 0;">₹${sm.totalExpenses.toLocaleString('en-IN')}</p>
+                        </div>
+                        <div style="text-align:center; width:33.33%; border-left:1px solid #e2e8f0; border-right:1px solid #e2e8f0;">
+                            <span style="font-size:13px; color:#64748b; font-weight:500;">कुल डीजल व्यय</span>
+                            <p style="font-size:20px; font-weight:700; color:#4f46e5; margin:4px 0 0 0;">₹${sm.totalDiesel.toLocaleString('en-IN')}</p>
+                        </div>
+                        <div style="text-align:center; width:33.33%;">
+                            <span style="font-size:13px; color:#64748b; font-weight:500;">अन्य फुटकर व्यय</span>
+                            <p style="font-size:20px; font-weight:700; color:#475569; margin:4px 0 0 0;">₹${sm.totalOther.toLocaleString('en-IN')}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // भाग 2: दैनिक प्रविष्टियाँ (Entries)
         let dailyRows = '';
         globalMoneyData.data.forEach((entry) => {
             const cash = parseFloat(entry.inCash) || 0;
@@ -983,39 +1042,71 @@ body {
             let fDate = entry.date;
             try { fDate = new Date(entry.date).toLocaleDateString('hi-IN'); } catch(e){}
 
-            dailyRows += `<tr><td>${fDate}</td><td style="color:#16a34a; font-weight:500;">₹${cash.toLocaleString('en-IN')}</td><td style="color:#b45309; font-weight:500;">₹${(diesel+other).toLocaleString('en-IN')}</td><td>₹${diesel.toLocaleString('en-IN')}</td><td>₹${other.toLocaleString('en-IN')}</td></tr>`;
+            dailyRows += `
+                <tr style="border-bottom:1px solid #e2e8f0;">
+                    <td style="padding:12px; font-weight:500;">${fDate}</td>
+                    <td style="padding:12px; color:#16a34a; font-weight:600;">₹${cash.toLocaleString('en-IN')}</td>
+                    <td style="padding:12px; color:#b45309; font-weight:600;">₹${(diesel+other).toLocaleString('en-IN')}</td>
+                    <td style="padding:12px; color:#475569;">₹${diesel.toLocaleString('en-IN')}</td>
+                    <td style="padding:12px; color:#475569;">₹${other.toLocaleString('en-IN')}</td>
+                </tr>`;
         });
-        if(!dailyRows) dailyRows = '<tr><td colspan="5" style="text-align:center; color:#94a3b8;">कोई दैनिक एंट्री डेटा उपलब्ध नहीं है।</td></tr>';
+        if(!dailyRows) dailyRows = '<tr><td colspan="5" style="text-align:center; color:#94a3b8; padding:20px;">कोई दैनिक एंट्री डेटा उपलब्ध नहीं है।</td></tr>';
 
-        template.innerHTML = `
-            <div style="font-family: 'Noto Sans Devanagari'; padding: 10px;">
-                <h2 style="text-align: center; color: #1e3a8a; margin-bottom:4px;">विस्तृत वित्तीय विश्लेषण रिपोर्ट</h2>
-                <p style="text-align: center; margin-top:0; font-size:13px; color:#475569;">कार्य सत्र: ${CURRENT_SEASON} | जनरेटेड तिथि: ${new Date().toLocaleDateString('hi-IN')}</p>
-                <hr style="border: 1px solid #cbd5e1; margin-bottom:20px;">
-                <table>
-                    <thead><tr style="background-color: #0f172a; color: white;"><th>वित्तीय पैरामीटर</th><th>विवरण / राशि (INR)</th></tr></thead>
-                    <tbody>
-                        <tr><td><strong>कुल रेवेन्यू संकलन</strong></td><td style="font-size:15px; font-weight:bold; color:#2563eb;">₹${sm.totalAmount.toLocaleString('en-IN')}</td></tr>
-                        <tr><td><strong>कुल प्राप्त राशि (चुकाया गया अमाउंट)</strong></td><td style="font-size:15px; font-weight:bold; color:#16a34a;">₹${sm.tpaidamount.toLocaleString('en-IN')}</td></tr>
-                        <tr><td><strong>कुल बकाया भुगतान (शेष राशि)</strong></td><td style="font-size:15px; font-weight:bold; color:#dc2626;">₹${sm.pendingAmount.toLocaleString('en-IN')}</td></tr>
-                        <tr><td><strong>कुल नकद काउंटर योग</strong></td><td>₹${sm.totalInCash.toLocaleString('en-IN')}</td></tr>
-                        <tr><td><strong>कुल परिचालन खर्च</strong></td><td style="color:#b45309; font-weight:600;">₹${sm.totalExpenses.toLocaleString('en-IN')}</td></tr>
-                    </tbody>
-                </table>
-                <div class="pdf-page-container"></div>
-                <h3 style="margin-top:20px; color:#16a34a;">✅ भुगतान पूर्ण ग्राहक सूची</h3>
-                <table>
-                    <thead><tr style="background-color:#f1f5f9;"><th>क्र.सं.</th><th>ग्राहक का नाम</th><th>गाँव</th><th>प्राप्त राशि</th></tr></thead>
-                    <tbody>${paidRows}</tbody>
-                </table>
-                <div class="pdf-page-container"></div>
-                <h3 style="margin-top:20px; color:#3b82f6;">📅 दैनिक प्रविष्टि रिपोर्ट (Day-by-Day Log)</h3>
-                <table>
-                    <thead><tr style="background-color:#edf2f7;"><th>दिनांक</th><th>कुल नगद</th><th>कुल खर्च</th><th>डीजल खर्च</th><th>अन्य खर्च</th></tr></thead>
+        // भाग 3: चुकता ग्राहक लिस्ट (Paid Customer List)
+        const paidUsers = globalCustomerData.filter(user => user.paymentDone);
+        let paidRows = '';
+        paidUsers.forEach((u, i) => {
+            paidRows += `
+                <tr style="border-bottom:1px solid #e2e8f0;">
+                    <td style="padding:12px;">${i+1}</td>
+                    <td style="padding:12px; font-weight:600; color:#1e293b;">${u.firstName || ''} ${u.lastName || ''}</td>
+                    <td style="padding:12px; color:#475569;"><span style="background:#f1f5f9; padding:4px 8px; border-radius:6px; font-size:12px;">${u.village || 'गाँव'}</span></td>
+                    <td style="padding:12px; color:#16a34a; font-weight:700;">₹${(parseFloat(u.amount)||0).toLocaleString('en-IN')}</td>
+                </tr>`;
+        });
+        if(!paidRows) paidRows = '<tr><td colspan="4" style="text-align:center; color:#94a3b8; padding:20px;">कोई चुकता खाता रिकॉर्ड नहीं मिला।</td></tr>';
+
+        // सभी को एक के बाद एक (मर्ज करके) जोड़ना
+        let pageTwoLogsHtml = `
+            <div class="pdf-page-container" style="font-family: 'Noto Sans Devanagari'; background: #ffffff; padding-top:0;">
+                <h3 style="color:#4f46e5; margin-top:0; margin-bottom:15px; font-size:18px; font-weight:700;"><i class="fas fa-calendar-alt"></i> दैनिक प्रविष्टि एवं लॉगबुक (Day-by-Day Logs)</h3>
+                <table style="width:100%; border-collapse:collapse; margin-bottom:40px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.05);">
+                    <thead>
+                        <tr style="background-color:#4f46e5; color:#ffffff;">
+                            <th style="padding:12px; text-align:left;">प्रविष्टि दिनांक</th>
+                            <th style="padding:12px; text-align:left;">प्राप्त नकद (Cash)</th>
+                            <th style="padding:12px; text-align:left;">सकल व्यय (Exp)</th>
+                            <th style="padding:12px; text-align:left;">डीजल खर्च</th>
+                            <th style="padding:12px; text-align:left;">अन्य खर्च</th>
+                        </tr>
+                    </thead>
                     <tbody>${dailyRows}</tbody>
+                </table>
+
+                <h3 style="color:#10b981; margin-top:0; margin-bottom:15px; font-size:18px; font-weight:700;"><i class="fas fa-check-circle"></i> चुकता किए गए ग्राहकों की प्रमाणित सूची</h3>
+                <table style="width:100%; border-collapse:collapse; box-shadow:0 4px 6px -1px rgba(0,0,0,0.05);">
+                    <thead>
+                        <tr style="background-color:#10b981; color:#ffffff;">
+                            <th style="padding:12px; text-align:left;">क्र.सं.</th>
+                            <th style="padding:12px; text-align:left;">सफल ग्राहक का नाम</th>
+                            <th style="padding:12px; text-align:left;">गाँव क्षेत्र</th>
+                            <th style="padding:12px; text-align:left;">प्राप्त शुद्ध राशि</th>
+                        </tr>
+                    </thead>
+                    <tbody>${paidRows}</tbody>
                 </table>
             </div>
         `;
+
+        template.innerHTML = pageOneInfographicsHtml + pageTwoLogsHtml;
+
+        const pageContainers = template.querySelectorAll('.pdf-page-container');
+        pageContainers.forEach(page => {
+            const currentHeight = page.offsetHeight;
+            const safeTargetBoundary = Math.ceil(currentHeight / 1185) * 1185; 
+            page.style.minHeight = safeTargetBoundary + 'px';
+        });
 
         if(!isPdfCancelled) await triggerMultiPagePdf(`वित्तीय_मास्टर_रिपोर्ट_${CURRENT_SEASON}.pdf`);
     });
@@ -1038,7 +1129,7 @@ body {
             pdf.addImage(imgData, 'JPEG', 10, position, imgWidth, imgHeight);
             heightLeft -= pageHeight;
 
-            while (heightLeft >= 0) {
+            while (heightLeft > 0) {
                 if(isPdfCancelled) return;
                 position = heightLeft - imgHeight + 10;
                 pdf.addPage();
@@ -1057,11 +1148,19 @@ body {
         }
     }
 
-
-    // ================= STEP WIZARD UTILS & HANDLERS =================
     function navigateStep(stepNumber) {
         document.querySelectorAll('.step-container').forEach(step => step.classList.remove('active'));
         document.getElementById(`step${stepNumber}`).classList.add('active');
+        
+        for(let i=1; i<=4; i++) {
+            let ind = document.getElementById(`ind-${i}`);
+            ind.classList.remove('active', 'completed');
+            if(i < stepNumber) {
+                ind.classList.add('completed');
+            } else if(i === stepNumber) {
+                ind.classList.add('active');
+            }
+        }
     }
 
     function closeWizard() {
@@ -1069,6 +1168,7 @@ body {
         formatWizardAmount(document.getElementById('inCash'), 'cashFormattedLabel');
         formatWizardAmount(document.getElementById('dieselExp'), 'dieselFormattedLabel');
         formatWizardAmount(document.getElementById('otherExp'), 'otherFormattedLabel');
+        resetDatePickerToToday();
         navigateStep(1);
         closeCanvas('canvasStepWizard');
     }
@@ -1081,8 +1181,6 @@ body {
 
     document.getElementById('moneyUpdateForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-        
-        // Show cloud syncing dialog box using existing loader component 
         document.getElementById('pdfProgressTitle').textContent = "क्लाउड डेटाबेस सिंक सक्रिय है";
         document.getElementById('pdfProgressPopup').style.display = 'flex';
 
@@ -1114,7 +1212,6 @@ body {
             globalMoneyData.data = currentData;
             globalMoneyData.sha = result.content.sha; 
             
-            // Recompute calculation engine variables instantly
             const analysisResult = analyzeData(globalCustomerData, globalMoneyData);
             globalAnalysisResult = analysisResult;
             renderSummary(analysisResult.summary);
@@ -1122,7 +1219,9 @@ body {
             updatePaidUI();
 
             document.getElementById('pdfProgressPopup').style.display = 'none';
-            alert(`🎉 सफलता: तारीख ${date} का डेटा सफलतापूर्वक सेव हुआ।`);
+            document.getElementById('successPopupMessage').textContent = `तारीख ${date} का डेटा सुरक्षित रूप से दर्ज कर लिया गया है।`;
+            document.getElementById('successPopup').style.display = 'flex';
+            
             closeWizard();
         } catch (error) {
             document.getElementById('pdfProgressPopup').style.display = 'none';
@@ -1130,8 +1229,6 @@ body {
         }
     });
 
-
-    // ================= ONE PLACE TRANSACTION CALCULATION ENGINE =================
     function compileSingleDateLedger() {
         const targetDate = document.getElementById('ledgerDatePicker').value;
         if(!targetDate) { alert('कृपया एक वैध तिथि का चयन करें'); return; }
@@ -1141,7 +1238,6 @@ body {
         const dieselExp = moneyEntry ? (parseFloat(moneyEntry.dieselExp) || 0) : 0;
         const otherExp = moneyEntry ? (parseFloat(moneyEntry.otherExp) || 0) : 0;
 
-        // Filter all customers registered exactly on this date
         const sampledCustomers = globalCustomerData.filter(user => user.date === targetDate);
         let accumulatedCustomerAmt = 0;
 
@@ -1169,7 +1265,6 @@ body {
             listContainer.innerHTML = `<p style="color:var(--text-muted); font-size:0.85rem; text-align:center; padding:10px;">इस तिथि को कोई नया ग्राहक पंजीकरण नहीं हुआ है।</p>`;
         }
 
-        // REQ SYNC: Day total revenue = Counter cash registered + Customer values logged 
         const aggregateDayRevenue = dailyInCash + accumulatedCustomerAmt;
 
         document.getElementById('lDayTotalRevenue').textContent = `₹${aggregateDayRevenue.toLocaleString('en-IN')}`;
@@ -1181,8 +1276,6 @@ body {
         document.getElementById('ledgerDaySummaryWrapper').style.display = "block";
     }
 
-
-    // ================= INITIALIZATION BOOTSTRAPPER =================
     async function runAnalysis() {
         await fetchAllData(); 
         if (globalCustomerData.length > 0 || globalMoneyData.data.length > 0) {
