@@ -265,7 +265,7 @@
             border-radius: 8px;
             letter-spacing: 0.5px;
         }
-        .status-pill.paid { background: var(--success-light); color: var(--success); }
+        .status-pill.paid { background: var(--success-light); color: var(--success); cursor: pointer; text-decoration: underline; }
         .status-pill.pending { background: var(--danger-light); color: var(--danger); }
 
         .card-action-trigger {
@@ -313,7 +313,6 @@
             transform: scale(1.1) rotate(90deg);
         }
 
-        /* SCREEN VIEWS CONTAINER SYSTEM */
         .app-view-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -357,7 +356,6 @@
             padding: 24px;
         }
 
-        /* CUSTOM LOCALE DATE WRAPPER */
         .native-date-wrapper {
             position: relative;
             display: flex;
@@ -367,7 +365,6 @@
             font-family: inherit;
         }
 
-        /* WIZARD ELEMENTS */
         .wizard-progress {
             display: flex;
             justify-content: space-between;
@@ -398,6 +395,7 @@
             display: flex; align-items: center; justify-content: center;
             z-index: 2; font-size: 0.85rem; font-weight: 700;
             color: var(--text-muted); transition: var(--transition);
+            cursor: pointer;
         }
         .step-dot.active {
             border-color: var(--primary);
@@ -457,18 +455,51 @@
             border-color: var(--primary);
             box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
         }
-        .form-group-custom input:disabled {
-            background-color: var(--background);
-            color: var(--text-muted);
-            cursor: not-allowed;
-            border-style: dashed;
+
+        .chips-container {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .chip-option {
+            background: var(--background);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .chip-option:hover, .chip-option.selected {
+            background: var(--primary-light);
+            color: var(--primary);
+            border-color: var(--primary);
         }
 
-        .wizard-footer-nav {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            margin-top: 40px;
+        .amount-chips-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .amount-chip-btn {
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 1px solid rgba(79, 70, 229, 0.2);
+            padding: 12px 8px;
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            transition: var(--transition);
+        }
+        .amount-chip-btn:hover {
+            background: var(--primary);
+            color: white;
         }
 
         .btn-modern {
@@ -550,90 +581,15 @@
             transition: var(--transition);
         }
 
-        .custom-radio-option input[type="radio"] {
-            width: 20px; height: 20px; accent-color: var(--primary);
-        }
-
-        .custom-radio-option.selected {
+        .custom-radio-option:hover {
             border-color: var(--primary);
             background: var(--primary-light);
-            color: var(--primary);
         }
 
         .custom-radio-option i { font-size: 1.25rem; }
 
-        /* PAYMENT SIMULATOR */
-        .payment-workspace-app {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 28px;
-        }
-
-        .pay-app-card {
-            background: linear-gradient(135deg, #1e1b4b, #312e81);
-            color: white; width: 100%; padding: 28px;
-            border-radius: var(--radius-lg); box-shadow: var(--shadow-md);
-            position: relative; overflow: hidden;
-            text-align: center;
-        }
-
-        .pay-app-currency-input-wrap {
-            display: flex; align-items: center; justify-content: center;
-            gap: 6px; margin-top: 14px; position: relative;
-        }
-
-        .pay-app-currency-input-wrap i {
-            font-size: 2.2rem; opacity: 0.8; color: #a5b4fc;
-        }
-
-        .pay-app-currency-input-wrap input {
-            background: transparent; border: none; outline: none;
-            color: white; font-size: 2.8rem; font-weight: 800;
-            width: 220px; text-align: left; border-bottom: 2px dashed rgba(255,255,255,0.3);
-            padding: 4px; user-select: text;
-        }
-
-        .large-formatted-mirror {
-            font-size: 1.2rem; font-weight: 700; color: #a5b4fc; margin-top: 10px; min-height: 24px;
-        }
-
-        .swipe-track-container {
-            width: 100%; height: 72px; background: #e2e8f0;
-            border-radius: 100px; position: relative;
-            overflow: hidden; display: flex; align-items: center;
-            justify-content: flex-start; border: 1px solid var(--border);
-            padding: 0 6px;
-        }
-
-        .swipe-track-container.active-ready { background: var(--success-light); border-color: var(--success); }
-
-        .swipe-bg-label {
-            position: absolute; font-size: 0.9rem; font-weight: 700;
-            color: var(--text-muted); display: flex; align-items: center; justify-content: center;
-            gap: 10px; pointer-events: none; width: 100%; left: 0; text-align: right;
-        }
-
-        .swipe-handle-thumb {
-            position: absolute; left: 6px; width: 60px; height: 60px;
-            border-radius: 50%; background: var(--primary);
-            box-shadow: var(--shadow-md); display: flex; align-items: center;
-            justify-content: center; cursor: grab; z-index: 10;
-            color: white; font-size: 1.2rem;
-        }
-
-        /* PROCESS TRACKER */
-        .payment-progress-bar-wrap {
-            width: 100%; background: var(--border); height: 8px; border-radius: 100px; overflow: hidden; margin: 16px 0;
-        }
-        .payment-progress-fill-line {
-            width: 0%; height: 100%; background: var(--success); transition: width 1.5s linear;
-        }
-
         #historyLedgerContainer {
-            margin-top: 20px;
             display: flex; flex-direction: column; gap: 10px;
-            max-height: 220px; overflow-y: auto; padding-right: 4px;
         }
 
         .ledger-row {
@@ -659,15 +615,16 @@
     <header id="mainHeader">
         <div class="header-left">
             <i class="fas fa-wallet header-icon"></i>
-            <h3 id="TitleDisplay">Manager<h3/>
-           
-            
+            <h3 id="TitleDisplay">Manager</h3>
         </div>
         <div class="header-right">
-            <!-- DATA HTML NAVIGATION ICON link -->
+
             <a href="data.html" title="View Extended Data Tables"><i class="fas fa-database" style="color: var(--primary);"></i></a>
-             <h6 id="appTitleDisplay"></h6>
-            <button id="logoutSessionBtn" title="Logout Session"><i class="fas fa-power-off" style="color: var(--danger);"></i></button>
+                        <!-- Season Switcher Icon Button -->
+                        <h6 id="appTitleDisplay"></h6>
+            <button id="seasonSwitchTriggerBtn" onclick="openSeasonSwitchModal()" title="Switch Season"><i class="fas fa-calendar-alt" style="color: var(--primary);"></i></button>
+            
+           
         </div>
     </header>
 
@@ -696,7 +653,123 @@
     </div>
 
     <!-- FAB ICON -->
-    <div class="fab" onclick="openAddWizardScreen()" title="Create New Customer Asset"><i class="fas fa-plus"></i></div>
+    <div class="fab" onclick="openAddChoiceModal()" title="Create New Customer Asset"><i class="fas fa-plus"></i></div>
+
+    <!-- SEASON SWITCH CUSTOM MODAL -->
+    <div id="seasonSwitchModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-dismiss-cross-trigger" onclick="closeModalWindow('seasonSwitchModal')"><i class="fas fa-times"></i></button>
+            <h3 style="margin-bottom:12px; color: var(--primary);"><i class="fas fa-calendar-alt"></i> Switch Season</h3>
+            <button id="logoutSessionBtn" title="Logout Session" >$ LOGOUT</button>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:16px;">Select the target season session you want to open:</p>
+            <div class="form-group-custom">
+                <label>Target Season</label>
+                <select id="modalSeasonSelect">
+                    <option value="2025-26">2025-26</option>
+                    <option value="2026-27">2026-27</option>
+                    <option value="2027-28">2027-28</option>
+                    <option value="2028-29">2028-29</option>
+                    <option value="2024-25">2024-25</option>
+                </select>
+            </div>
+            <button class="btn-modern primary" style="width:100%;" onclick="confirmSeasonSwitch()">Switch Session</button>
+        </div>
+    </div>
+
+    <!-- ADD CHOICE MODAL -->
+    <div id="addChoiceModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-dismiss-cross-trigger" onclick="closeModalWindow('addChoiceModal')"><i class="fas fa-times"></i></button>
+            <h3 style="margin-bottom:16px; color: var(--primary);">Add Customer</h3>
+            <div class="custom-radio-list">
+                <div class="custom-radio-option" onclick="handleNewCustomerChoice('new')">
+                    <i class="fas fa-user-plus" style="color: var(--primary);"></i>
+                    <div>
+                        <strong>Add New Customer</strong>
+                        <div style="font-size:0.8rem; color:var(--text-muted);">Create a fresh customer record</div>
+                    </div>
+                </div>
+                <div class="custom-radio-option" onclick="handleNewCustomerChoice('import')">
+                    <i class="fas fa-file-import" style="color: var(--success);"></i>
+                    <div>
+                        <strong>Import from Old Season</strong>
+                        <div style="font-size:0.8rem; color:var(--text-muted);">Bring forward from a previous season</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OLD SEASON SELECTOR MODAL -->
+    <div id="oldSeasonSelectModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-dismiss-cross-trigger" onclick="closeModalWindow('oldSeasonSelectModal')"><i class="fas fa-times"></i></button>
+            <h3 style="margin-bottom:12px;">Select Old Season</h3>
+            <div class="form-group-custom">
+                <label>Season Timeline</label>
+                <select id="importSeasonDropdown">
+                    <option value="2025-26">2025-26</option>
+                    <option value="2026-27">2026-27</option>
+                    <option value="2027-28">2027-28</option>
+                    <option value="2028-29">2028-29</option>
+                    <option value="2024-25">2024-25</option>
+                </select>
+            </div>
+            <button class="btn-modern primary" style="width:100%;" onclick="loadOldSeasonPendingCustomers()">Fetch Pending Customers</button>
+        </div>
+    </div>
+
+    <!-- IMPORT CUSTOMER LIST MODAL -->
+    <div id="importCustomerListModal" class="modal">
+        <div class="modal-content" style="max-width: 500px; max-height: 80vh; display: flex; flex-direction: column;">
+            <button class="modal-dismiss-cross-trigger" onclick="closeModalWindow('importCustomerListModal')"><i class="fas fa-times"></i></button>
+            <h3 style="margin-bottom:12px;">Select Pending Customer</h3>
+            <div class="form-group-custom" style="margin-bottom: 12px;">
+                <input type="text" id="importSearchInput" placeholder="Search customer..." oninput="filterImportCustomerList(this.value)">
+            </div>
+            <div id="importCustomerContainer" style="flex-grow: 1; overflow-y: auto; max-height: 350px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;"></div>
+            <button class="btn-modern primary" id="importProceedFabBtn" style="width:100%; display:none;" onclick="proceedWithImportedCustomer()">Proceed <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <!-- IMPORTED CUSTOMER FULLSCREEN EDIT SCREEN -->
+    <div id="importEditScreen" class="app-view-screen">
+        <div class="screen-header">
+            <h2>Verify & Update Imported Customer</h2>
+            <button class="close-screen-btn" onclick="closeImportEditScreen()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="screen-content">
+            <form id="importEditForm" onsubmit="event.preventDefault();" style="max-width: 600px; margin: 0 auto;">
+                <div class="form-group-custom">
+                    <label>First Name</label>
+                    <input type="text" id="importEditFirstName" disabled>
+                </div>
+                <div class="form-group-custom">
+                    <label>Last Name</label>
+                    <input type="text" id="importEditLastName" disabled>
+                </div>
+                <div class="form-group-custom">
+                    <label>Mobile Number (+91) [Optional]</label>
+                    <input type="tel" id="importEditNumber" placeholder="10-digit number" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)">
+                </div>
+                <div class="form-group-custom">
+                    <label>Village Sector *</label>
+                    <select id="importEditVillage" required></select>
+                </div>
+                <div class="form-group-custom">
+                    <label>Record Date (DD/MM/YYYY) *</label>
+                    <div class="native-date-wrapper">
+                        <input type="date" id="importEditDate" required>
+                    </div>
+                </div>
+                <div class="form-group-custom">
+                    <label>Amount (₹) *</label>
+                    <input type="number" id="importEditAmount" placeholder="Enter Amount" required>
+                </div>
+                <div class="fab" onclick="commitImportedCustomerSave()" title="Save Customer"><i class="fas fa-arrow-right"></i></div>
+            </form>
+        </div>
+    </div>
 
     <!-- WIZARD: ADD CUSTOMER FULLSCREEN SCREEN -->
     <div id="addWizardScreen" class="app-view-screen">
@@ -707,20 +780,25 @@
         <div class="screen-content">
             <div class="wizard-progress">
                 <div class="progress-line-fill" id="wizardProgressFill"></div>
-                <div class="step-dot active" id="dotStep1">1</div>
-                <div class="step-dot" id="dotStep2">2</div>
-                <div class="step-dot" id="dotStep3">3</div>
-                <div class="step-dot" id="dotStep4">4</div>
+                <div class="step-dot active" id="dotStep1" onclick="jumpWizardStep(1)">1</div>
+                <div class="step-dot" id="dotStep2" onclick="jumpWizardStep(2)">2</div>
+                <div class="step-dot" id="dotStep3" onclick="jumpWizardStep(3)">3</div>
+                <div class="step-dot" id="dotStep4" onclick="jumpWizardStep(4)">4</div>
             </div>
 
             <form id="wizardFormInstance" onsubmit="event.preventDefault();">
                 <div class="form-step-pane active" id="paneStep1">
                     <div class="pane-title">Select Timeline</div>
-                    <div class="pane-desc">Choose record timeline mapping. Display configuration matches your region.</div>
+                    <div class="pane-desc">Choose record timeline mapping (Day/Month/Year layout). No future dates allowed.</div>
                     <div class="form-group-custom">
-                        <label>Record Date *</label>
+                        <label>Record Date (DD/MM/YYYY) *</label>
                         <div class="native-date-wrapper">
                             <input type="date" id="addDate" required>
+                        </div>
+                        <div class="chips-container" id="dateChipsContainer">
+                            <div class="chip-option" onclick="setDatePreset('today')">Today</div>
+                            <div class="chip-option" onclick="setDatePreset('yesterday')">Yesterday</div>
+                            <div class="chip-option" onclick="setDatePreset('2days')">2 Days Ago</div>
                         </div>
                     </div>
                 </div>
@@ -730,7 +808,8 @@
                     <div class="pane-desc">Map the customer asset profile to a tracking village sector.</div>
                     <div class="form-group-custom">
                         <label>Village Location *</label>
-                        <select id="addVillage" required></select>
+                        <div class="chips-container" id="villageChipsContainer"></div>
+                        <input type="hidden" id="addVillageInput" required>
                     </div>
                 </div>
 
@@ -740,6 +819,12 @@
                     <div class="form-group-custom">
                         <label>Amount (₹) *</label>
                         <input type="number" id="addAmount" placeholder="Enter Amount" required>
+                        <div class="amount-chips-grid">
+                            <div class="amount-chip-btn" onclick="addAmountChip(100)">+100</div>
+                            <div class="amount-chip-btn" onclick="addAmountChip(200)">+200</div>
+                            <div class="amount-chip-btn" onclick="addAmountChip(500)">+500</div>
+                            <div class="amount-chip-btn" onclick="addAmountChip(1000)">+1000</div>
+                        </div>
                     </div>
                 </div>
 
@@ -754,54 +839,56 @@
                         <label>Last Name *</label>
                         <input type="text" id="addLastName" placeholder="E.g., Pooniya" required>
                     </div>
+                    <div class="form-group-custom">
+                        <label>Mobile Number (+91) [Optional]</label>
+                        <input type="tel" id="addNumber" placeholder="10-digit number" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)">
+                    </div>
                 </div>
 
-                <div class="wizard-footer-nav">
-                    <button type="button" class="btn-modern secondary" id="wizardBackBtn" onclick="navigateWizardStep(-1)" disabled>Back</button>
-                    <button type="button" class="btn-modern primary" id="wizardNextBtn" onclick="navigateWizardStep(1)">Continue</button>
+                <div style="margin-top: 40px; display: flex; justify-content: flex-end;">
+                    <div class="fab" id="wizardNextFab" onclick="navigateWizardStep(1)" title="Continue"><i class="fas fa-arrow-right"></i></div>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- ACTION VIEW ICON ROUTER -->
-    <div id="gestureActionScreen" class="app-view-screen">
+    <!-- NEW DETAILED CUSTOMER DASHBOARD (EYE ICON WORKSPACE) -->
+    <div id="customerDashboardScreen" class="app-view-screen">
         <div class="screen-header">
-            <h2 id="gestureScreenTitle">Manage Record Configuration</h2>
-            <button class="close-screen-btn" onclick="closeGestureActionScreen()"><i class="fas fa-times"></i></button>
+            <h2 id="dashCustomerNameTitle">Customer Details</h2>
+            <button class="close-screen-btn" onclick="closeCustomerDashboardScreen()"><i class="fas fa-times"></i></button>
         </div>
-        <div class="screen-content">
-            <div class="custom-radio-list">
-                <div class="custom-radio-option" id="optRadioEdit" onclick="selectGestureMode('EDIT')">
-                    <input type="radio" name="gestureModeGroup" value="EDIT">
-                    <i class="fas fa-edit" style="color: var(--warning);"></i>
-                    <div>
-                        <strong>Modify Information Profile</strong>
-                        <div style="font-size:0.8rem; color:var(--text-muted);">Edit fields & view history logs</div>
-                    </div>
+        <div class="screen-content" style="display: flex; flex-direction: column; gap: 24px; max-width: 600px; margin: 0 auto; width: 100%;">
+            <!-- Summary Card -->
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; box-shadow: var(--shadow-sm);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <strong id="dashFullName" style="font-size: 1.25rem;">-</strong>
+                    <span id="dashVillageBadge" class="v-badge">-</span>
                 </div>
-                <div class="custom-radio-option" id="optRadioPayment" onclick="selectGestureMode('PAYMENT')">
-                    <input type="radio" name="gestureModeGroup" value="PAYMENT">
-                    <i class="fas fa-credit-card" style="color: var(--success);"></i>
-                    <div>
-                        <strong>Execute Payment Gateway Processing</strong>
-                        <div style="font-size:0.8rem; color:var(--text-muted);">Adjust balances or close transactions</div>
-                    </div>
+                <div style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 8px; cursor: pointer;" id="dashNumberDisplay" onclick="handleCustomerNumberClick()" title="Click to call or copy"><i class="fas fa-phone"></i> -</div>
+                <div style="font-size: 1.8rem; font-weight: 800; color: var(--text-main); margin-bottom: 12px;" id="dashAmountDisplay">₹ 0</div>
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--text-muted);">
+                    <span id="dashDateDisplay"><i class="fas fa-calendar-alt"></i> -</span>
+                    <span id="dashStatusPill" class="status-pill pending" onclick="togglePaymentStatusFromDashboard()">-</span>
                 </div>
-                <div class="custom-radio-option" id="optRadioDelete" onclick="selectGestureMode('DELETE')">
-                    <input type="radio" name="gestureModeGroup" value="DELETE">
-                    <i class="fas fa-trash-alt" style="color: var(--danger);"></i>
-                    <div>
-                        <strong>Purge Data Element</strong>
-                        <div style="font-size:0.8rem; color:var(--text-muted);">Permanently drop from cloud servers</div>
-                    </div>
+                <div style="display: flex; gap: 12px; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px;">
+                    <button class="btn-modern secondary" style="flex:1;" onclick="openEditFromDashboard()"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="btn-modern secondary" style="flex:1; background: var(--danger-light); color: var(--danger);" onclick="openDeleteFromDashboard()"><i class="fas fa-trash-alt"></i> Delete</button>
                 </div>
             </div>
-            <button class="btn-modern primary" style="width:100%; margin-top:12px;" onclick="executeGestureRouteSelection()">Proceed with Selection</button>
+
+            <!-- Scrollable History Section -->
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; flex-grow: 1; max-height: 300px;">
+                <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-muted); margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 6px;">📋 History Logs</h4>
+                <div id="dashHistoryContainer" style="overflow-y: auto; flex-grow: 1; display: flex; flex-direction: column; gap: 10px;"></div>
+            </div>
+
+            <!-- Payment Confirmation FAB (Hidden if paid) -->
+            <div class="fab" id="dashPaymentFab" onclick="openPaymentConfirmationModal()" title="Mark Payment as Done"><i class="fas fa-check"></i></div>
         </div>
     </div>
 
-    <!-- FULLSCREEN WORKSPACE: RECORD MODIFY/EDIT ENGINE CANVAS (AMOUNT LOCKED) -->
+    <!-- FULLSCREEN WORKSPACE: RECORD MODIFY/EDIT ENGINE CANVAS -->
     <div id="editPaneScreen" class="app-view-screen">
         <div class="screen-header">
             <h2>Modify Customer Record Canvas</h2>
@@ -818,55 +905,54 @@
                     <input type="text" id="editLastName" required>
                 </div>
                 <div class="form-group-custom">
+                    <label>Mobile Number (+91) [Optional]</label>
+                    <input type="tel" id="editNumber" placeholder="10-digit number" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)">
+                </div>
+                <div class="form-group-custom">
                     <label>Village Sector</label>
                     <select id="editVillage" required></select>
                 </div>
                 <div class="form-group-custom">
-                    <label>Timeline Date</label>
+                    <label>Timeline Date (DD/MM/YYYY)</label>
                     <div class="native-date-wrapper">
                         <input type="date" id="editDate" required>
                     </div>
                 </div>
                 <div class="form-group-custom">
-                    <label>Amount (₹) —</label>
-                    <input type="number" id="editAmount"  title="Financial profiles must be amended inside the Payment Gateway terminal.">
+                    <label>Amount (₹)</label>
+                    <input type="number" id="editAmount" required>
                 </div>
                 <button type="button" class="btn-modern primary" style="width:100%;" onclick="processDataUpdateOperation()">Commit Structural Upgrades</button>
             </form>
-            <div style="max-width: 600px; margin: 30px auto 0 auto;">
-                <h4 style="font-size:0.9rem; color:var(--text-muted); font-weight:700; border-bottom:1px solid var(--border); padding-bottom:6px;">📋 Action Log Matrix</h4>
-                <div id="historyLedgerContainer"></div>
-            </div>
         </div>
     </div>
 
-    <!-- PAYMENT TERMINAL CANVAS -->
-    <div id="paymentGatewayScreen" class="app-view-screen">
-        <div class="screen-header">
-            <h2>Payment Terminal Simulator</h2>
-            <button class="close-screen-btn" onclick="closePaymentGatewayScreen()"><i class="fas fa-times"></i></button>
+    <!-- PAYMENT CONFIRMATION & AMOUNT ADJUST MODAL -->
+    <div id="paymentConfirmModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-dismiss-cross-trigger" onclick="closeModalWindow('paymentConfirmModal')"><i class="fas fa-times"></i></button>
+            <h3 style="margin-bottom:12px; color: var(--success);"><i class="fas fa-check-circle"></i> Confirm Payment</h3>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:16px;">You can adjust the final amount before marking the payment as done.</p>
+            <div class="form-group-custom">
+                <label>Final Paid Amount (₹)</label>
+                <input type="number" id="confirmPaymentAmountInput" required>
+            </div>
+            <button class="btn-modern primary" style="width:100%; background: var(--success);" onclick="executePaymentCompletion()">Mark as Paid & Save</button>
         </div>
-        <div class="screen-content" style="display:flex; align-items:center; justify-content:center;">
-            <div class="payment-workspace-app" style="width:100%; max-width:540px;">
-                <div class="pay-app-card">
-                    <div style="font-size:0.85rem; text-transform:uppercase; letter-spacing:1px; opacity:0.7;" id="payAppProfileLabel">Customer Transaction Card</div>
-                    <div id="payAppProfileBalance" style="font-size:1.1rem; font-weight:600; margin-top:4px;">Pending: ₹0</div>
-                    
-                    <div class="pay-app-currency-input-wrap">
-                        <i class="fas fa-rupee-sign"></i>
-                        <input type="number" id="payAppTransactionInput" placeholder="0" oninput="handlePaymentInputMirrorFormat()" value="0">
-                    </div>
-                    <div class="large-formatted-mirror" id="payInputMirrorDisplay">₹0</div>
-                </div>
+    </div>
 
-                <div class="swipe-track-container" id="swipeTrackRoot">
-                    <div class="swipe-bg-label">
-                        <span>  SWIPE RIGHT TO PROCESS TRANSACTION</span> <i class="fas fa-chevron-right"></i>
-                    </div>
-                    <div class="swipe-handle-thumb" id="swipeHandleElement">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                </div>
+    <!-- CUSTOM STATUS CHANGE CONFIRMATION MODAL -->
+    <div id="statusToggleModal" class="modal">
+        <div class="modal-content" style="text-align: center;">
+            <button class="modal-dismiss-cross-trigger" onclick="closeModalWindow('statusToggleModal')"><i class="fas fa-times"></i></button>
+            <div style="width:56px; height:56px; background:var(--warning-light, #fef3c7); color:var(--warning, #f59e0b); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 14px auto; font-size:1.5rem;">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <h3 style="margin-bottom:8px;">Change Payment Status?</h3>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">Do you want to change this customer status from Paid back to Pending?</p>
+            <div style="display:flex; gap:12px;">
+                <button class="btn-modern secondary" style="flex:1;" onclick="closeModalWindow('statusToggleModal')">Cancel</button>
+                <button class="btn-modern primary" style="flex:1; background:var(--warning);" onclick="confirmStatusToggleToPending()">Mark as Pending</button>
             </div>
         </div>
     </div>
@@ -874,35 +960,15 @@
     <!-- NOTIFICATION MODAL CLUSTER SYSTEM -->
     <div id="cloudActionProcessModal" class="modal">
         <div class="modal-content">
-            
-            <!-- TRANSACTIONS SWIPE BREAKDOWN SUMMARY MODAL (WITH CROSS CLOSER) -->
-            <div id="swipeSummaryReportBlock" style="display:none;">
-                <button class="modal-dismiss-cross-trigger" onclick="closeModalWindow('cloudActionProcessModal')" title="Cancel Operation"><i class="fas fa-times"></i></button>
-                <h3 style="margin-bottom:12px; color: var(--primary); padding-right:30px;"><i class="fas fa-receipt"></i> Transaction Summary</h3>
-                <p id="swipeSummaryFormText" style="font-size:1rem; line-height:1.5; color:var(--text-main); margin-bottom:16px; background: var(--background); padding: 14px; border-radius: var(--radius-md); border: 1px solid var(--border);"></p>
-                
-                <div id="swipeProgressElementContainer" style="display:none;">
-                    <div style="font-size:0.8rem; font-weight:600; color:var(--text-muted);">Synchronizing Cloud Ledger Registers...</div>
-                    <div class="payment-progress-bar-wrap">
-                        <div class="payment-progress-fill-line" id="swipeConfirmationProgressBarFill"></div>
-                    </div>
-                </div>
-
-                <button class="btn-modern primary" id="swipeSummaryExecuteBtn" style="width:100%;" onclick="confirmAndExecuteSwipePayloadCloudSync()">Confirm & Sync Ledger</button>
-            </div>
-
-            <!-- Delete Dialogue Confirmation -->
             <div id="confirmPromptBlock" style="display:none;">
-                                   <button class=" modal-dismiss-cross-trigger" style="flex:1;" onclick="closeModalWindow('cloudActionProcessModal')"><i class="fas fa-times"></i></button>
+                <button class="modal-dismiss-cross-trigger" onclick="closeModalWindow('cloudActionProcessModal')"><i class="fas fa-times"></i></button>
                 <h3 style="margin-bottom:12px;">Destructive Action Validation</h3>
                 <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">Are you confident you want to delete this customer permanently from servers?</p>
                 <div style="display:flex; gap:12px;">
-
-                    <button class="btn-modern primary" style="flex:1; background:var(--danger);" onclick="commitDataPurgeExecution()">Sure it's a wrong entry </button>
+                    <button class="btn-modern primary" style="flex:1; background:var(--danger);" onclick="commitDataPurgeExecution()">Sure, Delete Entry</button>
                 </div>
             </div>
 
-            <!-- Alert Popup Window Block -->
             <div id="alertFeedbackNoticeBlock" style="display:none; text-align:center;">
                 <div id="alertIconSphere" style="width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 14px auto; font-size:1.6rem;"></div>
                 <h3 id="alertHeaderTitle" style="margin-bottom:8px;">Notification</h3>
@@ -910,7 +976,6 @@
                 <button class="btn-modern primary" style="width:100%;" id="alertFeedbackDismissBtn" onclick="closeModalWindow('cloudActionProcessModal')">OK</button>
             </div>
 
-            <!-- Loader Progress Block -->
             <div id="processingEngineStatusBlock" style="display:none;" class="processing-modal-box">
                 <div class="spinner-radar"></div>
                 <h4 id="processingBoxLabel">Communicating with Cluster Array...</h4>
@@ -919,7 +984,7 @@
         </div>
     </div>
 
-    <!-- TERMINATED SESSION OVERRIDE POPUP (WITH DISMISS CROSS CLOSER) -->
+    <!-- TERMINATED SESSION OVERRIDE POPUP -->
     <div id="sessionOverrideNoticeModal" class="modal" style="display:none;">
         <div class="modal-content" style="text-align: center;">
             <button class="modal-dismiss-cross-trigger" onclick="closeModalWindow('sessionOverrideNoticeModal')" title="Dismiss Warning"><i class="fas fa-times"></i></button>
@@ -929,7 +994,6 @@
             <h3 style="margin-bottom:8px; padding-top:6px;">Session Termination Matrix</h3>
             <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">Your workspace parameters will be cleared completely. Click OK to confirm window reload references.</p>
             <div style="display:flex; gap:12px;">
-               
                 <button class="btn-modern primary" style="flex:1; background:var(--danger);" onclick="executeSessionPurgeReloadSequence()">OK</button>
             </div>
         </div>
@@ -943,13 +1007,11 @@
                 <div class="form-group-custom">
                     <label>Work Session Timeline Profile</label>
                     <select id="setupSeason" required>
-                       
-                     
-    <option value="2025-26">2025-26</option>
+                        <option value="2025-26">2025-26</option>
                         <option value="2026-27">2026-27</option>
                         <option value="2027-28">2027-28</option>
-                       <option value="2028-29">2028-29</option>
-                     <option value="2024-25">2024-25</option>
+                        <option value="2028-29">2028-29</option>
+                        <option value="2024-25">2024-25</option>
                     </select>
                 </div>
                 <div class="form-group-custom">
@@ -962,7 +1024,6 @@
     </div>
 
     <script>
-        // --- STATE AND CORE ENGINE CONTROLLERS ---
         let CURRENT_SEASON = localStorage.getItem('season') || "";
         let GITHUB_TOKEN = localStorage.getItem('who') || "";
         const GITHUB_USERNAME = "mitpooniya";
@@ -972,15 +1033,14 @@
         let globalCachedDataObject = { customers: [], history: [] };
         const VILLAGE_LIST = ["Dungrana", "Kalana", "Rakhi", "Gunjasari", "Other"];
 
-        // Sorting Configurations
         let currentSortingCycleState = 0; 
         let activeRecordScopeId = null;
-        let selectedGestureActionType = null;
         let wizardCurrentStep = 1;
         
-        let stagedSwipeUpdatePayload = null;
+        let importedCustomersCache = [];
+        let selectedImportCustomerObj = null;
+        let selectedImportSeasonVal = "";
 
-        // Visual String Parser for Domestic Indian Subcontinent Date Layout Grid
         function parseInputToUIDateText(isoString) {
             if (!isoString) return "";
             const segment = isoString.split('-');
@@ -990,7 +1050,7 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             initSessionSecurityCheck();
-            initSwipeSystemCoreEngine();
+            setupVillageChips();
         });
 
         function initSessionSecurityCheck() {
@@ -1018,7 +1078,6 @@
         function triggerCustomAlertNotice(title, body, isSuccess, callback = null) {
             document.getElementById('confirmPromptBlock').style.display = 'none';
             document.getElementById('processingEngineStatusBlock').style.display = 'none';
-            document.getElementById('swipeSummaryReportBlock').style.display = 'none';
             
             const iconBox = document.getElementById('alertIconSphere');
             if (isSuccess) {
@@ -1060,6 +1119,22 @@
             loadCloudDataFeed();
         }
 
+        // --- SEASON SWITCHER FUNCTIONS ---
+        function openSeasonSwitchModal() {
+            document.getElementById('modalSeasonSelect').value = CURRENT_SEASON || "2025-26";
+            openModalWindow('seasonSwitchModal');
+        }
+
+        function confirmSeasonSwitch() {
+            const targetSeason = document.getElementById('modalSeasonSelect').value;
+            closeModalWindow('seasonSwitchModal');
+            if(targetSeason === CURRENT_SEASON) return;
+
+            localStorage.setItem('season', targetSeason);
+            CURRENT_SEASON = targetSeason;
+            bootstrapAppCoreSystem();
+        }
+
         function cycleSortStateEngine() {
             currentSortingCycleState = (currentSortingCycleState + 1) % 4;
             const labels = ["Recent", "Alphabetical", "Old ➔ New", "Amount: Low ➔ High"];
@@ -1073,15 +1148,33 @@
         }
 
         function populateVillageSelectors() {
-            const selectOptions = ['addVillage', 'editVillage'];
+            const selectOptions = ['editVillage', 'importEditVillage'];
             selectOptions.forEach(elementId => {
                 const select = document.getElementById(elementId);
+                if(!select) return;
                 select.innerHTML = `<option value="" disabled selected>Select Target Sector</option>`;
                 VILLAGE_LIST.forEach(v => {
                     const opt = document.createElement('option');
                     opt.value = v; opt.textContent = v;
                     select.appendChild(opt);
                 });
+            });
+        }
+
+        function setupVillageChips() {
+            const container = document.getElementById('villageChipsContainer');
+            if (!container) return;
+            container.innerHTML = '';
+            VILLAGE_LIST.forEach(v => {
+                const chip = document.createElement('div');
+                chip.className = 'chip-option';
+                chip.textContent = v;
+                chip.onclick = () => {
+                    container.querySelectorAll('.chip-option').forEach(c => c.classList.remove('selected'));
+                    chip.classList.add('selected');
+                    document.getElementById('addVillageInput').value = v;
+                };
+                container.appendChild(chip);
             });
         }
 
@@ -1105,6 +1198,7 @@
                     return fullName.includes(query) || 
                            (user.village || '').toLowerCase().includes(query) || 
                            String(user.amount || '').includes(query) ||
+                           (user.number || '').includes(query) ||
                            formattedDate.includes(query);
                 });
             }
@@ -1163,16 +1257,235 @@
 
                 card.querySelector('.card-action-trigger').addEventListener('click', () => {
                     activeRecordScopeId = user.id;
-                    openGestureActionScreen(user);
+                    openCustomerDashboard(user);
                 });
 
                 container.appendChild(card);
             });
         }
 
-        // --- SUBMISSION ENTRY WIZARD MATRIX ---
+        function openAddChoiceModal() {
+            openModalWindow('addChoiceModal');
+        }
+
+        function handleNewCustomerChoice(choice) {
+            closeModalWindow('addChoiceModal');
+            if (choice === 'new') {
+                openAddWizardScreen();
+            } else if (choice === 'import') {
+                openModalWindow('oldSeasonSelectModal');
+            }
+        }
+
+        async function loadOldSeasonPendingCustomers() {
+            selectedImportSeasonVal = document.getElementById('importSeasonDropdown').value;
+            closeModalWindow('oldSeasonSelectModal');
+
+            document.getElementById('confirmPromptBlock').style.display = 'none';
+            document.getElementById('processingEngineStatusBlock').style.display = 'flex';
+            document.getElementById('processingBoxLabel').textContent = `Fetching pending customers from ${selectedImportSeasonVal}...`;
+            openModalWindow('cloudActionProcessModal');
+
+            const oldUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${selectedImportSeasonVal}/customer.json`;
+            try {
+                const response = await fetch(oldUrl, {
+                    headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
+                });
+                closeModalWindow('cloudActionProcessModal');
+                if (!response.ok) {
+                    triggerCustomAlertNotice("Import Error", "Could not load data from the selected season.", false);
+                    return;
+                }
+                const data = await response.json();
+                const parsed = JSON.parse(decodeURIComponent(escape(atob(data.content))));
+                importedCustomersCache = (parsed.customers || []).filter(c => !c.paymentDone);
+
+                renderImportCustomerList(importedCustomersCache);
+                openModalWindow('importCustomerListModal');
+            } catch (err) {
+                closeModalWindow('cloudActionProcessModal');
+                triggerCustomAlertNotice("Import Error", "Failed to connect or parse old season data.", false);
+            }
+        }
+
+        function renderImportCustomerList(list) {
+            const container = document.getElementById('importCustomerContainer');
+            container.innerHTML = '';
+            selectedImportCustomerObj = null;
+            document.getElementById('importProceedFabBtn').style.display = 'none';
+
+            if (list.length === 0) {
+                container.innerHTML = '<p style="text-align:center; padding:20px; color:var(--text-muted);">No pending customers found in this season.</p>';
+                return;
+            }
+
+            list.forEach(c => {
+                const item = document.createElement('div');
+                item.className = 'customer-card';
+                item.style.margin = '0';
+                item.style.cursor = 'pointer';
+                item.innerHTML = `
+                    <div class="card-details">
+                        <div class="card-title-row">
+                            <strong>${c.firstName} ${c.lastName}</strong>
+                            <span class="v-badge">${c.village}</span>
+                        </div>
+                        <span class="amt-display" style="font-size:1.1rem;">₹ ${(parseFloat(c.amount)||0).toLocaleString('en-IN')}</span>
+                    </div>
+                    <div class="import-check-box" style="width:28px; height:28px; border-radius:50%; border:2px solid var(--border); display:flex; align-items:center; justify-content:center; color:white;">
+                        <i class="fas fa-check" style="display:none;"></i>
+                    </div>
+                `;
+
+                item.onclick = () => {
+                    document.querySelectorAll('#importCustomerContainer .customer-card').forEach(el => {
+                        el.style.borderColor = 'var(--border)';
+                        el.style.background = 'var(--surface)';
+                        el.querySelector('.import-check-box').style.background = 'transparent';
+                        el.querySelector('.import-check-box i').style.display = 'none';
+                    });
+                    item.style.borderColor = 'var(--primary)';
+                    item.style.background = 'var(--primary-light)';
+                    const box = item.querySelector('.import-check-box');
+                    box.style.background = 'var(--primary)';
+                    box.querySelector('.import-check-box i').style.display = 'block';
+
+                    selectedImportCustomerObj = c;
+                    document.getElementById('importProceedFabBtn').style.display = 'inline-flex';
+                };
+
+                container.appendChild(item);
+            });
+        }
+
+        function filterImportCustomerList(query) {
+            const q = query.toLowerCase();
+            const filtered = importedCustomersCache.filter(c => 
+                `${c.firstName} ${c.lastName}`.toLowerCase().includes(q) || 
+                (c.village || '').toLowerCase().includes(q) || 
+                String(c.amount || '').includes(q)
+            );
+            renderImportCustomerList(filtered);
+        }
+
+        function proceedWithImportedCustomer() {
+            if(!selectedImportCustomerObj) return;
+            closeModalWindow('importCustomerListModal');
+
+            document.getElementById('importEditFirstName').value = selectedImportCustomerObj.firstName || "";
+            document.getElementById('importEditLastName').value = selectedImportCustomerObj.lastName || "";
+            document.getElementById('importEditNumber').value = selectedImportCustomerObj.number === 'null' ? '' : (selectedImportCustomerObj.number || "");
+            document.getElementById('importEditVillage').value = selectedImportCustomerObj.village || VILLAGE_LIST[0];
+            
+            const todayStr = new Date().toISOString().split("T")[0];
+            const dateInput = document.getElementById('importEditDate');
+            dateInput.max = todayStr;
+            dateInput.value = todayStr;
+
+            document.getElementById('importEditAmount').value = selectedImportCustomerObj.amount || 0;
+
+            document.getElementById('importEditScreen').style.display = 'flex';
+        }
+
+        function closeImportEditScreen() {
+            document.getElementById('importEditScreen').style.display = 'none';
+        }
+
+        async function commitImportedCustomerSave() {
+            const village = document.getElementById('importEditVillage').value;
+            const date = document.getElementById('importEditDate').value;
+            const newAmount = parseInt(document.getElementById('importEditAmount').value);
+            const number = document.getElementById('importEditNumber').value.trim() || "null";
+
+            if(!village || !date || isNaN(newAmount)) {
+                triggerCustomAlertNotice("Validation Error", "Please fill out all required fields correctly.", false);
+                return;
+            }
+
+            closeImportEditScreen();
+
+            document.getElementById('confirmPromptBlock').style.display = 'none';
+            document.getElementById('processingEngineStatusBlock').style.display = 'flex';
+            document.getElementById('processingBoxLabel').textContent = "Updating old season & importing copy...";
+            openModalWindow('cloudActionProcessModal');
+
+            // 1. Add "Moved to CURRENT_SEASON" entry into the old season's customer history log
+            const oldUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${selectedImportSeasonVal}/customer.json`;
+            try {
+                const oldRes = await fetch(oldUrl, {
+                    headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
+                });
+                if (oldRes.ok) {
+                    const oldDataJson = await oldRes.json();
+                    const oldSha = oldDataJson.sha;
+                    const oldParsed = JSON.parse(decodeURIComponent(escape(atob(oldDataJson.content))));
+                    
+                    const targetOldCust = (oldParsed.customers || []).find(c => c.id === selectedImportCustomerObj.id);
+                    if (targetOldCust) {
+                        if(!oldParsed.history) oldParsed.history = [];
+                        oldParsed.history.push({
+                            userId: targetOldCust.id,
+                            type: 'Season Migration',
+                            message: `Moved to ${CURRENT_SEASON} season`,
+                            timestamp: new Date().toISOString()
+                        });
+
+                        const oldRawBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(oldParsed, null, 2))));
+                        await fetch(oldUrl, {
+                            method: 'PUT',
+                            headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ message: `Record moved to ${CURRENT_SEASON}`, content: oldRawBase64, sha: oldSha })
+                        });
+                    }
+                }
+            } catch (e) {
+                console.error("Error updating old season history:", e);
+            }
+
+            // 2. Add customer to current season with detailed history
+            const newId = '_' + Math.random().toString(36).substr(2, 9);
+            const oldBal = selectedImportCustomerObj.amount || 0;
+            const oldDt = selectedImportCustomerObj.date || "N/A";
+
+            const newUserObj = {
+                id: newId,
+                firstName: selectedImportCustomerObj.firstName,
+                lastName: selectedImportCustomerObj.lastName,
+                number: number,
+                amount: newAmount,
+                village: village,
+                date: date,
+                paymentDone: false
+            };
+
+            const dataObject = JSON.parse(JSON.stringify(globalCachedDataObject));
+            if(!dataObject.customers) dataObject.customers = [];
+            if(!dataObject.history) dataObject.history = [];
+
+            dataObject.customers.push(newUserObj);
+            dataObject.history.push({
+                userId: newId, 
+                type: 'Imported from ' + selectedImportSeasonVal,
+                message: `${selectedImportCustomerObj.firstName} balance is ${oldBal} and after import ${newAmount} (Old Date: ${parseInputToUIDateText(oldDt)})`,
+                timestamp: new Date().toISOString()
+            });
+
+            const success = await syncPayloadDataToGitHubCloud(dataObject, `Import customer copy ${newUserObj.firstName}`);
+            closeModalWindow('cloudActionProcessModal');
+
+            if(success) {
+                triggerCustomAlertNotice("Import Successful", `Customer copy "${newUserObj.firstName} ${newUserObj.lastName}" imported successfully.`, true);
+            } else {
+                triggerCustomAlertNotice("Import Error", "Failed to deploy imported customer copy onto current season cloud nodes.", false);
+            }
+        }
+
         function openAddWizardScreen() {
-            document.getElementById('addDate').valueAsDate = new Date();
+            const todayStr = new Date().toISOString().split("T")[0];
+            const dateInput = document.getElementById('addDate');
+            dateInput.max = todayStr;
+            dateInput.value = todayStr;
+
             wizardCurrentStep = 1;
             renderWizardPaneState();
             document.getElementById('addWizardScreen').style.display = 'flex';
@@ -1181,11 +1494,27 @@
         function closeAddWizardScreen() {
             document.getElementById('addWizardScreen').style.display = 'none';
             document.getElementById('wizardFormInstance').reset();
+            setupVillageChips();
+        }
+
+        function setDatePreset(preset) {
+            const d = new Date();
+            if (preset === 'yesterday') {
+                d.setDate(d.getDate() - 1);
+            } else if (preset === '2days') {
+                d.setDate(d.getDate() - 2);
+            }
+            document.getElementById('addDate').value = d.toISOString().split("T")[0];
+        }
+
+        function jumpWizardStep(targetStep) {
+            wizardCurrentStep = targetStep;
+            renderWizardPaneState();
         }
 
         function navigateWizardStep(direction) {
             if(direction === 1 && !validateCurrentStepFormPane()) {
-                alert("Please complete the required field in this step.");
+                triggerCustomAlertNotice("Validation Error", "Please complete the required field in this step.", false);
                 return;
             }
             
@@ -1199,89 +1528,135 @@
 
         function validateCurrentStepFormPane() {
             if(wizardCurrentStep === 1) return document.getElementById('addDate').value !== "";
-            if(wizardCurrentStep === 2) return document.getElementById('addVillage').value !== "";
+            if(wizardCurrentStep === 2) return document.getElementById('addVillageInput').value !== "";
             if(wizardCurrentStep === 3) return document.getElementById('addAmount').value !== "";
-            if(wizardCurrentStep === 4) return document.getElementById('addFirstName').value.trim() !== "" && document.getElementById('addLastName').value.trim() !== "";
+            if(wizardCurrentStep === 4) {
+                return document.getElementById('addFirstName').value.trim() !== "" && 
+                       document.getElementById('addLastName').value.trim() !== "";
+            }
             return true;
+        }
+
+        function addAmountChip(val) {
+            const input = document.getElementById('addAmount');
+            const current = parseInt(input.value) || 0;
+            input.value = current + val;
         }
 
         function renderWizardPaneState() {
             for(let i=1; i<=4; i++) {
                 document.getElementById(`paneStep${i}`).style.display = 'none';
-                document.getElementById(`dotStep${i}`).className = 'step-dot';
-                if(i < wizardCurrentStep) document.getElementById(`dotStep${i}`).classList.add('completed');
+                const dot = document.getElementById(`dotStep${i}`);
+                dot.className = 'step-dot';
+                if(i < wizardCurrentStep) dot.classList.add('completed');
             }
             document.getElementById(`paneStep${wizardCurrentStep}`).style.display = 'block';
             document.getElementById(`dotStep${wizardCurrentStep}`).classList.add('active');
             document.getElementById('wizardProgressFill').style.width = `${((wizardCurrentStep - 1) / 3) * 100}%`;
-            document.getElementById('wizardBackBtn').disabled = (wizardCurrentStep === 1);
-            document.getElementById('wizardNextBtn').textContent = (wizardCurrentStep === 4) ? "Finish & Save" : "Continue";
-        }
-
-        function openGestureActionScreen(userObject) {
-            document.getElementById('gestureScreenTitle').textContent = `Manage: ${userObject.firstName} ${userObject.lastName}`;
-            selectedGestureActionType = null;
-            document.querySelectorAll('.custom-radio-option').forEach(el => el.classList.remove('selected'));
-            document.querySelectorAll('input[name="gestureModeGroup"]').forEach(rad => rad.checked = false);
-            document.getElementById('gestureActionScreen').style.display = 'flex';
-        }
-
-        function closeGestureActionScreen() { document.getElementById('gestureActionScreen').style.display = 'none'; }
-        function openEditPaneScreen() { document.getElementById('editPaneScreen').style.display = 'flex'; }
-        function closeEditPaneScreen() { document.getElementById('editPaneScreen').style.display = 'none'; }
-        function openPaymentGatewayScreen() { document.getElementById('paymentGatewayScreen').style.display = 'flex'; }
-        function closePaymentGatewayScreen() { document.getElementById('paymentGatewayScreen').style.display = 'none'; }
-        function openModalWindow(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModalWindow(id) { document.getElementById(id).style.display = 'none'; }
-
-        function selectGestureMode(mode) {
-            selectedGestureActionType = mode;
-            document.querySelectorAll('.custom-radio-option').forEach(el => el.classList.remove('selected'));
-            document.querySelectorAll('input[name="gestureModeGroup"]').forEach(rad => {
-                if(rad.value === mode) rad.checked = true;
-            });
-            document.getElementById(`optRadio${mode.charAt(0) + mode.slice(1).toLowerCase()}`).classList.add('selected');
-        }
-
-        function executeGestureRouteSelection() {
-            if(!selectedGestureActionType) { alert("Please specify an operations route."); return; }
-            closeGestureActionScreen();
             
-            const targetedUser = globalCachedDataObject.customers.find(u => u.id === activeRecordScopeId);
-            if(!targetedUser) return;
-
-            if (selectedGestureActionType === 'EDIT') {
-                // Populate multiple fields inside user modify profile context screen
-                document.getElementById('editFirstName').value = targetedUser.firstName || "";
-                document.getElementById('editLastName').value = targetedUser.lastName || "";
-                document.getElementById('editVillage').value = targetedUser.village || "";
-                document.getElementById('editDate').value = targetedUser.date || "";
-                document.getElementById('editAmount').value = targetedUser.amount || 0; // Read-only asset
-                
-                renderLedgerLogsPane(targetedUser.id);
-                openEditPaneScreen();
-            } else if (selectedGestureActionType === 'PAYMENT') {
-                document.getElementById('payAppProfileLabel').textContent = `${targetedUser.firstName} ${targetedUser.lastName}`;
-                document.getElementById('payAppProfileBalance').textContent = `Pending Liability: ₹${targetedUser.amount.toLocaleString('en-IN')}`;
-                document.getElementById('payAppTransactionInput').value = targetedUser.amount;
-                handlePaymentInputMirrorFormat();
-                openPaymentGatewayScreen();
-            } else if (selectedGestureActionType === 'DELETE') {
-                document.getElementById('alertFeedbackNoticeBlock').style.display = 'none';
-                document.getElementById('processingEngineStatusBlock').style.display = 'none';
-                document.getElementById('swipeSummaryReportBlock').style.display = 'none';
-                document.getElementById('confirmPromptBlock').style.display = 'block';
-                openModalWindow('cloudActionProcessModal');
+            const nextFab = document.getElementById('wizardNextFab');
+            if (wizardCurrentStep === 4) {
+                nextFab.title = "Finish & Save";
+                nextFab.innerHTML = '<i class="fas fa-check"></i>';
+            } else {
+                nextFab.title = "Continue";
+                nextFab.innerHTML = '<i class="fas fa-arrow-right"></i>';
             }
         }
 
-        function renderLedgerLogsPane(userId) {
-            const container = document.getElementById('historyLedgerContainer');
+        function openCustomerDashboard(userObject) {
+            activeRecordScopeId = userObject.id;
+            document.getElementById('dashCustomerNameTitle').textContent = `Customer: ${userObject.firstName} ${userObject.lastName}`;
+            document.getElementById('dashFullName').textContent = `${userObject.firstName} ${userObject.lastName}`;
+            document.getElementById('dashVillageBadge').textContent = userObject.village;
+            document.getElementById('dashNumberDisplay').innerHTML = `<i class="fas fa-phone"></i> ${userObject.number || 'null'}`;
+            document.getElementById('dashAmountDisplay').textContent = `₹ ${(parseFloat(userObject.amount)||0).toLocaleString('en-IN')}`;
+            document.getElementById('dashDateDisplay').innerHTML = `<i class="fas fa-calendar-alt"></i> ${parseInputToUIDateText(userObject.date)}`;
+            
+            const pill = document.getElementById('dashStatusPill');
+            const fab = document.getElementById('dashPaymentFab');
+            if(userObject.paymentDone) {
+                pill.className = 'status-pill paid';
+                pill.textContent = '✓ PAID (Click to change)';
+                fab.style.display = 'none';
+            } else {
+                pill.className = 'status-pill pending';
+                pill.textContent = '⏳ PENDING';
+                fab.style.display = 'flex';
+            }
+
+            renderDashboardHistoryLogs(userObject.id);
+            document.getElementById('customerDashboardScreen').style.display = 'flex';
+        }
+
+        function closeCustomerDashboardScreen() {
+            document.getElementById('customerDashboardScreen').style.display = 'none';
+        }
+
+        function handleCustomerNumberClick() {
+            const targetedUser = globalCachedDataObject.customers.find(u => u.id === activeRecordScopeId);
+            if (!targetedUser || !targetedUser.number || targetedUser.number === 'null') return;
+            
+            const num = targetedUser.number;
+            navigator.clipboard.writeText(num).then(() => {
+                triggerCustomAlertNotice("Copied & Dialing", `Number ${num} copied to clipboard! Opening dialer...`, true, () => {
+                    window.location.href = `tel:${num}`;
+                });
+            }).catch(() => {
+                window.location.href = `tel:${num}`;
+            });
+        }
+
+        function togglePaymentStatusFromDashboard() {
+            const targetedUser = globalCachedDataObject.customers.find(u => u.id === activeRecordScopeId);
+            if(!targetedUser) return;
+
+            if(targetedUser.paymentDone) {
+                openModalWindow('statusToggleModal');
+            }
+        }
+
+        async function confirmStatusToggleToPending() {
+            closeModalWindow('statusToggleModal');
+            const targetedUser = globalCachedDataObject.customers.find(u => u.id === activeRecordScopeId);
+            if(!targetedUser) return;
+
+            document.getElementById('processingEngineStatusBlock').style.display = 'flex';
+            document.getElementById('processingBoxLabel').textContent = "Changing status to pending...";
+            openModalWindow('cloudActionProcessModal');
+
+            const dataObject = JSON.parse(JSON.stringify(globalCachedDataObject));
+            const target = dataObject.customers.find(u => u.id === targetedUser.id);
+            if(target) {
+                target.paymentDone = false;
+                if(!dataObject.history) dataObject.history = [];
+                dataObject.history.push({
+                    userId: target.id,
+                    type: 'Status Change',
+                    message: 'Status changed from Paid to Pending',
+                    timestamp: new Date().toISOString()
+                });
+
+                const success = await syncPayloadDataToGitHubCloud(dataObject, `Mark pending for ${target.firstName}`);
+                closeModalWindow('cloudActionProcessModal');
+                if(success) {
+                    openCustomerDashboard(target);
+                    triggerCustomAlertNotice("Updated", "Status changed to pending successfully.", true);
+                } else {
+                    triggerCustomAlertNotice("Error", "Could not sync status change.", false);
+                }
+            } else {
+                closeModalWindow('cloudActionProcessModal');
+            }
+        }
+
+        function renderDashboardHistoryLogs(userId) {
+            const container = document.getElementById('dashHistoryContainer');
             container.innerHTML = '';
             const historyStack = (globalCachedDataObject.history || []).filter(h => h.userId === userId).sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
             
             if(historyStack.length === 0) {
-                container.innerHTML = '<p style="font-size:0.8rem; color:var(--text-muted);">No records stored inside historical ledger clusters.</p>';
+                container.innerHTML = '<p style="font-size:0.8rem; color:var(--text-muted);">No historical logs recorded yet.</p>';
                 return;
             }
             historyStack.forEach(h => {
@@ -1292,167 +1667,85 @@
             });
         }
 
-        // --- INTERACTIVE SWIPE ENGINE & MATRIX LOGIC ARRAY ---
-        let swipeStartX = 0;
-        let isDraggingSwipeHandle = false;
+        function openEditFromDashboard() {
+            closeCustomerDashboardScreen();
+            const targetedUser = globalCachedDataObject.customers.find(u => u.id === activeRecordScopeId);
+            if(!targetedUser) return;
 
-        function handlePaymentInputMirrorFormat() {
-            const val = parseFloat(document.getElementById('payAppTransactionInput').value) || 0;
-            document.getElementById('payInputMirrorDisplay').textContent = `₹ ${val.toLocaleString('en-IN')}`;
+            document.getElementById('editFirstName').value = targetedUser.firstName || "";
+            document.getElementById('editLastName').value = targetedUser.lastName || "";
+            document.getElementById('editNumber').value = targetedUser.number === 'null' ? '' : (targetedUser.number || "");
+            document.getElementById('editVillage').value = targetedUser.village || "";
             
-            const handle = document.getElementById('swipeHandleElement');
-            if (val <= 0) {
-                handle.style.opacity = '0.4'; handle.style.cursor = 'not-allowed';
-            } else {
-                handle.style.opacity = '1'; handle.style.cursor = 'grab';
-            }
+            const todayStr = new Date().toISOString().split("T")[0];
+            const editDateInput = document.getElementById('editDate');
+            editDateInput.max = todayStr;
+            editDateInput.value = targetedUser.date || "";
+
+            document.getElementById('editAmount').value = targetedUser.amount || 0;
+            
+            document.getElementById('editPaneScreen').style.display = 'flex';
         }
 
-        function initSwipeSystemCoreEngine() {
-            const handle = document.getElementById('swipeHandleElement');
-            const rootTrack = document.getElementById('swipeTrackRoot');
-
-            const startSwipeGesture = (clientX) => {
-                const inputVal = parseFloat(document.getElementById('payAppTransactionInput').value) || 0;
-                if(inputVal <= 0) return;
-                isDraggingSwipeHandle = true;
-                swipeStartX = clientX;
-                handle.style.transition = 'none';
-            };
-
-            const moveSwipeGesture = (clientX) => {
-                if (!isDraggingSwipeHandle) return;
-                let deltaX = clientX - swipeStartX;
-                const trackWidth = rootTrack.offsetWidth;
-                const maxSwipeDistance = trackWidth - handle.offsetWidth - 12;
-
-                if (deltaX < 0) deltaX = 0;
-                if (deltaX > maxSwipeDistance) deltaX = maxSwipeDistance;
-
-                handle.style.transform = `translateX(${deltaX}px)`;
-                
-                if (deltaX >= maxSwipeDistance - 10) {
-                    rootTrack.classList.add('active-ready');
-                } else {
-                    rootTrack.classList.remove('active-ready');
-                }
-            };
-
-            const endSwipeGesture = (clientX) => {
-                if (!isDraggingSwipeHandle) return;
-                isDraggingSwipeHandle = false;
-                rootTrack.classList.remove('active-ready');
-
-                const trackWidth = rootTrack.offsetWidth;
-                const maxSwipeDistance = trackWidth - handle.offsetWidth - 12;
-                
-                let finalDeltaX = (clientX && typeof clientX === 'number') ? (clientX - swipeStartX) : 0;
-                if(!clientX) {
-                    const transformMatrix = window.getComputedStyle(handle).transform;
-                    if(transformMatrix && transformMatrix !== 'none') {
-                        finalDeltaX = parseFloat(transformMatrix.split(',')[4]) || 0;
-                    }
-                }
-
-                handle.style.transition = 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)';
-
-                if (finalDeltaX >= maxSwipeDistance - 25) {
-                    handle.style.transform = `translateX(${maxSwipeDistance}px)`;
-                    processSwipeFinancialCalculations();
-                } else {
-                    handle.style.transform = 'translateX(0px)';
-                }
-            };
-
-            handle.addEventListener('touchstart', (e) => startSwipeGesture(e.touches[0].clientX));
-            window.addEventListener('touchmove', (e) => moveSwipeGesture(e.touches[0].clientX));
-            window.addEventListener('touchend', (e) => endSwipeGesture());
-
-            handle.addEventListener('mousedown', (e) => startSwipeGesture(e.clientX));
-            window.addEventListener('mousemove', (e) => moveSwipeGesture(e.clientX));
-            window.addEventListener('mouseup', (e) => endSwipeGesture(e.clientX));
-        }
-
-        function processSwipeFinancialCalculations() {
-            const userInputVal = parseInt(document.getElementById('payAppTransactionInput').value) || 0;
-            if(userInputVal <= 0) { resetSwipeThumbTrack(); return; }
-
-            const dataObject = JSON.parse(JSON.stringify(globalCachedDataObject));
-            const index = dataObject.customers.findIndex(u => u.id === activeRecordScopeId);
-            if (index === -1) { resetSwipeThumbTrack(); return; }
-
-            const targetUser = dataObject.customers[index];
-            const originalServerAmount = targetUser.amount;
-            
-            let messageSummaryText = "";
-            let historyLogText = "";
-            
-            if (userInputVal === originalServerAmount) {
-                targetUser.paymentDone = true;
-                messageSummaryText = `The input amount matches the records on the server exactly. User amount was paid completely. Total balance remains ₹${originalServerAmount}.`;
-                historyLogText = `Full Payment cleared. Status set to true. Balance kept at: ₹${userInputVal}`;
-            } else {
-                targetUser.amount = userInputVal;
-                targetUser.paymentDone = false;
-                messageSummaryText = `The input value differs from current registers. User amount changed from ₹${originalServerAmount} to ₹${userInputVal}. Payment status remains pending.`;
-                historyLogText = `Overwrote balance configuration from ₹${originalServerAmount} to ₹${userInputVal}`;
-            }
-
-            if (!dataObject.history) dataObject.history = [];
-            dataObject.history.push({
-                userId: targetUser.id,
-                type: 'Gateway Action',
-                message: historyLogText,
-                timestamp: new Date().toISOString()
-            });
-
-            stagedSwipeUpdatePayload = { data: dataObject, desc: `Process billing mutation for ${targetUser.firstName}` };
-
-            closePaymentGatewayScreen();
-            resetSwipeThumbTrack();
-
-            document.getElementById('confirmPromptBlock').style.display = 'none';
-            document.getElementById('processingEngineStatusBlock').style.display = 'none';
+        function openDeleteFromDashboard() {
+            closeCustomerDashboardScreen();
             document.getElementById('alertFeedbackNoticeBlock').style.display = 'none';
-            
-            document.getElementById('swipeSummaryFormText').textContent = messageSummaryText;
-            document.getElementById('swipeProgressElementContainer').style.display = 'none';
-            document.getElementById('swipeConfirmationProgressBarFill').style.width = '0%';
-            document.getElementById('swipeSummaryExecuteBtn').style.display = 'inline-flex';
-            
-            document.getElementById('swipeSummaryReportBlock').style.display = 'block';
+            document.getElementById('processingEngineStatusBlock').style.display = 'none';
+            document.getElementById('confirmPromptBlock').style.display = 'block';
             openModalWindow('cloudActionProcessModal');
         }
 
-        function resetSwipeThumbTrack() {
-            const handle = document.getElementById('swipeHandleElement');
-            handle.style.transition = 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)';
-            handle.style.transform = 'translateX(0px)';
+        function openPaymentConfirmationModal() {
+            const targetedUser = globalCachedDataObject.customers.find(u => u.id === activeRecordScopeId);
+            if(!targetedUser) return;
+            document.getElementById('confirmPaymentAmountInput').value = targetedUser.amount || 0;
+            openModalWindow('paymentConfirmModal');
         }
 
-        async function confirmAndExecuteSwipePayloadCloudSync() {
-            if(!stagedSwipeUpdatePayload) return;
-            
-            document.getElementById('swipeSummaryExecuteBtn').style.display = 'none';
-            document.getElementById('swipeProgressElementContainer').style.display = 'block';
-            
-            const fillLine = document.getElementById('swipeConfirmationProgressBarFill');
-            setTimeout(() => { fillLine.style.width = '100%'; }, 50);
+        async function executePaymentCompletion() {
+            const finalAmt = parseInt(document.getElementById('confirmPaymentAmountInput').value);
+            if(isNaN(finalAmt) || finalAmt < 0) {
+                triggerCustomAlertNotice("Validation Error", "Please enter a valid amount.", false);
+                return;
+            }
+            closeModalWindow('paymentConfirmModal');
+            closeCustomerDashboardScreen();
 
-            const statusSuccess = await syncPayloadDataToGitHubCloud(stagedSwipeUpdatePayload.data, stagedSwipeUpdatePayload.desc);
-            stagedSwipeUpdatePayload = null;
+            document.getElementById('processingEngineStatusBlock').style.display = 'flex';
+            document.getElementById('processingBoxLabel').textContent = "Updating payment status and amount...";
+            openModalWindow('cloudActionProcessModal');
 
-            setTimeout(() => {
+            const dataObject = JSON.parse(JSON.stringify(globalCachedDataObject));
+            const userObj = dataObject.customers.find(u => u.id === activeRecordScopeId);
+            if(userObj) {
+                const oldAmt = userObj.amount;
+                userObj.amount = finalAmt;
+                userObj.paymentDone = true;
+
+                if(!dataObject.history) dataObject.history = [];
+                dataObject.history.push({
+                    userId: userObj.id,
+                    type: 'Payment Completed',
+                    message: `Marked as paid. Amount adjusted from ₹${oldAmt} to ₹${finalAmt}`,
+                    timestamp: new Date().toISOString()
+                });
+
+                const success = await syncPayloadDataToGitHubCloud(dataObject, `Mark payment done for ${userObj.firstName}`);
                 closeModalWindow('cloudActionProcessModal');
-                if(statusSuccess) {
-                    triggerCustomAlertNotice("Success", "Transaction ledger has been updated and synchronized with cloud databases successfully.", true);
+                if(success) {
+                    triggerCustomAlertNotice("Success", "Payment marked as completed successfully.", true);
                 } else {
-                    triggerCustomAlertNotice("Sync Error", "Could not complete transaction. Please check network validation streams.", false);
+                    triggerCustomAlertNotice("Error", "Could not sync payment status to cloud.", false);
                 }
-            }, 1600);
+            } else {
+                closeModalWindow('cloudActionProcessModal');
+            }
         }
 
-        // --- NETWORK PERSISTENCE MIDDLEWARE LINK ---
+        function closeEditPaneScreen() { document.getElementById('editPaneScreen').style.display = 'none'; }
+        function openModalWindow(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModalWindow(id) { document.getElementById(id).style.display = 'none'; }
+
         async function loadCloudDataFeed() {
             if(!CURRENT_SEASON) return;
             const container = document.getElementById('dataList');
@@ -1500,22 +1793,22 @@
 
         async function commitNewUserCloudStorage() {
             const date = document.getElementById('addDate').value;
-            const village = document.getElementById('addVillage').value;
+            const village = document.getElementById('addVillageInput').value;
             const amount = parseInt(document.getElementById('addAmount').value);
             const firstName = document.getElementById('addFirstName').value.trim();
             const lastName = document.getElementById('addLastName').value.trim();
+            const number = document.getElementById('addNumber').value.trim() || "null";
 
             closeAddWizardScreen();
             
             document.getElementById('confirmPromptBlock').style.display = 'none';
-            document.getElementById('swipeSummaryReportBlock').style.display = 'none';
             document.getElementById('alertFeedbackNoticeBlock').style.display = 'none';
             document.getElementById('processingEngineStatusBlock').style.display = 'flex';
             document.getElementById('processingBoxLabel').textContent = "Deploying customer profile node blocks...";
             openModalWindow('cloudActionProcessModal');
 
             const newId = '_' + Math.random().toString(36).substr(2, 9);
-            const newUserObj = { id: newId, firstName, lastName, amount, village, date, paymentDone: false };
+            const newUserObj = { id: newId, firstName, lastName, number, amount, village, date, paymentDone: false };
 
             const dataObject = JSON.parse(JSON.stringify(globalCachedDataObject));
             if(!dataObject.customers) dataObject.customers = [];
@@ -1541,16 +1834,19 @@
         async function processDataUpdateOperation() {
             const editFn = document.getElementById('editFirstName').value.trim();
             const editLn = document.getElementById('editLastName').value.trim();
+            const editNum = document.getElementById('editNumber').value.trim() || "null";
             const editVg = document.getElementById('editVillage').value;
             const dt = document.getElementById('editDate').value;
+            const editAmt = parseInt(document.getElementById('editAmount').value);
             
-            if(!editFn || !editLn || !editVg || !dt) { alert("Please compile all mandatory text inputs."); return; }
+            if(!editFn || !editLn || !editVg || !dt || isNaN(editAmt)) {
+                triggerCustomAlertNotice("Validation Error", "Please compile all mandatory text inputs.", false);
+                return;
+            }
 
             closeEditPaneScreen();
             
             document.getElementById('confirmPromptBlock').style.display = 'none';
-            document.getElementById('swipeSummaryReportBlock').style.display = 'none';
-            document.getElementById('alertFeedbackNoticeBlock').style.display = 'none';
             document.getElementById('processingEngineStatusBlock').style.display = 'flex';
             document.getElementById('processingBoxLabel').textContent = "Rewriting properties on database grid...";
             openModalWindow('cloudActionProcessModal');
@@ -1564,14 +1860,18 @@
 
             if(oldRecord.firstName !== editFn) changesTextLog.push(`First Name modified from "${oldRecord.firstName}" to "${editFn}"`);
             if(oldRecord.lastName !== editLn) changesTextLog.push(`Last Name modified from "${oldRecord.lastName}" to "${editLn}"`);
+            if(oldRecord.number !== editNum) changesTextLog.push(`Mobile Number modified from "${oldRecord.number}" to "${editNum}"`);
             if(oldRecord.village !== editVg) changesTextLog.push(`Village moved from ${oldRecord.village} to ${editVg}`);
             if(oldRecord.date !== dt) changesTextLog.push(`Timeline date shifted from ${oldRecord.date} to ${dt}`);
+            if(oldRecord.amount !== editAmt) changesTextLog.push(`Amount modified from ₹${oldRecord.amount} to ₹${editAmt}`);
 
             if(changesTextLog.length > 0) {
                 oldRecord.firstName = editFn;
                 oldRecord.lastName = editLn;
+                oldRecord.number = editNum;
                 oldRecord.village = editVg;
                 oldRecord.date = dt;
+                oldRecord.amount = editAmt;
                 
                 if(!dataObject.history) dataObject.history = [];
                 dataObject.history.push({
@@ -1597,10 +1897,8 @@
             closeModalWindow('cloudActionProcessModal');
             
             document.getElementById('confirmPromptBlock').style.display = 'none';
-            document.getElementById('swipeSummaryReportBlock').style.display = 'none';
-            document.getElementById('alertFeedbackNoticeBlock').style.display = 'none';
             document.getElementById('processingEngineStatusBlock').style.display = 'flex';
-            document.getElementById('processingBoxLabel').textContent = "Dropping entity from system arrays...";
+            document.getElementById('processingBoxLabel').textContent = "Dropping entity from system arrays... [NOTE: Old season records remain fully preserved]";
             openModalWindow('cloudActionProcessModal');
             
             const dataObject = JSON.parse(JSON.stringify(globalCachedDataObject));
