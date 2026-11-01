@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sumit - Profile & Socials</title>
+    <!-- Google Fonts & FontAwesome for Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0b0919, #1c1836, #111118);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 28px;
+            padding: 35px 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Profile Picture & Active Story Animation Ring */
+        .story-ring {
+            width: 114px;
+            height: 114px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            padding: 3px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            animation: pulse-ring 2s infinite;
+            margin-bottom: 16px;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .story-ring:hover {
+            transform: scale(1.06);
+        }
+
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(225, 48, 108, 0.5); }
+            70% { box-shadow: 0 0 0 14px rgba(225, 48, 108, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(225, 48, 108, 0); }
+        }
+
+        .profile-img-container {
+            width: 106px;
+            height: 106px;
+            border-radius: 50%;
+            background: #121212;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 3px solid #141319;
+            position: relative;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* First-Letter Fallback Avatar */
+        .fallback-avatar {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: #ffffff;
+            font-size: 42px;
+            font-weight: 700;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-transform: uppercase;
+        }
+
+        /* Profile Details */
+        .profile-name {
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            margin-bottom: 2px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .verified-badge {
+            color: #3897f0;
+            font-size: 16px;
+        }
+
+        .username {
+            font-size: 14px;
+            color: #9ca3af;
+            margin-bottom: 22px;
+        }
+
+        /* Follow Button */
+        .follow-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #6366f1, #9333ea);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            margin-bottom: 24px;
+        }
+
+        .follow-btn:hover {
+            opacity: 0.95;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+        }
+
+        .follow-btn.following {
+            background: rgba(255, 255, 255, 0.06);
+            color: #c084fc;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            box-shadow: none;
+        }
+
+        /* Snapchat ID Card UI/UX */
+        .section-title {
+            align-self: flex-start;
+            font-size: 12px;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            margin-left: 4px;
+        }
+
+        .snapchat-card {
+            width: 100%;
+            background: linear-gradient(135deg, rgba(255, 252, 0, 0.95), rgba(238, 220, 0, 0.9));
+            border-radius: 16px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #000;
+            box-shadow: 0 8px 25px rgba(255, 252, 0, 0.15);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .snapchat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 252, 0, 0.25);
+        }
+
+        .snap-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Snapchat Story Ring Animation */
+        .snap-story-ring {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            padding: 2px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            animation: pulse-ring 2s infinite;
+        }
+
+        .snap-avatar-container {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+        }
+
+        .snap-avatar {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .snap-fallback {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            color: #fffc00;
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-transform: uppercase;
+        }
+
+        .snap-info h4 {
+            font-size: 15px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            line-height: 1.2;
+        }
+
+        .snap-info p {
+            font-size: 13px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .snap-add-btn {
+            background: #000000;
+            color: #fffc00;
+            border: none;
+            padding: 7px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s ease;
+        }
+
+        .snap-add-btn:hover { background: #222; }
+        .snap-add-btn.added { background: rgba(0, 0, 0, 0.15); color: #000; }
+
+        /* Full Screen Story Modal */
+        .story-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .story-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .story-content {
+            text-align: center;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .story-header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .story-user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .story-user-img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .story-username {
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .close-story {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 26px;
+            cursor: pointer;
+            padding: 5px;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .close-story:hover { opacity: 1; }
+        .story-message { font-size: 17px; font-weight: 400; color: #71717a; letter-spacing: 0.4px; }
+
+        /* Custom Popup Modal Style */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .popup-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .popup-box {
+            background: #1e1b38;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px 20px;
+            width: 90%;
+            max-width: 320px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .popup-overlay.active .popup-box {
+            transform: scale(1);
+        }
+
+        .popup-box i {
+            font-size: 38px;
+            color: #10b981;
+            margin-bottom: 12px;
+        }
+
+        .popup-box h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .popup-box p {
+            font-size: 13px;
+            color: #9ca3af;
+            margin-bottom: 20px;
+        }
+
+        .popup-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .popup-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: opacity 0.2s;
+        }
+
+        .popup-btn-cancel {
+            background: rgba(255, 255, 255, 0.08);
+            color: #d1d5db;
+        }
+
+        .popup-btn-confirm {
+            background: linear-gradient(135deg, #6366f1, #9333ea);
+            color: #ffffff;
+        }
+
+        .popup-btn:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Profile Picture with Active Story Ring -->
+        <div class="story-ring" id="storyTrigger" title="Click to view story">
+            <div class="profile-img-container" id="profileImgContainer">
+                <img id="profileImage" src="profile.jpg" alt="Sumit profile picture" class="profile-img">
+                <div id="fallbackAvatar" class="fallback-avatar" style="display: none;">M</div>
+            </div>
+        </div>
+
+        <!-- Profile Details -->
+        <h1 class="profile-name">Sumit <i class="fa-solid fa-circle-check verified-badge"></i></h1>
+        <span class="username">@mit_jii</span>
+
+        <!-- Follow Button -->
+        <button class="follow-btn" id="followBtn">Follow</button>
+
+        <!-- Snapchat ID Card Section -->
+        <span class="section-title">Snapchat Social</span>
+        <div class="snapchat-card">
+            <div class="snap-left">
+                <!-- Snapchat Story Ring Animation -->
+                <div class="snap-story-ring" id="snapStoryTrigger" title="Click to view story">
+                    <div class="snap-avatar-container">
+                        <img id="snapAvatar" src="snap.webp" alt="Snapchat Avatar" class="snap-avatar">
+                        <div id="snapFallback" class="snap-fallback" style="display: none;">M</div>
+                    </div>
+                </div>
+                <div class="snap-info">
+                    <h4>mit_jii <i class="fa-solid fa-ghost" style="font-size: 11px;"></i></h4>
+                    <p>Snapchat ID</p>
+                </div>
+            </div>
+            <button class="snap-add-btn" id="snapAddBtn">
+                <i class="fa-solid fa-user-plus" id="addIcon"></i> <span id="addText">Add</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Full Screen Story Modal -->
+    <div class="story-modal" id="storyModal">
+        <div class="story-content">
+            <div class="story-header">
+                <div class="story-user-info">
+                    <img id="modalAvatar" src="profile.jpg" alt="" class="story-user-img">
+                    <div id="modalFallback" class="fallback-avatar" style="width: 36px; height: 36px; font-size: 15px; border-radius: 50%; display: none;">M</div>
+                    <span class="story-username">mit_jii</span>
+                </div>
+                <button class="close-story" id="closeStory">&times;</button>
+            </div>
+            <div class="story-message">Story not available</div>
+        </div>
+    </div>
+
+    <!-- Instagram Redirect Popup Modal -->
+    <div class="popup-overlay" id="igPopup">
+        <div class="popup-box">
+            <i class="fa-solid fa-circle-check"></i>
+            <h3>Successfully Followed!</h3>
+            <p>Would you like to open Instagram to view @mit_jii's profile?</p>
+            <div class="popup-actions">
+                <button class="popup-btn popup-btn-cancel" id="igCancelBtn">Cancel</button>
+                <button class="popup-btn popup-btn-confirm" id="igOpenBtn">Open Instagram</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Snapchat Redirect Popup Modal -->
+    <div class="popup-overlay" id="snapPopup">
+        <div class="popup-box" style="background: #232212; border-color: rgba(255,252,0,0.2);">
+            <i class="fa-solid fa-ghost" style="color: #fffc00;"></i>
+            <h3 style="color: #fffc00;">Successfully Added!</h3>
+            <p>Would you like to open Snapchat to connect with @mit_jii?</p>
+            <div class="popup-actions">
+                <button class="popup-btn popup-btn-cancel" id="snapCancelBtn">Cancel</button>
+                <button class="popup-btn popup-btn-confirm" id="snapOpenBtn" style="background: #fffc00; color: #000;">Open Snapchat</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const profileImg = document.getElementById("profileImage");
+        const fallbackAvatar = document.getElementById("fallbackAvatar");
+        const snapAvatar = document.getElementById("snapAvatar");
+        const snapFallback = document.getElementById("snapFallback");
+        const modalAvatar = document.getElementById("modalAvatar");
+        const modalFallback = document.getElementById("modalFallback");
+
+        // Handle profile.jpg load failure by falling back to letter 'M'
+        profileImg.onerror = () => {
+            profileImg.style.display = "none";
+            fallbackAvatar.style.display = "flex";
+        };
+
+        snapAvatar.onerror = () => {
+            snapAvatar.style.display = "none";
+            snapFallback.style.display = "flex";
+        };
+
+        modalAvatar.onerror = () => {
+            modalAvatar.style.display = "none";
+            modalFallback.style.display = "flex";
+        };
+
+        // Follow Button Interaction & Popup
+        const followBtn = document.getElementById("followBtn");
+        const igPopup = document.getElementById("igPopup");
+        const igOpenBtn = document.getElementById("igOpenBtn");
+        const igCancelBtn = document.getElementById("igCancelBtn");
+        let isFollowing = false;
+
+        followBtn.addEventListener("click", () => {
+            isFollowing = !isFollowing;
+            if (isFollowing) {
+                followBtn.textContent = "Following";
+                followBtn.classList.add("following");
+                // Show Instagram popup on successful follow
+                setTimeout(() => {
+                    igPopup.classList.add("active");
+                }, 300);
+            } else {
+                followBtn.textContent = "Follow";
+                followBtn.classList.remove("following");
+            }
+        });
+
+        igOpenBtn.addEventListener("click", () => {
+            window.open("https://instagram.com/mit_jii", "_blank");
+            igPopup.classList.remove("active");
+        });
+
+        igCancelBtn.addEventListener("click", () => {
+            igPopup.classList.remove("active");
+        });
+
+        // Snapchat Add Button Interaction & Popup
+        const snapAddBtn = document.getElementById("snapAddBtn");
+        const addIcon = document.getElementById("addIcon");
+        const addText = document.getElementById("addText");
+        const snapPopup = document.getElementById("snapPopup");
+        const snapOpenBtn = document.getElementById("snapOpenBtn");
+        const snapCancelBtn = document.getElementById("snapCancelBtn");
+        let isAdded = false;
+
+        snapAddBtn.addEventListener("click", () => {
+            isAdded = !isAdded;
+            if (isAdded) {
+                addIcon.className = "fa-solid fa-check";
+                addText.textContent = "Added";
+                snapAddBtn.classList.add("added");
+                // Show Snapchat popup after successful add
+                setTimeout(() => {
+                    snapPopup.classList.add("active");
+                }, 300);
+            } else {
+                addIcon.className = "fa-solid fa-user-plus";
+                addText.textContent = "Add";
+                snapAddBtn.classList.remove("added");
+            }
+        });
+
+        snapOpenBtn.addEventListener("click", () => {
+            window.open("https://www.snapchat.com/add/mit_jii", "_blank");
+            snapPopup.classList.remove("active");
+        });
+
+        snapCancelBtn.addEventListener("click", () => {
+            snapPopup.classList.remove("active");
+        });
+
+        // Full Screen Story Modal Functionality (for both profile & Snapchat stories)
+        const storyTrigger = document.getElementById("storyTrigger");
+        const snapStoryTrigger = document.getElementById("snapStoryTrigger");
+        const storyModal = document.getElementById("storyModal");
+        const closeStory = document.getElementById("closeStory");
+
+        storyTrigger.addEventListener("click", () => storyModal.classList.add("active"));
+        snapStoryTrigger.addEventListener("click", () => storyModal.classList.add("active"));
+        
+        closeStory.addEventListener("click", () => storyModal.classList.remove("active"));
+        storyModal.addEventListener("click", (e) => {
+            if (e.target === storyModal) storyModal.classList.remove("active");
+        });
+    </script>
+</body>
+</html>
