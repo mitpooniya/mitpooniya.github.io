@@ -8,7 +8,7 @@
     <!-- Google Fonts & Font Awesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- PDF Generation Libraries -->
@@ -24,6 +24,7 @@
     
     --primary: #4f46e5;
     --primary-light: #e0e7ff;
+    --primary-dark: #4338ca;
     --success: #10b981;
     --success-light: #d1fae5;
     --danger: #ef4444;
@@ -33,9 +34,10 @@
     
     --radius-lg: 24px;
     --radius-md: 16px;
+    --radius-sm: 10px;
     --shadow-sm: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
     --shadow-md: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
-    --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * {
@@ -58,7 +60,7 @@ body {
 ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
 #mainHeader {
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.88);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     padding: 18px 20px;
@@ -133,14 +135,6 @@ body {
     position: relative;
     overflow: hidden;
     user-select: none;
-    -webkit-user-select: none;
-}
-
-.menu-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: radial-gradient(circle at top right, rgba(255,255,255,0.2), transparent);
 }
 
 .menu-card:active {
@@ -152,7 +146,7 @@ body {
 
 .card-revenue { background: linear-gradient(135deg, #4f46e5, #6366f1); color: white; }
 .card-revenue .icon-box { background: rgba(255,255,255,0.2); color: white; }
-.card-revenue .card-title { color: rgba(255,255,255,0.8); }
+.card-revenue .card-title { color: rgba(255,255,255,0.85); }
 
 .icon-box {
     width: 40px;
@@ -181,7 +175,7 @@ body {
     display: flex;
     flex-direction: column;
     transform: translateY(100%);
-    transition: transform 0.4s cubic-bezier(0.1, 1, 0.1, 1);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .full-canvas.active { transform: translateY(0); }
@@ -204,7 +198,7 @@ body {
 }
 
 .canvas-header h2 { font-size: 1.2rem; font-weight: 700; color: var(--text-main); }
-.canvas-body { padding: 20px; flex: 1; overflow-y: auto; }
+.canvas-body { padding: 20px; flex: 1; overflow-y: auto; padding-bottom: 100px; }
 
 .search-container {
     background: var(--card-bg);
@@ -238,20 +232,43 @@ body {
     background: var(--card-bg); border: 1px solid #e2e8f0; border-radius: var(--radius-md);
     padding: 12px; width: 100%; text-align: left; font-size: 0.9rem; font-weight: 600;
     color: var(--text-main); margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer;
 }
 
 .data-list { display: flex; flex-direction: column; gap: 12px; }
 .list-item {
     background: var(--card-bg); border-radius: var(--radius-md); padding: 16px;
     box-shadow: var(--shadow-sm); display: flex; justify-content: space-between; align-items: center;
-    user-select: none; -webkit-user-select: none;
+    border: 1px solid #f1f5f9;
+    transition: var(--transition);
 }
-.item-info h4 { font-size: 0.95rem; font-weight: 600; color: var(--text-main); margin-bottom: 4px; }
-.item-info p { font-size: 0.8rem; color: var(--text-muted); display: flex; gap: 8px; }
-.item-badge { background: #f1f5f9; padding: 2px 8px; border-radius: 10px; font-weight: 500; }
-.item-amount { font-size: 1.1rem; font-weight: 700; }
+.item-info h4 { font-size: 0.98rem; font-weight: 700; color: var(--text-main); margin-bottom: 5px; }
+.item-info p { font-size: 0.8rem; color: var(--text-muted); display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.item-badge { background: #f1f5f9; padding: 3px 9px; border-radius: 10px; font-weight: 600; color: #475569; }
+.item-amount { font-size: 1.12rem; font-weight: 800; text-align: right; }
 .item-amount.pending { color: var(--danger); }
 .item-amount.paid { color: var(--success); }
+
+/* Dedicated small check button on pending cards to prevent accidental row taps */
+.pending-mark-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1.5px solid var(--success);
+    background: var(--success-light);
+    color: var(--success);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+.pending-mark-btn:hover, .pending-mark-btn:active {
+    background: var(--success);
+    color: #ffffff;
+}
 
 .metric-row {
     display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px;
@@ -262,37 +279,228 @@ body {
 .metric-box label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
 .metric-box p { font-size: 1.2rem; font-weight: 700; color: var(--text-main); margin-top: 4px; }
 
+/* FAB BUTTONS */
 .fab-btn {
-    position: fixed; bottom: 30px; right: 30px;
-    background: linear-gradient(135deg, var(--primary), #6366f1);
-    color: white; width: 56px; height: 56px; border-radius: 50%;
+    position: fixed; bottom: 28px; right: 28px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; width: 60px; height: 60px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.5rem; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
+    font-size: 1.45rem; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.35);
     border: none; cursor: pointer; z-index: 99; transition: var(--transition);
 }
-.fab-btn:active { transform: scale(0.9) rotate(90deg); }
+.fab-btn:active { transform: scale(0.92); }
 
-.stepper-wrapper { display: flex; justify-content: space-between; margin-bottom: 30px; position: relative; padding: 0 10px; }
-.stepper-wrapper::before { content: ''; position: absolute; top: 50%; left: 10px; right: 10px; height: 3px; background: #e2e8f0; z-index: 1; transform: translateY(-50%); }
-.step-indicator { width: 35px; height: 35px; border-radius: 50%; background: #e2e8f0; color: #64748b; display: flex; align-items: center; justify-content: center; font-weight: 700; position: relative; z-index: 2; transition: var(--transition); font-size: 0.9rem; border: 3px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-.step-indicator.active { background: var(--primary); color: white; transform: scale(1.1); }
-.step-indicator.completed { background: var(--success); color: white; border-color: #d1fae5; }
-
-.step-container { display: none; animation: fadeIn 0.4s ease-in-out forwards; }
-.step-container.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-.wizard-title { font-size: 1.4rem; font-weight: 700; text-align: center; margin-bottom: 24px; color: var(--text-main); }
-.wizard-input-wrap { position: relative; margin-bottom: 30px; }
-.wizard-input-wrap input {
-    width: 100%; border: none; border-bottom: 3px solid #cbd5e1; padding: 12px;
-    font-size: 1.5rem; font-weight: 700; text-align: center; outline: none; background: transparent; transition: var(--transition);
+/* CUSTOM DD/MM/YYYY DATE DISPLAY OVERLAY */
+.custom-date-box {
+    position: relative;
+    width: 100%;
+    height: 54px;
+    border: 1px solid #cbd5e1;
+    border-radius: var(--radius-md);
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    cursor: pointer;
+    transition: var(--transition);
 }
-.wizard-input-wrap input:focus { border-color: var(--primary); }
-.wizard-label { text-align: center; color: var(--text-muted); font-size: 1rem; font-weight: 600; margin-bottom: 10px; display: block; }
-.wizard-nav { display: flex; gap: 12px; margin-top: 40px; }
+.custom-date-box:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+.custom-date-box .date-text-display {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+.custom-date-box i {
+    color: var(--primary);
+    font-size: 1.15rem;
+}
+.custom-date-box input[type="date"] {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* STEPPER WIZARD */
+.wizard-progress {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    position: relative;
+}
+.wizard-progress::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 0; width: 100%; height: 2px;
+    background: #e2e8f0;
+    z-index: 1; transform: translateY(-50%);
+}
+.progress-line-fill {
+    position: absolute;
+    top: 50%; left: 0; height: 2px;
+    background: var(--primary);
+    z-index: 1; transform: translateY(-50%);
+    width: 0%; transition: var(--transition);
+}
+.step-dot {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: #ffffff;
+    border: 2px solid #cbd5e1;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2; font-size: 0.9rem; font-weight: 700;
+    color: var(--text-muted); transition: var(--transition);
+    cursor: pointer;
+}
+.step-dot.active {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+}
+.step-dot.completed {
+    border-color: var(--success);
+    background: var(--success);
+    color: white;
+}
+
+.step-container { display: none; animation: fadeIn 0.3s ease forwards; }
+.step-container.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.wizard-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 6px; color: var(--text-main); }
+.wizard-desc { font-size: 0.86rem; color: var(--text-muted); margin-bottom: 22px; }
+
+.chips-container {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+.chip-option {
+    background: #ffffff;
+    color: var(--text-main);
+    padding: 9px 15px;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid #cbd5e1;
+    transition: var(--transition);
+}
+.chip-option:hover, .chip-option.selected {
+    background: var(--primary-light);
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.amount-input-box {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: var(--radius-md);
+    font-size: 1.25rem;
+    font-weight: 700;
+    outline: none;
+    background: #ffffff;
+    transition: var(--transition);
+}
+.amount-input-box:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+.amount-chips-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 14px;
+}
+.amount-chip-btn {
+    background: var(--primary-light);
+    color: var(--primary);
+    border: 1px solid rgba(79, 70, 229, 0.2);
+    padding: 12px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    transition: var(--transition);
+}
+.amount-chip-btn:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* BOTTOM SHEET SYSTEM */
+.bottom-sheet-overlay {
+    display: none;
+    position: fixed;
+    z-index: 3500;
+    left: 0; top: 0; width: 100%; height: 100%;
+    background-color: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(5px);
+    align-items: flex-end;
+    justify-content: center;
+}
+.bottom-sheet-content {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 540px;
+    border-top-left-radius: 28px;
+    border-top-right-radius: 28px;
+    padding: 14px 24px 32px 24px;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.15);
+    position: relative;
+    max-height: 88vh;
+    overflow-y: auto;
+    animation: slideSheetUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sheet-drag-handle {
+    width: 44px;
+    height: 5px;
+    background: #cbd5e1;
+    border-radius: 10px;
+    margin: 0 auto 16px auto;
+}
+@keyframes slideSheetUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+
+.summary-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-md);
+    padding: 16px;
+    margin: 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.92rem;
+    border-bottom: 1px dashed #cbd5e1;
+    padding-bottom: 8px;
+}
+.summary-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+.summary-row span:first-child { color: var(--text-muted); font-weight: 500; }
+.summary-row strong { color: var(--text-main); font-weight: 700; }
+
 .wiz-btn {
-    flex: 1; padding: 16px; border-radius: var(--radius-md); border: none; font-size: 1rem; font-weight: 700; cursor: pointer; transition: var(--transition);
+    padding: 15px 20px; border-radius: var(--radius-md); border: none; font-size: 0.98rem; font-weight: 700; cursor: pointer; transition: var(--transition);
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
 }
 .wiz-next { background: var(--primary); color: white; }
 .wiz-back { background: #e2e8f0; color: var(--text-main); }
@@ -300,20 +508,16 @@ body {
 .popup-overlay {
     position: fixed; top:0; left:0; width:100%; height:100%;
     background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px);
-    z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px;
+    z-index: 4000; display: none; align-items: center; justify-content: center; padding: 20px;
 }
 .popup-card {
-    background: var(--card-bg); border-radius: var(--radius-lg); padding: 30px;
-    width: 100%; max-width: 360px; text-align: center; box-shadow: var(--shadow-md);
+    background: var(--card-bg); border-radius: var(--radius-lg); padding: 28px;
+    width: 100%; max-width: 380px; text-align: center; box-shadow: var(--shadow-md);
 }
 .popup-card i.spinner { font-size: 2.5rem; color: var(--primary); animation: spin 1s linear infinite; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
-#pdfExportTemplate { position: absolute; left: -9999px; top: -9999px; width: 790px; background: #ffffff; color: #000000; padding: 0; }
-#pdfExportTemplate table { width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 15px; }
-#pdfExportTemplate th, #pdfExportTemplate td { border: 1px solid #cbd5e1; padding: 10px; text-align: left; font-size: 14px; }
-#pdfExportTemplate th { background-color: #f1f5f9; font-weight: bold; }
-.pdf-page-container { width: 100%; background: #ffffff; box-sizing: border-box; display: block; overflow: hidden; padding: 40px; }
+#pdfExportTemplate { position: absolute; left: -9999px; top: -9999px; width: 794px; background: #ffffff; color: #000000; padding: 0; }
 </style>
 </head>
 <body>
@@ -325,7 +529,7 @@ body {
             <h1 id="appTitleDisplay">Data</h1>
         </div>
         <div class="header-right">
-            <button onclick="window.location.href='index.html'" class="wallet-btn" title="होम स्क्रीन"><i class="fas fa-wallet"></i></button>
+            <button onclick="window.location.href='/'" class="wallet-btn" title="होम स्क्रीन"><i class="fas fa-wallet"></i></button>
         </div>
     </header>
 
@@ -367,7 +571,8 @@ body {
                 </div>
             </div>
 
-            <div class="menu-card card-ledger" onclick="openCanvas('canvasDayLedger')">
+            <!-- Single Day Tracker Card: Automatically loads Today's details on open -->
+            <div class="menu-card card-ledger" onclick="openSingleDayLedgerCanvas()">
                 <div class="icon-box"><i class="fas fa-book"></i></div>
                 <div>
                     <p class="card-title">डेली लेजर ट्रैकर</p>
@@ -379,7 +584,7 @@ body {
     </div>
 
     <!-- Floating Action Button for Step Form -->
-    <button class="fab-btn" onclick="openCanvas('canvasStepWizard')"><i class="fas fa-plus"></i></button>
+    <button class="fab-btn" onclick="openStepWizardCanvas()" title="दैनिक एंट्री जोड़ें"><i class="fas fa-plus"></i></button>
 
     <!-- CANVAS 1: REVENUE DETAILS -->
     <div id="canvasRevenue" class="full-canvas">
@@ -416,7 +621,7 @@ body {
         <div class="canvas-body">
             <div class="search-container">
                 <i class="fas fa-search" style="color:var(--text-muted)"></i>
-                <input type="text" id="pendingSearch" placeholder="नाम या गाँव खोजें...">
+                <input type="text" id="pendingSearch" placeholder="नाम, गाँव या DD/MM/YYYY खोजें...">
             </div>
             
             <div class="chip-scroller" id="pendingVillageChips"></div>
@@ -439,7 +644,7 @@ body {
         <div class="canvas-body">
             <div class="search-container">
                 <i class="fas fa-search" style="color:var(--text-muted)"></i>
-                <input type="text" id="paidSearch" placeholder="खोजें...">
+                <input type="text" id="paidSearch" placeholder="नाम, गाँव या DD/MM/YYYY खोजें...">
             </div>
             <div class="data-list" id="paidRecordsContainer"></div>
         </div>
@@ -454,20 +659,20 @@ body {
         <div class="canvas-body" style="display:flex; flex-direction:column; gap:20px;">
             <div class="menu-card" style="min-height:auto; background:#fff; border:1px solid #e2e8f0;" id="printMasterPdfTrigger">
                 <div style="display:flex; gap:16px; align-items:center;">
-                    <div class="icon-box" style="margin-bottom:0; background:var(--danger-light); color:var(--danger);"><i class="fas fa-file-pdf"></i></div>
+                    <div class="icon-box" style="margin-bottom:0; background:#f1f5f9; color:#0f172a;"><i class="fas fa-print"></i></div>
                     <div>
-                        <h4 style="font-size:1rem; font-weight:700;">समस्त विलेज बकाया रिपोर्ट</h4>
-                        <p style="font-size:0.8rem; color:var(--text-muted);">बिना किसी फालतू नियमों के, सीधे QR कोड और विलेज सूची से शुरू करें</p>
+                        <h4 style="font-size:1rem; font-weight:700;">सिंपल ब्लैक & व्हाइट ड्यू लिस्ट (PDF)</h4>
+                        <p style="font-size:0.8rem; color:var(--text-muted);">राशि > नाम > दिनांक (हिंदी माह एवं वार) > गाँव > Paid कॉलम (क्र.सं. बाहर)</p>
                     </div>
                 </div>
             </div>
 
             <div class="menu-card" style="min-height:auto; background:#fff; border:1px solid #e2e8f0;" id="printFinanceReportTrigger">
                 <div style="display:flex; gap:16px; align-items:center;">
-                    <div class="icon-box" style="margin-bottom:0; background:var(--primary-light); color:var(--primary);"><i class="fas fa-file-invoice-dollar"></i></div>
+                    <div class="icon-box" style="margin-bottom:0; background:var(--primary-light); color:var(--primary);"><i class="fas fa-chart-line"></i></div>
                     <div>
-                        <h4 style="font-size:1rem; font-weight:700;">विस्तृत वित्तीय लेजर रिपोर्ट</h4>
-                        <p style="font-size:0.8rem; color:var(--text-muted);">खूबसूरत इन्फोग्राफिक्स, प्रविष्टियों और चुकता सूची का एकीकरण</p>
+                        <h4 style="font-size:1rem; font-weight:700;">मास्टर फाइनेंस एनालिटिक्स रिपोर्ट (PDF)</h4>
+                        <p style="font-size:0.8rem; color:var(--text-muted);">सभी गाँवों का बकाया विश्लेषण, नेट प्रॉफिट, कैश फ्लो, चुकता ग्राहक सूची एवं लेजर</p>
                     </div>
                 </div>
             </div>
@@ -478,78 +683,107 @@ body {
     <div id="canvasStepWizard" class="full-canvas">
         <div class="canvas-header">
             <button class="canvas-close" onclick="closeWizard()"><i class="fas fa-times"></i></button>
-            <h2>दैनिक <span style="color: green; margin:10px ;">₹</span> एंट्री </h2>
+            <h2>दैनिक <span style="color: var(--success); margin:0 4px;">₹</span> एंट्री</h2>
         </div>
         <div class="canvas-body">
-            <div class="stepper-wrapper">
-                <div class="step-indicator active" id="ind-1">1</div>
-                <div class="step-indicator" id="ind-2">2</div>
-                <div class="step-indicator" id="ind-3">3</div>
-                <div class="step-indicator" id="ind-4">4</div>
+            <!-- Clickable Step Dots -->
+            <div class="wizard-progress">
+                <div class="progress-line-fill" id="wizardProgressFill"></div>
+                <div class="step-dot active" id="ind-1" onclick="jumpToStep(1)">1</div>
+                <div class="step-dot" id="ind-2" onclick="jumpToStep(2)">2</div>
+                <div class="step-dot" id="ind-3" onclick="jumpToStep(3)">3</div>
+                <div class="step-dot" id="ind-4" onclick="jumpToStep(4)">4</div>
             </div>
 
-            <form id="moneyUpdateForm">
+            <form id="moneyUpdateForm" onsubmit="event.preventDefault();">
+                <!-- STEP 1: DATE (Today selected by default, preset chips start from Yesterday) -->
                 <div class="step-container active" id="step1">
-                    <h3 class="wizard-title">एंट्री की तिथि का चयन</h3>
-                    <div class="wizard-input-wrap">
-                        <label class="wizard-label">तारीख चुनें</label>
-                        <input type="date" id="moneyDate" required>
+                    <h3 class="wizard-title">1. एंट्री की तिथि चुनें</h3>
+                    <p class="wizard-desc">आज की तिथि पहले से चयनित है। पिछली तिथि के लिए नीचे टैप करें या कैलेंडर चुनें।</p>
+                    <div class="custom-date-box">
+                        <span class="date-text-display" id="moneyDateDisplay">--/--/----</span>
+                        <i class="fas fa-calendar-alt"></i>
+                        <input type="date" id="moneyDate" onchange="onManualEntryDateChange()" required>
                     </div>
-                    <div class="wizard-nav">
-                        <button type="button" class="wiz-btn wiz-next" onclick="navigateStep(2)">आगे बढ़ें <i class="fas fa-arrow-right"></i></button>
+                    <div class="chips-container" id="entryDatePresetChips">
+                        <div class="chip-option" onclick="setEntryDatePreset(1, this)">कल (Yesterday)</div>
+                        <div class="chip-option" onclick="setEntryDatePreset(2, this)">2 दिन पहले</div>
+                        <div class="chip-option" onclick="setEntryDatePreset(3, this)">3 दिन पहले</div>
+                        <div class="chip-option" onclick="setEntryDatePreset(4, this)">4 दिन पहले</div>
                     </div>
                 </div>
 
+                <!-- STEP 2: IN CASH -->
                 <div class="step-container" id="step2">
-                    <h3 class="wizard-title">नकद राशि को डालें </h3>
-                    <div class="wizard-input-wrap">
-                        <label class="wizard-label" id="cashFormattedLabel">कुल नकद राशि (₹0)</label>
-                        <input type="number" id="inCash" placeholder="₹ राशि दर्ज करें" oninput="formatWizardAmount(this, 'cashFormattedLabel')">
-                    </div>
-                    <div class="wizard-nav">
-                        <button type="button" class="wiz-btn wiz-back" onclick="navigateStep(1)">पीछे</button>
-                        <button type="button" class="wiz-btn wiz-next" onclick="navigateStep(3)">आगे बढ़ें</button>
+                    <h3 class="wizard-title">2. प्राप्त नकद राशि (In Cash)</h3>
+                    <p class="wizard-desc" id="cashFormattedLabel">कुल नकद राशि: ₹0</p>
+                    <input type="number" class="amount-input-box" id="inCash" placeholder="₹ राशि दर्ज करें" oninput="updateStepAmountLabel('inCash', 'cashFormattedLabel', 'कुल नकद राशि')">
+                    <div class="amount-chips-grid">
+                        <div class="amount-chip-btn" onclick="addStepAmount('inCash', 100, 'cashFormattedLabel', 'कुल नकद राशि')">+100</div>
+                        <div class="amount-chip-btn" onclick="addStepAmount('inCash', 200, 'cashFormattedLabel', 'कुल नकद राशि')">+200</div>
+                        <div class="amount-chip-btn" onclick="addStepAmount('inCash', 500, 'cashFormattedLabel', 'कुल नकद राशि')">+500</div>
+                        <div class="amount-chip-btn" onclick="addStepAmount('inCash', 1000, 'cashFormattedLabel', 'कुल नकद राशि')">+1000</div>
+                        <div class="amount-chip-btn" onclick="addStepAmount('inCash', 2000, 'cashFormattedLabel', 'कुल नकद राशि')">+2000</div>
+                        <div class="amount-chip-btn" onclick="addStepAmount('inCash', 5000, 'cashFormattedLabel', 'कुल नकद राशि')">+5000</div>
                     </div>
                 </div>
 
+                <!-- STEP 3: DIESEL EXPENSE -->
                 <div class="step-container" id="step3">
-                    <h3 class="wizard-title">डीजल परिचालन व्यय</h3>
-                    <div class="wizard-input-wrap">
-                        <label class="wizard-label" id="dieselFormattedLabel">डीजल खर्च (₹0)</label>
-                        <input type="number" id="dieselExp" placeholder="₹ डीजल खर्च" oninput="formatWizardAmount(this, 'dieselFormattedLabel')">
-                    </div>
-                    <div class="wizard-nav">
-                        <button type="button" class="wiz-btn wiz-back" onclick="navigateStep(2)">पीछे</button>
-                        <button type="button" class="wiz-btn wiz-next" onclick="navigateStep(4)">आगे बढ़ें</button>
+                    <h3 class="wizard-title">3. डीजल परिचालन व्यय</h3>
+                    <p class="wizard-desc" id="dieselFormattedLabel">डीजल खर्च: ₹0</p>
+                    <input type="number" class="amount-input-box" id="dieselExp" placeholder="₹ डीजल खर्च दर्ज करें" oninput="updateStepAmountLabel('dieselExp', 'dieselFormattedLabel', 'डीजल खर्च')">
+                    <div class="amount-chips-grid">
+                        <div class="amount-chip-btn" onclick="addStepAmount('dieselExp', 100, 'dieselFormattedLabel', 'डीजल खर्च')">+100</div>
+                        <div class="amount-chip-btn" onclick="addStepAmount('dieselExp', 200, 'dieselFormattedLabel', 'डीजल खर्च')">+200</div>
+                        <div class="amount-chip-btn" onclick="addStepAmount('dieselExp', 500, 'dieselFormattedLabel', 'डीजल खर्च')">+500</div>
+                        <div class="amount-chip-btn" onclick="addStepAmount('dieselExp', 1000, 'dieselFormattedLabel', 'डीजल खर्च')">+1000</div>
+                        <div class="amount-chip-btn" onclick="addStepAmount('dieselExp', 2000, 'dieselFormattedLabel', 'डीजल खर्च')">+2000</div>
+                        <div class="amount-chip-btn" onclick="addStepAmount('dieselExp', 5000, 'dieselFormattedLabel', 'डीजल खर्च')">+5000</div>
                     </div>
                 </div>
 
+                <!-- STEP 4: OTHER EXPENSE -->
                 <div class="step-container" id="step4">
-                    <h3 class="wizard-title">अन्य खर्चे डालें</h3>
-                    <div class="wizard-input-wrap">
-                        <label class="wizard-label" id="otherFormattedLabel">अन्य खर्च (₹0)</label>
-                        <input type="number" id="otherExp" placeholder="₹ अन्य फुटकर खर्च" oninput="formatWizardAmount(this, 'otherFormattedLabel')">
-                    </div>
-                    <div class="wizard-nav">
-                        <button type="button" class="wiz-btn wiz-back" onclick="navigateStep(3)">पीछे</button>
-                        <button type="submit" class="wiz-btn wiz-next" style="background:var(--success);">क्लाउड सिंक करें <i class="fas fa-cloud-upload-alt"></i></button>
+                    <h3 class="wizard-title">4. अन्य फुटकर खर्चे</h3>
+                    <p class="wizard-desc" id="otherFormattedLabel">अन्य खर्च: ₹0</p>
+                    <input type="number" class="amount-input-box" id="otherExp" placeholder="₹ अन्य खर्च दर्ज करें" oninput="updateStepAmountLabel('otherExp', 'otherFormattedLabel', 'अन्य खर्च')">
+                    <div class="amount-chips-grid">
+                        <div class="amount-chip-btn" onclick="addStepAmount('otherExp', 100, 'otherFormattedLabel', 'अन्य खर्च')">+100</div>
+                        <div class="amount-chip-btn" onclick="addStepAmount('otherExp', 200, 'otherFormattedLabel', 'अन्य खर्च')">+200</div>
+                        <div class="amount-chip-btn" onclick="addStepAmount('otherExp', 500, 'otherFormattedLabel', 'अन्य खर्च')">+500</div>
+                        <div class="amount-chip-btn" onclick="addStepAmount('otherExp', 1000, 'otherFormattedLabel', 'अन्य खर्च')">+1000</div>
+                        <div class="amount-chip-btn" onclick="addStepAmount('otherExp', 2000, 'otherFormattedLabel', 'अन्य खर्च')">+2000</div>
+                        <div class="amount-chip-btn" onclick="addStepAmount('otherExp', 5000, 'otherFormattedLabel', 'अन्य खर्च')">+5000</div>
                     </div>
                 </div>
+
+                <!-- NEXT / PREVIEW FAB BUTTON -->
+                <button type="button" class="fab-btn" id="wizardNextFabBtn" onclick="handleWizardFabNext()" title="आगे बढ़ें">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
             </form>
         </div>
     </div>
 
-    <!-- CANVAS 6: DATE TRANSACTION LOOKUP -->
+    <!-- CANVAS 6: DATE TRANSACTION LOOKUP (AUTO-LOADS TODAY, ICON-ONLY SEARCH BUTTON) -->
     <div id="canvasDayLedger" class="full-canvas">
         <div class="canvas-header">
             <button class="canvas-close" onclick="closeCanvas('canvasDayLedger')"><i class="fas fa-arrow-left"></i></button>
             <h2>एकल तिथि वित्तीय ट्रैकर</h2>
         </div>
         <div class="canvas-body">
-            <label style="font-weight:700; font-size:0.9rem; color:var(--text-main); margin-bottom:8px; display:block;">दिनांक चुनें:</label>
-            <div style="display:flex; gap:10px; margin-bottom:24px;">
-                <input type="date" id="ledgerDatePicker" style="width:100%; padding:12px; border-radius:12px; border:1px solid #cbd5e1; font-weight:600;">
-                <button class="wiz-btn wiz-next" style="padding:0 20px; border-radius:12px;" onclick="compileSingleDateLedger()">खोजें</button>
+            <label style="font-weight:700; font-size:0.9rem; color:var(--text-main); margin-bottom:8px; display:block;">दिनांक चुनें (DD/MM/YYYY):</label>
+            <div style="display:flex; gap:10px; margin-bottom:24px; align-items:center;">
+                <div class="custom-date-box" style="flex:1;">
+                    <span class="date-text-display" id="ledgerDateDisplay">--/--/----</span>
+                    <i class="fas fa-calendar-alt"></i>
+                    <input type="date" id="ledgerDatePicker" onchange="onLedgerDateChange()">
+                </div>
+                <!-- Icon-only Search Button -->
+                <button class="wiz-btn wiz-next" style="width:54px; height:54px; padding:0; flex-shrink:0;" onclick="compileSingleDateLedger()" title="खोजें">
+                    <i class="fas fa-search"></i>
+                </button>
             </div>
 
             <div id="ledgerDaySummaryWrapper" style="display:none;">
@@ -573,6 +807,58 @@ body {
         </div>
     </div>
 
+    <!-- ========================================================= -->
+    <!-- BOTTOM SHEET 1: PREVIEW DAILY ENTRY BEFORE CLOUD UPLOAD   -->
+    <!-- ========================================================= -->
+    <div id="entryPreviewSheet" class="bottom-sheet-overlay" onclick="handleOverlayClose(event, 'entryPreviewSheet')">
+        <div class="bottom-sheet-content">
+            <div class="sheet-drag-handle"></div>
+            <h3 style="margin-bottom:6px; color: var(--primary);"><i class="fas fa-clipboard-check"></i> एंट्री प्रीव्यू एवं सत्यापन</h3>
+            <p style="font-size:0.85rem; color:var(--text-muted);">क्लाउड पर सेव करने से पहले नीचे दी गई जानकारी की जांच करें:</p>
+
+            <div class="summary-box" id="entryPreviewContent"></div>
+
+            <div style="display:flex; gap:12px;">
+                <button class="wiz-btn wiz-back" style="flex:1;" onclick="closeBottomSheet('entryPreviewSheet')">बदलाव करें</button>
+                <button class="wiz-btn wiz-next" style="flex:1.4; background:var(--success);" onclick="confirmAndUploadMoneyEntry()">
+                    <i class="fas fa-cloud-upload-alt"></i> Confirm & Upload
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- BOTTOM SHEET 2: TWO-STEP TICK CONFIRMATION FOR MARK PAID  -->
+    <!-- ========================================================= -->
+    <div id="markPaidSheet" class="bottom-sheet-overlay" onclick="handleOverlayClose(event, 'markPaidSheet')">
+        <div class="bottom-sheet-content">
+            <div class="sheet-drag-handle"></div>
+            <div style="width:48px; height:48px; background:var(--success-light); color:var(--success); border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:10px; font-size:1.3rem;">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 style="margin-bottom:6px;">भुगतान पूर्ण सत्यापन (Mark as Paid)</h3>
+            <p id="markPaidCustInfo" style="font-size:0.88rem; color:var(--text-muted); margin-bottom:14px;"></p>
+
+            <div style="margin-bottom:16px;">
+                <label style="display:block; font-size:0.85rem; font-weight:600; color:var(--text-muted); margin-bottom:6px;">प्राप्त अंतिम राशि (₹)</label>
+                <input type="number" class="amount-input-box" id="markPaidAmountInput">
+            </div>
+
+            <!-- Mandatory Tick Confirmation Box to prevent accidental clicks -->
+            <label for="markPaidVerifyCheckbox" style="display:flex; align-items:center; gap:12px; background:#f8fafc; border:1.5px solid #cbd5e1; padding:14px; border-radius:14px; margin-bottom:18px; cursor:pointer;">
+                <input type="checkbox" id="markPaidVerifyCheckbox" onchange="toggleMarkPaidSubmitState(this.checked)" style="width:20px; height:20px; accent-color:var(--success); cursor:pointer;">
+                <span style="font-size:0.86rem; font-weight:600; color:var(--text-main);">हाँ, मैंने राशि की जांच कर ली है और इसे <strong>Paid</strong> मार्क करना चाहता हूँ।</span>
+            </label>
+
+            <div style="display:flex; gap:12px;">
+                <button class="wiz-btn wiz-back" style="flex:1;" onclick="closeBottomSheet('markPaidSheet')">रद्द करें</button>
+                <button id="confirmMarkPaidBtn" class="wiz-btn wiz-next" style="flex:1.4; background:var(--success); opacity:0.45; cursor:not-allowed;" disabled onclick="executeMarkCustomerPaid()">
+                    <i class="fas fa-check"></i> Confirm Paid
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Modals & Overlays -->
     <div id="redirectPopup" class="popup-overlay">
         <div class="popup-card">
@@ -587,7 +873,7 @@ body {
         <div class="popup-card">
             <i class="fas fa-circle-notch spinner"></i>
             <h3 style="margin-top:15px;" id="pdfProgressTitle">रिपोर्ट जनरेट हो रही है</h3>
-            <p style="color:var(--text-muted); font-size:0.85rem; margin:8px 0 20px 0;">Devanagari कैरेक्टर मैपिंग और रेंडरिंग की जा रही है, कृपया प्रतीक्षा करें।</p>
+            <p style="color:var(--text-muted); font-size:0.85rem; margin:8px 0 20px 0;">कृपया प्रतीक्षा करें...</p>
             <button class="wiz-btn wiz-back" style="width:100%; background:#fef2f2; color:var(--danger);" onclick="cancelPdfGeneration()">प्रक्रिया रद्द करें</button>
         </div>
     </div>
@@ -610,16 +896,19 @@ body {
     let CURRENT_SEASON = localStorage.getItem('season') || "";
     let GITHUB_TOKEN = localStorage.getItem('who') || "";
     
-    let GLOBAL_QR_PAYMENT_URL = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=mitpooniya@oksbi&pn=SUMIT&aid=uGICAgMCfqsrNcg";
+    // Black & White QR Code URL
+    let BW_QR_PAYMENT_URL = "https://api.qrserver.com/v1/create-qr-code/?size=160x160&color=000000&bgcolor=ffffff&data=upi://pay?pa=mitpooniya@oksbi&pn=SUMIT&aid=uGICAgMCfqsrNcg";
 
     let CUSTOMER_FILE_PATH = `${CURRENT_SEASON}/customer.json`; 
     let MONEY_FILE_PATH = `${CURRENT_SEASON}/money.json`; 
-    document.getElementById('appTitleDisplay').textContent = `Data(${CURRENT_SEASON|| 20})`;
+    document.getElementById('appTitleDisplay').textContent = `Data (${CURRENT_SEASON || '2025-26'})`;
 
     let CUSTOMER_API_URL = `https://api.github.com/repos/${GITHUB_USERNAME}/${CUSTOMER_REPO}/contents/${CUSTOMER_FILE_PATH}`;
     let MONEY_API_URL = `https://api.github.com/repos/${GITHUB_USERNAME}/${CUSTOMER_REPO}/contents/${MONEY_FILE_PATH}`;
 
     let globalCustomerData = []; 
+    let globalCustomerHistory = [];
+    let globalCustomerSha = null;
     let globalMoneyData = { data: [], sha: null }; 
     let globalAnalysisResult = null;
     
@@ -627,26 +916,108 @@ body {
     let activePendingVillageFilter = "All";
     let isPdfCancelled = false;
 
+    let currentWizardStep = 1;
+    let selectedPendingCustomerForPaid = null;
+
+    // Hindi Month & Weekday Names for Due List Date Formatting
+    const HINDI_MONTHS = [
+        "जनवरी", "फ़रवरी", "मार्च", "अप्रैल", "मई", "जून",
+        "जुलाई", "अगस्त", "सितंबर", "अक्टूबर", "नवंबर", "दिसंबर"
+    ];
+    const HINDI_WEEKDAYS = [
+        "रविवार", "सोमवार", "मंगलवार", "बुधवार", "गुरुवार", "शुक्रवार", "शनिवार"
+    ];
+
+    // ============================================================
+    // 1. STRICT DATE HELPERS: BACKEND (YYYY-MM-DD / YYYY/MM/DD)
+    //    AND FRONTEND UI DISPLAY (DD/MM/YYYY) + HINDI MONTH/DAY
+    // ============================================================
+    function formatBackendDateToDDMMYYYY(dateStr) {
+        if (!dateStr) return "";
+        const clean = dateStr.replace(/\//g, '-');
+        const parts = clean.split('-');
+        if (parts.length === 3) {
+            return `${parts[2]}/${parts[1]}/${parts[0]}`;
+        }
+        return dateStr;
+    }
+
+    function normalizeDateForInput(dateStr) {
+        if (!dateStr) return "";
+        return dateStr.replace(/\//g, '-');
+    }
+
+    function formatHindiDateWithMonthAndDay(dateStr) {
+        if (!dateStr) return "N/A";
+        const clean = normalizeDateForInput(dateStr);
+        const parts = clean.split('-');
+        if (parts.length !== 3) return dateStr;
+
+        const year = parseInt(parts[0], 10);
+        const monthIdx = parseInt(parts[1], 10) - 1;
+        const dayNum = parseInt(parts[2], 10);
+        const dateObj = new Date(year, monthIdx, dayNum);
+
+        if (isNaN(dateObj.getTime())) return formatBackendDateToDDMMYYYY(dateStr);
+
+        const hindiMonth = HINDI_MONTHS[monthIdx] || "";
+        const hindiDay = HINDI_WEEKDAYS[dateObj.getDay()] || "";
+        const ddStr = String(dayNum).padStart(2, '0');
+
+        return `${ddStr} ${hindiMonth} ${year} (${hindiDay})`;
+    }
+
+    function syncCustomDateDisplay(inputId, displayId) {
+        const val = document.getElementById(inputId).value;
+        const displayEl = document.getElementById(displayId);
+        if (displayEl) {
+            displayEl.textContent = val ? formatBackendDateToDDMMYYYY(val) : "--/--/----";
+        }
+    }
+
+    function getLocalTodayISO() {
+        const now = new Date();
+        const yyyy = now.getFullYear();
+        const mm = String(now.getMonth() + 1).padStart(2, '0');
+        const dd = String(now.getDate()).padStart(2, '0');
+        return `${yyyy}-${mm}-${dd}`;
+    }
+
+    // ============================================================
+    // INITIALIZATION
+    // ============================================================
     window.addEventListener('DOMContentLoaded', () => {
         if(!localStorage.getItem('season') || !localStorage.getItem('who')) {
             document.getElementById('redirectPopup').style.display = 'flex';
         } else {
-            resetDatePickerToToday();
+            resetDatePickersToToday();
             runAnalysis();
         }
     });
 
-    function resetDatePickerToToday() {
-        document.getElementById('moneyDate').valueAsDate = new Date();
+    function resetDatePickersToToday() {
+        const todayStr = getLocalTodayISO();
+        const mDate = document.getElementById('moneyDate');
+        mDate.max = todayStr;
+        mDate.value = todayStr;
+        syncCustomDateDisplay('moneyDate', 'moneyDateDisplay');
+
+        const lDate = document.getElementById('ledgerDatePicker');
+        lDate.max = todayStr;
+        lDate.value = todayStr;
+        syncCustomDateDisplay('ledgerDatePicker', 'ledgerDateDisplay');
     }
 
     function openCanvas(id) { document.getElementById(id).classList.add('active'); }
     function closeCanvas(id) { document.getElementById(id).classList.remove('active'); }
+    function openBottomSheet(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeBottomSheet(id) { document.getElementById(id).style.display = 'none'; }
+    function handleOverlayClose(e, id) { if (e.target.id === id) closeBottomSheet(id); }
 
     function decodeFromBase64(base64) { return decodeURIComponent(escape(atob(base64))); }
     function encodeToBase64(content) { return btoa(unescape(encodeURIComponent(content))); }
 
-    function animateValueCounter(element, targetVal, isPrice = true, duration = 1500) {
+    function animateValueCounter(element, targetVal, isPrice = true, duration = 1100) {
         let startTimestamp = null;
         const step = (timestamp) => {
             if (!startTimestamp) startTimestamp = timestamp;
@@ -677,18 +1048,21 @@ body {
             const response = await fetch(url, {
                 headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
             });
-            if (response.status === 404 && filePath === MONEY_FILE_PATH) return { content: [], sha: null };
+            if (response.status === 404) return { content: {}, sha: null };
             if (!response.ok) throw new Error(`Error: ${response.statusText}`);
             const data = await response.json();
             return { content: JSON.parse(decodeFromBase64(data.content)), sha: data.sha };
         } catch (error) {
-            console.error(error); return { content: [], sha: null };
+            console.error(error); return { content: {}, sha: null };
         }
     }
 
     async function fetchAllData() {
         const customerResult = await fetchFileContent(CUSTOMER_API_URL, CUSTOMER_FILE_PATH);
         globalCustomerData = customerResult.content.customers || [];
+        globalCustomerHistory = customerResult.content.history || [];
+        globalCustomerSha = customerResult.sha;
+
         const moneyResult = await fetchFileContent(MONEY_API_URL, MONEY_FILE_PATH);
         globalMoneyData = { data: moneyResult.content.dailyEntries || [], sha: moneyResult.sha };
     }
@@ -699,6 +1073,7 @@ body {
         let paidAmount = 0;
         let totalCustomers = data.length;
         let pendingCustomersCount = 0;
+        let paidCustomersCount = 0;
         const villageStats = {};
         let totalInCash = 0;
         let totalExpenses = 0;
@@ -720,7 +1095,7 @@ body {
             const village = (user.village || 'अज्ञात गाँव').trim();
             
             if (!villageStats[village]) {
-                villageStats[village] = { total: 0, pending: 0, paid: 0, customers: 0, pendingCustomers: 0 };
+                villageStats[village] = { total: 0, pending: 0, paid: 0, customers: 0, pendingCustomers: 0, paidCustomers: 0 };
             }
             villageStats[village].customers += 1;
             villageStats[village].total += numericAmount;
@@ -732,17 +1107,23 @@ body {
                 villageStats[village].pendingCustomers += 1;
             } else {
                 paidAmount += numericAmount;
+                paidCustomersCount += 1;
                 villageStats[village].paid += numericAmount;
+                villageStats[village].paidCustomers += 1;
             }
         });
 
         const totalRevenue = totalCustomerAmount + totalInCash; 
-        const completionRate = (totalCustomerAmount) > 0 ? Math.round((paidAmount / totalCustomerAmount) * 100) : 0;
+        const totalRealizedCash = paidAmount + totalInCash;
+        const netProfit = totalRevenue - totalExpenses;
+        const netCashInHand = totalRealizedCash - totalExpenses;
+        const completionRate = totalCustomerAmount > 0 ? Math.round((paidAmount / totalCustomerAmount) * 100) : 0;
 
         return {
             summary: {
-                totalCustomers, pendingCustomersCount, tpaidamount: paidAmount,
-                totalAmount: totalRevenue, pendingAmount, paidAmount,
+                totalCustomers, pendingCustomersCount, paidCustomersCount, tpaidamount: paidAmount,
+                totalCustomerAmount, totalAmount: totalRevenue, pendingAmount, paidAmount,
+                totalRealizedCash, netProfit, netCashInHand,
                 completionRate, totalInCash, totalExpenses, totalDiesel, totalOther
             },
             villageStats
@@ -752,7 +1133,7 @@ body {
     function renderSummary(summary) {
         animateValueCounter(document.getElementById('totalAmount'), summary.totalAmount, true);
         animateValueCounter(document.getElementById('pendingCustomersCount'), summary.pendingCustomersCount, false);
-        animateValueCounter(document.getElementById('totalCustomers'), globalCustomerData.filter(u=>u.paymentDone).length, false);
+        animateValueCounter(document.getElementById('totalCustomers'), summary.paidCustomersCount, false);
         animateValueCounter(document.getElementById('pendingAmountCard'), summary.pendingAmount, true);
 
         animateValueCounter(document.getElementById('mTotalRevenue'), summary.totalAmount, true);
@@ -765,6 +1146,10 @@ body {
         animateValueCounter(document.getElementById('mTotalOther'), summary.totalOther, true);
     }
 
+    // ============================================================
+    // 3. PENDING CUSTOMER LIST (DEDICATED TICK BUTTON + BOTTOM SHEET
+    //    CONFIRMATION CHECKBOX TO PREVENT ACCIDENTAL CLICKS)
+    // ============================================================
     function buildVillageChips() {
         const container = document.getElementById('pendingVillageChips');
         container.innerHTML = '';
@@ -814,7 +1199,8 @@ body {
         if(searchVal) {
             filtered = filtered.filter(u => {
                 const name = `${u.firstName || ''} ${u.lastName || ''}`.toLowerCase();
-                return name.includes(searchVal) || (u.village || '').toLowerCase().includes(searchVal);
+                const ddmmyyyy = formatBackendDateToDDMMYYYY(u.date);
+                return name.includes(searchVal) || (u.village || '').toLowerCase().includes(searchVal) || ddmmyyyy.includes(searchVal);
             });
         }
 
@@ -830,21 +1216,132 @@ body {
         filtered.forEach(user => {
             const row = document.createElement('div');
             row.className = 'list-item';
-            let regDate = user.date || 'N/A';
-            try { if(user.date) regDate = new Date(user.date).toLocaleDateString('hi-IN'); } catch(e){}
+            const regDate = formatBackendDateToDDMMYYYY(user.date) || 'N/A';
 
             row.innerHTML = `
                 <div class="item-info">
                     <h4>${user.firstName || ''} ${user.lastName || ''}</h4>
                     <p><span class="item-badge">${user.village || 'अज्ञात'}</span> <span>📅 ${regDate}</span></p>
                 </div>
-                <div class="item-amount pending">₹${(parseFloat(user.amount)||0).toLocaleString('en-IN')}</div>
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <div class="item-amount pending">₹${(parseFloat(user.amount)||0).toLocaleString('en-IN')}</div>
+
+                </div>
             `;
+            // Only clicking the dedicated tick button opens the bottom sheet confirmation
+            row.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openMarkPaidBottomSheet(user);
+            });
             container.appendChild(row);
         });
     }
 
     document.getElementById('pendingSearch').addEventListener('input', updatePendingUI);
+
+    function openMarkPaidBottomSheet(user) {
+        selectedPendingCustomerForPaid = user;
+        document.getElementById('markPaidCustInfo').innerHTML = `<strong>${user.firstName} ${user.lastName}</strong> (${user.village}) • पंजीकरण: <strong>${formatBackendDateToDDMMYYYY(user.date)}</strong>`;
+        document.getElementById('markPaidAmountInput').value = parseFloat(user.amount) || 0;
+        
+        // Reset mandatory confirmation tick every time the sheet opens
+        const cb = document.getElementById('markPaidVerifyCheckbox');
+        cb.checked = false;
+        toggleMarkPaidSubmitState(false);
+
+        openBottomSheet('markPaidSheet');
+    }
+
+    function toggleMarkPaidSubmitState(isChecked) {
+        const btn = document.getElementById('confirmMarkPaidBtn');
+        btn.disabled = !isChecked;
+        btn.style.opacity = isChecked ? '1' : '0.45';
+        btn.style.cursor = isChecked ? 'pointer' : 'not-allowed';
+    }
+
+    async function executeMarkCustomerPaid() {
+        if (!selectedPendingCustomerForPaid) return;
+        if (!document.getElementById('markPaidVerifyCheckbox').checked) return;
+
+        const finalAmt = parseFloat(document.getElementById('markPaidAmountInput').value);
+        if (isNaN(finalAmt) || finalAmt < 0) {
+            alert('कृपया सही राशि दर्ज करें।');
+            return;
+        }
+
+        closeBottomSheet('markPaidSheet');
+        document.getElementById('pdfProgressTitle').textContent = "भुगतान अपडेट हो रहा है...";
+        document.getElementById('pdfProgressPopup').style.display = 'flex';
+
+        const updatedCustomers = JSON.parse(JSON.stringify(globalCustomerData));
+        const updatedHistory = JSON.parse(JSON.stringify(globalCustomerHistory));
+        const idx = updatedCustomers.findIndex(c => c.id === selectedPendingCustomerForPaid.id);
+
+        if (idx !== -1) {
+            const oldAmt = updatedCustomers[idx].amount;
+            const paidTs = new Date().toISOString();
+            updatedCustomers[idx].amount = finalAmt;
+            updatedCustomers[idx].paymentDone = true;
+            updatedCustomers[idx].paidAt = paidTs;
+
+            updatedHistory.push({
+                userId: updatedCustomers[idx].id,
+                type: 'Payment Completed',
+                message: `Marked as paid from Analytics. Amount: ₹${oldAmt} -> ₹${finalAmt}`,
+                timestamp: paidTs
+            });
+
+            const payload = {
+                message: `Mark payment done for ${updatedCustomers[idx].firstName}`,
+                content: encodeToBase64(JSON.stringify({ customers: updatedCustomers, history: updatedHistory }, null, 2))
+            };
+            if (globalCustomerSha) payload.sha = globalCustomerSha;
+
+            try {
+                const res = await fetch(CUSTOMER_API_URL, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!res.ok) throw new Error("Failed to sync payment status");
+                const jsonRes = await res.json();
+                globalCustomerSha = jsonRes.content.sha;
+                globalCustomerData = updatedCustomers;
+                globalCustomerHistory = updatedHistory;
+
+                const analysisResult = analyzeData(globalCustomerData, globalMoneyData);
+                globalAnalysisResult = analysisResult;
+                renderSummary(analysisResult.summary);
+                updatePendingUI();
+                updatePaidUI();
+
+                document.getElementById('pdfProgressPopup').style.display = 'none';
+                document.getElementById('successPopupMessage').textContent = `${updatedCustomers[idx].firstName} ${updatedCustomers[idx].lastName} का भुगतान (₹${finalAmt.toLocaleString('en-IN')}) सफलतापूर्वक Paid मार्क हो गया है।`;
+                document.getElementById('successPopup').style.display = 'flex';
+            } catch (err) {
+                document.getElementById('pdfProgressPopup').style.display = 'none';
+                alert('❌ त्रुटि: ' + err.message);
+            }
+        } else {
+            document.getElementById('pdfProgressPopup').style.display = 'none';
+        }
+    }
+
+    // ============================================================
+    // PAID CUSTOMER LIST: REGISTRATION DATE + LATEST PAID ON TOP
+    // ============================================================
+    function getLatestPaidTimestampForUser(user) {
+        if (user.paidAt) return new Date(user.paidAt).getTime();
+        const paymentLogs = (globalCustomerHistory || []).filter(h =>
+            h.userId === user.id &&
+            ((h.type || '').toLowerCase().includes('payment') || (h.message || '').toLowerCase().includes('paid'))
+        );
+        if (paymentLogs.length > 0) {
+            paymentLogs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            return new Date(paymentLogs[0].timestamp).getTime();
+        }
+        return new Date(normalizeDateForInput(user.date) || 0).getTime();
+    }
 
     function updatePaidUI() {
         const searchVal = document.getElementById('paidSearch').value.toLowerCase().trim();
@@ -852,12 +1349,13 @@ body {
         container.innerHTML = '';
 
         let paidUsers = globalCustomerData.filter(u => u.paymentDone);
-        paidUsers.reverse(); 
+        paidUsers.sort((a, b) => getLatestPaidTimestampForUser(b) - getLatestPaidTimestampForUser(a));
 
         if(searchVal) {
             paidUsers = paidUsers.filter(u => {
                 const fullName = `${u.firstName || ''} ${u.lastName || ''}`.toLowerCase();
-                return fullName.includes(searchVal) || (u.village || '').toLowerCase().includes(searchVal);
+                const ddmmyyyy = formatBackendDateToDDMMYYYY(u.date);
+                return fullName.includes(searchVal) || (u.village || '').toLowerCase().includes(searchVal) || ddmmyyyy.includes(searchVal);
             });
         }
 
@@ -869,10 +1367,15 @@ body {
         paidUsers.forEach(user => {
             const row = document.createElement('div');
             row.className = 'list-item';
+            const regDate = formatBackendDateToDDMMYYYY(user.date) || 'N/A';
+
             row.innerHTML = `
                 <div class="item-info">
                     <h4>${user.firstName || ''} ${user.lastName || ''}</h4>
-                    <p><span class="item-badge">${user.village || 'गाँव'}</span></p>
+                    <p>
+                        <span class="item-badge">${user.village || 'गाँव'}</span>
+                        <span>📅 पंजीकरण: <strong>${regDate}</strong></span>
+                    </p>
                 </div>
                 <div class="item-amount paid">₹${(parseFloat(user.amount)||0).toLocaleString('en-IN')}</div>
             `;
@@ -886,229 +1389,317 @@ body {
         document.getElementById('pdfProgressPopup').style.display = 'none';
     }
 
-    /* --- CUSTOMIZATION 1, 2, 3 & 4: PENDING BAKAYA REPORT --- */
+    // ============================================================
+    // 1. PRINT DUE LIST:
+    //    OUTSIDE OF TABLE: S.N.
+    //    INSIDE TABLE COLUMNS: AMOUNT (1ST) > NAME > DATE (HINDI MONTH & WEEKDAY) > VILLAGE > MARK AS PAYMENT
+    // ============================================================
     document.getElementById('printMasterPdfTrigger').addEventListener('click', async () => {
         isPdfCancelled = false;
-        document.getElementById('pdfProgressTitle').textContent = "मास्टर ड्यू लिस्ट पीडीएफ जनरेट हो रहा है";
+        document.getElementById('pdfProgressTitle').textContent = "सिंपल ब्लैक & व्हाइट ड्यू लिस्ट बन रही है...";
         document.getElementById('pdfProgressPopup').style.display = 'flex';
 
         const template = document.getElementById('pdfExportTemplate');
-        template.innerHTML = ''; 
+        template.innerHTML = '';
 
         const rawVillages = [...new Set(globalCustomerData.map(u => (u.village || 'अज्ञात गाँव').trim()))];
-        
-        // केवल उन्हीं गाँवों को फिल्टर करें जिनमें बकाया (Pending) ग्राहक हैं (Rule 3)
-        const villagesWithPending = rawVillages.filter(vName => {
-            return globalCustomerData.some(u => (u.village || 'अज्ञात गाँव').trim() === vName && !u.paymentDone);
-        });
+        const villagesWithPending = rawVillages.filter(vName =>
+            globalCustomerData.some(u => (u.village || 'अज्ञात गाँव').trim() === vName && !u.paymentDone)
+        );
 
-        let villageBlocksHtml = '';
-        let globalCustomerSerial = 1;
+        let allRowsHtml = '';
 
-        villagesWithPending.forEach((villageName) => {
-            const pendingInVillage = globalCustomerData.filter(u => 
-                (u.village || 'अज्ञात गाँव').trim() === villageName && !u.paymentDone
-            ).sort((a, b) => (b.amount || 0) - (a.amount || 0));
+        villagesWithPending.forEach((villageName, vIdx) => {
+            // Arrange customers by registration date within each village
+            const pendingInVillage = globalCustomerData
+                .filter(u => (u.village || 'अज्ञात गाँव').trim() === villageName && !u.paymentDone)
+                .sort((a, b) => new Date(normalizeDateForInput(a.date)) - new Date(normalizeDateForInput(b.date)));
 
-            let villageSum = 0;
-            let rows = '';
-            
-            pendingInVillage.forEach((user) => {
-                const amt = parseFloat(user.amount) || 0;
-                villageSum += amt;
-                let rDate = user.date || 'N/A';
-                try { if(user.date) rDate = new Date(user.date).toLocaleDateString('hi-IN'); } catch(e){}
-
-                rows += `
+            // 1 empty separator line before starting next village
+            if (vIdx > 0) {
+                allRowsHtml += `
                     <tr>
-                        <td style="padding:12px; border:1px solid #e2e8f0;">${globalCustomerSerial++}</td>
-                        <td style="padding:12px; border:1px solid #e2e8f0; font-weight:600; color:#1e293b;">${user.firstName || ''} ${user.lastName || ''}</td>
-                        <td style="padding:12px; border:1px solid #e2e8f0; color:#64748b;">${rDate}</td>
-                        <td style="padding:12px; border:1px solid #e2e8f0; font-weight:700; color:#ef4444;">₹${amt.toLocaleString('en-IN')}</td>
+                        <td style="border:none; height:22px;">&nbsp;</td>
+                        <td colspan="5" style="border:none; height:22px;">&nbsp;</td>
+                    </tr>
+                `;
+            }
+
+            // Village Heading Row (Simple B&W, no village due total)
+            allRowsHtml += `
+                <tr>
+                    <td style="border:none; background:#ffffff;"></td>
+                    <td colspan="5" style="padding:8px 10px; font-size:15px; font-weight:800; color:#000000; background:#f2f2f2; border:1px solid #000000;">
+                        गाँव: ${villageName}
+                    </td>
+                </tr>
+            `;
+
+            pendingInVillage.forEach((user, idx) => {
+                const amt = parseFloat(user.amount) || 0;
+                const hindiDateStr = formatHindiDateWithMonthAndDay(user.date);
+
+                allRowsHtml += `
+                    <tr>
+                        <!-- S.N. placed OUTSIDE of the bordered table on the left -->
+                        <td style="border:none; padding:7px 8px 7px 0; text-align:right; font-size:12px; font-weight:700; color:#000000; width:34px;">${idx + 1}.</td>
+                        <!-- Col 1: Amount -->
+                        <td style="padding:7px 10px; border:1px solid #000000; text-align:right; font-weight:800; font-size:13px;">₹${amt.toLocaleString('en-IN')}</td>
+                        <!-- Col 2: Name -->
+                        <td style="padding:7px 10px; border:1px solid #000000; font-weight:600; font-size:13px;">${user.firstName || ''} ${user.lastName || ''}</td>
+                        <!-- Col 3: Date with Hindi Month & Weekday -->
+                        <td style="padding:7px 10px; border:1px solid #000000; text-align:center; font-size:12px;">${hindiDateStr}</td>
+                        <!-- Col 4: Village -->
+                        <td style="padding:7px 10px; border:1px solid #000000; text-align:center; font-size:12px;">${user.village || villageName}</td>
+                        <!-- Col 5: Mark as Payment (Empty column for offline marking) -->
+                        <td style="padding:7px 10px; border:1px solid #000000; text-align:center; width:74px;"></td>
                     </tr>
                 `;
             });
+        });
 
-            // प्रत्येक विलेज ब्लॉक के लिए सुंदर और कलरफुल हेडर + क्यूआर कोड लेआउट
-            villageBlocksHtml += `
-                <div class="pdf-page-container" style="font-family: 'Noto Sans Devanagari'; background: #ffffff; margin-bottom:20px; border-bottom:3px solid #e2e8f0;">
-                    <div style="background: linear-gradient(135deg, #1e1b4b, #312e81); padding:24px; border-radius:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; color:#ffffff; box-shadow:0 10px 15px -3px rgba(0,0,0,0.1);">
-                        <div style="width:70%;">
-                            <h2 style="margin:0; font-size:22px; font-weight:700; color:#f3f4f6;">📍 ग्राम: ${villageName}</h2>
-                            <p style="margin:8px 0 0 0; font-size:14px; color:#c7d2fe; font-weight:500; line-height:1.4;">
-                                ⚠️ सूचना: यदि आपका भुगतान अभी तक बकाया है, तो कृपया नीचे दिए गए QR कोड को स्कैन करके त्वरित भुगतान करें।
-                            </p>
-                            <h4 style="margin:12px 0 0 0; color:#fca5a5; font-size:16px; font-weight:700;">ग्राम संचित कुल बकाया: ₹${villageSum.toLocaleString('en-IN')}</h4>
-                        </div>
-                        <div style="width:25%; text-align:right;">
-                            <img src="${GLOBAL_QR_PAYMENT_URL}" style="width:110px; height:110px; border:3px solid #ffffff; border-radius:12px; padding:4px; background:#fff;">
-                        </div>
+        template.innerHTML = `
+            <div style="font-family: 'Noto Sans Devanagari', sans-serif; background:#ffffff; color:#000000; padding:26px 30px; width:794px;">
+                <!-- Simple Black & White Header with B&W QR -->
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #000000; padding-bottom:14px; margin-bottom:16px; margin-left:34px;">
+                    <div>
+                        <h2 style="margin:0; font-size:20px; font-weight:800; color:#000000;">बकाया ग्राहक सूची (Due List)</h2>
+                        <p style="margin:5px 0 0 0; font-size:12px; color:#000000;">सत्र: ${CURRENT_SEASON} &nbsp;|&nbsp; दिनांक: ${formatHindiDateWithMonthAndDay(getLocalTodayISO())}</p>
+                        <p style="margin:4px 0 0 0; font-size:11px; color:#222222;">ऑनलाइन भुगतान हेतु दाईं ओर दिए गए QR कोड को स्कैन करें।</p>
                     </div>
-                    <table style="width:100%; border-collapse:collapse; box-shadow:0 4px 6px -1px rgba(0,0,0,0.05);">
-                        <thead>
-                            <tr style="background-color:#4f46e5; color:#ffffff;">
-                                <th style="width:10%; padding:14px; text-align:left; border-top-left-radius:8px;">क्र.सं.</th>
-                                <th style="width:45%; padding:14px; text-align:left;">ग्राहक का नाम</th>
-                                <th style="width:25%; padding:14px; text-align:left;">पंजीकरण तिथि</th>
-                                <th style="width:20%; padding:14px; text-align:left; border-top-right-radius:8px;">बकाया राशि</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${rows}
-                        </tbody>
-                    </table>
+                    <div style="text-align:center;">
+                        <img src="${BW_QR_PAYMENT_URL}" style="width:92px; height:92px; border:1px solid #000000; padding:3px; background:#ffffff; filter: grayscale(100%) contrast(150%);">
+                    </div>
                 </div>
-            `;
-        });
 
-        // पीडीएफ बिना किसी एक्स्ट्रा नियम वाले पेज के सीधे पहले विलेज से शुरू होगी
-        template.innerHTML = `<div style="background: #ffffff;">${villageBlocksHtml}</div>`;
+                <!-- Table with S.N. outside on the left, followed by Amount > Name > Date (Hindi) > Village > Mark as Payment -->
+                <table style="width:100%; border-collapse:collapse; color:#000000;">
+                    <thead>
+                        <tr>
+                            <th style="border:none; width:34px;"></th>
+                            <th style="width:15%; padding:8px; border:1px solid #000000; background:#e5e5e5; text-align:right; font-size:13px;">बकाया राशि</th>
+                            <th style="width:27%; padding:8px; border:1px solid #000000; background:#e5e5e5; text-align:left; font-size:13px;">ग्राहक का नाम</th>
+                            <th style="width:28%; padding:8px; border:1px solid #000000; background:#e5e5e5; text-align:center; font-size:13px;">पंजीकरण तिथि (माह एवं वार)</th>
+                            <th style="width:16%; padding:8px; border:1px solid #000000; background:#e5e5e5; text-align:center; font-size:13px;">गाँव</th>
+                            <th style="width:14%; padding:8px; border:1px solid #000000; background:#e5e5e5; text-align:center; font-size:13px;">Paid (✓)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${allRowsHtml || '<tr><td style="border:none;"></td><td colspan="5" style="padding:20px; text-align:center; border:1px solid #000000;">कोई बकाया रिकॉर्ड नहीं है।</td></tr>'}
+                    </tbody>
+                </table>
+            </div>
+        `;
 
-        const pageContainers = template.querySelectorAll('.pdf-page-container');
-        pageContainers.forEach(page => {
-            const currentHeight = page.offsetHeight;
-            const safeTargetBoundary = Math.ceil(currentHeight / 1185) * 1185; 
-            page.style.minHeight = safeTargetBoundary + 'px';
-        });
-
-        if(!isPdfCancelled) await triggerMultiPagePdf(`समस्त_ग्राम_बकाया_रिपोर्ट.pdf`);
+        if(!isPdfCancelled) await triggerMultiPagePdf(`Due_List_${CURRENT_SEASON}.pdf`);
     });
 
-    /* --- CUSTOMIZATION 5 & 6: MERGED COLORFUL FINANCE REPORT --- */
+    // ============================================================
+    // MASTER FINANCIAL ANALYTICS REPORT
+    // ============================================================
     document.getElementById('printFinanceReportTrigger').addEventListener('click', async () => {
         isPdfCancelled = false;
-        document.getElementById('pdfProgressTitle').textContent = "फाइनेंशियल लेजर स्टेटमेंट जनरेट हो रहा है";
+        document.getElementById('pdfProgressTitle').textContent = "मास्टर फाइनेंशियल एनालिटिक्स रिपोर्ट बन रही है...";
         document.getElementById('pdfProgressPopup').style.display = 'flex';
 
         const template = document.getElementById('pdfExportTemplate');
         const sm = globalAnalysisResult.summary;
+        const vStats = globalAnalysisResult.villageStats;
 
-        // भाग 1: वित्तीय मुख्य डिटेल्स (खूबसूरत रंगीन इन्फोग्राफिक कार्ड्स)
-        let pageOneInfographicsHtml = `
-            <div class="pdf-page-container" style="font-family: 'Noto Sans Devanagari'; background: #ffffff;">
-                <div style="background: linear-gradient(135deg, #0f172a, #1e293b); padding:30px; border-radius:20px; text-align:center; margin-bottom:30px; color:#ffffff;">
-                    <h2 style="margin:0; font-size:26px; font-weight:800; letter-spacing:0.5px; color:#38bdf8;">व्यावसायिक विस्तृत वित्तीय लेजर रिपोर्ट</h2>
-                    <p style="color:#94a3b8; font-size:13px; margin-top:8px; font-weight:500;">सत्र चक्र कोड: ${CURRENT_SEASON} | रिपोर्ट जनरेशन तिथि: ${new Date().toLocaleDateString('hi-IN')}</p>
-                </div>
+        let villageAnalyticsRows = '';
+        const sortedVillages = Object.keys(vStats).sort((a, b) => vStats[b].pending - vStats[a].pending);
 
-                <div style="display: flex; gap: 20px; margin-bottom: 20px;">
-                    <div style="flex: 1; background: linear-gradient(135deg, #4f46e5, #6366f1); color: white; padding: 24px; border-radius: 16px; box-shadow: 0 10px 15px -3px rgba(79,70,229,0.3);">
-                        <span style="font-size: 11px; text-transform: uppercase; opacity: 0.9; font-weight:600; letter-spacing:0.5px;">कुल सकल राजस्व (Gross Revenue)</span>
-                        <h3 style="font-size: 26px; margin: 8px 0 0 0; font-weight: 800;">₹${sm.totalAmount.toLocaleString('en-IN')}</h3>
-                    </div>
-                    <div style="flex: 1; background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 24px; border-radius: 16px; box-shadow: 0 10px 15px -3px rgba(16,185,129,0.3);">
-                        <span style="font-size: 11px; text-transform: uppercase; opacity: 0.9; font-weight:600; letter-spacing:0.5px;">कुल प्राप्त भुगतान (Paid Collection)</span>
-                        <h3 style="font-size: 26px; margin: 8px 0 0 0; font-weight: 800;">₹${sm.tpaidamount.toLocaleString('en-IN')}</h3>
-                    </div>
-                </div>
+        sortedVillages.forEach((vName, idx) => {
+            const st = vStats[vName];
+            const vRecRate = st.total > 0 ? Math.round((st.paid / st.total) * 100) : 0;
+            const shareOfPending = sm.pendingAmount > 0 ? Math.round((st.pending / sm.pendingAmount) * 100) : 0;
+            villageAnalyticsRows += `
+                <tr style="border-bottom:1px solid #e2e8f0; background:${idx % 2 === 0 ? '#ffffff' : '#f8fafc'};">
+                    <td style="padding:10px; font-weight:700; color:#1e293b;">${vName}</td>
+                    <td style="padding:10px; text-align:center; color:#475569;">${st.customers} (${st.pendingCustomers} बकाया)</td>
+                    <td style="padding:10px; text-align:right; font-weight:600; color:#1e293b;">₹${st.total.toLocaleString('en-IN')}</td>
+                    <td style="padding:10px; text-align:right; font-weight:600; color:#059669;">₹${st.paid.toLocaleString('en-IN')}</td>
+                    <td style="padding:10px; text-align:right; font-weight:800; color:#dc2626;">₹${st.pending.toLocaleString('en-IN')} <span style="font-size:10px; color:#64748b;">(${shareOfPending}%)</span></td>
+                    <td style="padding:10px; text-align:center; font-weight:700; color:${vRecRate >= 70 ? '#059669' : '#d97706'};">${vRecRate}%</td>
+                </tr>
+            `;
+        });
+        if (!villageAnalyticsRows) {
+            villageAnalyticsRows = '<tr><td colspan="6" style="padding:16px; text-align:center; color:#94a3b8;">कोई गाँव डेटा उपलब्ध नहीं है।</td></tr>';
+        }
 
-                <div style="display: flex; gap: 20px; margin-bottom: 30px;">
-                    <div style="flex: 1; background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 24px; border-radius: 16px; box-shadow: 0 10px 15px -3px rgba(239,68,68,0.3);">
-                        <span style="font-size: 11px; text-transform: uppercase; opacity: 0.9; font-weight:600; letter-spacing:0.5px;">सिस्टम शुद्ध बकाया (Pending Due)</span>
-                        <h3 style="font-size: 26px; margin: 8px 0 0 0; font-weight: 800;">₹${sm.pendingAmount.toLocaleString('en-IN')}</h3>
-                    </div>
-                    <div style="flex: 1; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 24px; border-radius: 16px; box-shadow: 0 10px 15px -3px rgba(245,158,11,0.3);">
-                        <span style="font-size: 11px; text-transform: uppercase; opacity: 0.9; font-weight:600; letter-spacing:0.5px;">नकद काउंटर योग (Cash Pool)</span>
-                        <h3 style="font-size: 26px; margin: 8px 0 0 0; font-weight: 800;">₹${sm.totalInCash.toLocaleString('en-IN')}</h3>
-                    </div>
-                </div>
-
-                <div style="background: #f8fafc; border-radius: 16px; padding: 24px; border: 1px solid #e2e8f0; margin-bottom: 30px; box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);">
-                    <h4 style="margin: 0 0 15px 0; color:#1e293b; font-size:16px; border-bottom:2px solid #cbd5e1; padding-bottom:8px; font-weight:700;"><i class="fas fa-gas-pump" style="color:#f59e0b; margin-right:8px;"></i> परिचालन व्यय पृथक्करण विवरण</h4>
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <div style="text-align:center; width:33.33%;">
-                            <span style="font-size:13px; color:#64748b; font-weight:500;">कुल सकल व्यय</span>
-                            <p style="font-size:20px; font-weight:700; color:#b45309; margin:4px 0 0 0;">₹${sm.totalExpenses.toLocaleString('en-IN')}</p>
-                        </div>
-                        <div style="text-align:center; width:33.33%; border-left:1px solid #e2e8f0; border-right:1px solid #e2e8f0;">
-                            <span style="font-size:13px; color:#64748b; font-weight:500;">कुल डीजल व्यय</span>
-                            <p style="font-size:20px; font-weight:700; color:#4f46e5; margin:4px 0 0 0;">₹${sm.totalDiesel.toLocaleString('en-IN')}</p>
-                        </div>
-                        <div style="text-align:center; width:33.33%;">
-                            <span style="font-size:13px; color:#64748b; font-weight:500;">अन्य फुटकर व्यय</span>
-                            <p style="font-size:20px; font-weight:700; color:#475569; margin:4px 0 0 0;">₹${sm.totalOther.toLocaleString('en-IN')}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        // भाग 2: दैनिक प्रविष्टियाँ (Entries)
         let dailyRows = '';
         globalMoneyData.data.forEach((entry) => {
             const cash = parseFloat(entry.inCash) || 0;
             const diesel = parseFloat(entry.dieselExp) || 0;
             const other = parseFloat(entry.otherExp) || 0;
-            let fDate = entry.date;
-            try { fDate = new Date(entry.date).toLocaleDateString('hi-IN'); } catch(e){}
+            const netDay = cash - (diesel + other);
+            const fDate = formatBackendDateToDDMMYYYY(entry.date);
 
             dailyRows += `
                 <tr style="border-bottom:1px solid #e2e8f0;">
-                    <td style="padding:12px; font-weight:500;">${fDate}</td>
-                    <td style="padding:12px; color:#16a34a; font-weight:600;">₹${cash.toLocaleString('en-IN')}</td>
-                    <td style="padding:12px; color:#b45309; font-weight:600;">₹${(diesel+other).toLocaleString('en-IN')}</td>
-                    <td style="padding:12px; color:#475569;">₹${diesel.toLocaleString('en-IN')}</td>
-                    <td style="padding:12px; color:#475569;">₹${other.toLocaleString('en-IN')}</td>
+                    <td style="padding:9px 10px; font-weight:600;">${fDate}</td>
+                    <td style="padding:9px 10px; text-align:right; color:#059669; font-weight:700;">₹${cash.toLocaleString('en-IN')}</td>
+                    <td style="padding:9px 10px; text-align:right; color:#475569;">₹${diesel.toLocaleString('en-IN')}</td>
+                    <td style="padding:9px 10px; text-align:right; color:#475569;">₹${other.toLocaleString('en-IN')}</td>
+                    <td style="padding:9px 10px; text-align:right; color:#b45309; font-weight:600;">₹${(diesel + other).toLocaleString('en-IN')}</td>
+                    <td style="padding:9px 10px; text-align:right; font-weight:700; color:${netDay >= 0 ? '#1e293b' : '#dc2626'};">₹${netDay.toLocaleString('en-IN')}</td>
                 </tr>`;
         });
-        if(!dailyRows) dailyRows = '<tr><td colspan="5" style="text-align:center; color:#94a3b8; padding:20px;">कोई दैनिक एंट्री डेटा उपलब्ध नहीं है।</td></tr>';
+        if(!dailyRows) dailyRows = '<tr><td colspan="6" style="text-align:center; color:#94a3b8; padding:16px;">कोई दैनिक एंट्री उपलब्ध नहीं है।</td></tr>';
 
-        // भाग 3: चुकता ग्राहक लिस्ट (Paid Customer List)
-        const paidUsers = globalCustomerData.filter(user => user.paymentDone);
+        const paidUsers = globalCustomerData
+            .filter(user => user.paymentDone)
+            .sort((a, b) => getLatestPaidTimestampForUser(b) - getLatestPaidTimestampForUser(a));
+
         let paidRows = '';
         paidUsers.forEach((u, i) => {
+            const regDate = formatBackendDateToDDMMYYYY(u.date) || 'N/A';
             paidRows += `
-                <tr style="border-bottom:1px solid #e2e8f0;">
-                    <td style="padding:12px;">${i+1}</td>
-                    <td style="padding:12px; font-weight:600; color:#1e293b;">${u.firstName || ''} ${u.lastName || ''}</td>
-                    <td style="padding:12px; color:#475569;"><span style="background:#f1f5f9; padding:4px 8px; border-radius:6px; font-size:12px;">${u.village || 'गाँव'}</span></td>
-                    <td style="padding:12px; color:#16a34a; font-weight:700;">₹${(parseFloat(u.amount)||0).toLocaleString('en-IN')}</td>
+                <tr style="border-bottom:1px solid #e2e8f0; background:${i % 2 === 0 ? '#ffffff' : '#f8fafc'};">
+                    <td style="padding:9px 10px; text-align:center;">${i + 1}</td>
+                    <td style="padding:9px 10px; font-weight:700; color:#1e293b;">${u.firstName || ''} ${u.lastName || ''}</td>
+                    <td style="padding:9px 10px; color:#475569;">${u.village || 'गाँव'}</td>
+                    <td style="padding:9px 10px; text-align:center; color:#475569;">${regDate}</td>
+                    <td style="padding:9px 10px; text-align:right; color:#059669; font-weight:800;">₹${(parseFloat(u.amount)||0).toLocaleString('en-IN')}</td>
                 </tr>`;
         });
-        if(!paidRows) paidRows = '<tr><td colspan="4" style="text-align:center; color:#94a3b8; padding:20px;">कोई चुकता खाता रिकॉर्ड नहीं मिला।</td></tr>';
+        if(!paidRows) paidRows = '<tr><td colspan="5" style="text-align:center; color:#94a3b8; padding:16px;">कोई चुकता ग्राहक रिकॉर्ड नहीं मिला।</td></tr>';
 
-        // सभी को एक के बाद एक (मर्ज करके) जोड़ना
-        let pageTwoLogsHtml = `
-            <div class="pdf-page-container" style="font-family: 'Noto Sans Devanagari'; background: #ffffff; padding-top:0;">
-                <h3 style="color:#4f46e5; margin-top:0; margin-bottom:15px; font-size:18px; font-weight:700;"><i class="fas fa-calendar-alt"></i> दैनिक प्रविष्टि एवं लॉगबुक (Day-by-Day Logs)</h3>
-                <table style="width:100%; border-collapse:collapse; margin-bottom:40px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.05);">
+        const avgTicketSize = sm.totalCustomers > 0 ? Math.round(sm.totalCustomerAmount / sm.totalCustomers) : 0;
+        const expenseRatio = sm.totalAmount > 0 ? Math.round((sm.totalExpenses / sm.totalAmount) * 100) : 0;
+        const dieselShare = sm.totalExpenses > 0 ? Math.round((sm.totalDiesel / sm.totalExpenses) * 100) : 0;
+
+        template.innerHTML = `
+            <div style="font-family: 'Noto Sans Devanagari', sans-serif; background: #ffffff; padding: 32px; width: 794px; color: #0f172a;">
+                <div style="background: linear-gradient(135deg, #0f172a, #1e1b4b); padding: 26px 30px; border-radius: 18px; color: #ffffff; margin-bottom: 22px; display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <span style="background:rgba(56,189,248,0.2); color:#38bdf8; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:700; letter-spacing:0.5px;">EXECUTIVE FINANCIAL ANALYTICS</span>
+                        <h1 style="margin:8px 0 4px 0; font-size:24px; font-weight:800; color:#ffffff;">मास्टर फाइनेंस एवं रिकवरी विश्लेषण रिपोर्ट</h1>
+                        <p style="margin:0; color:#cbd5e1; font-size:12px;">सत्र: <strong>${CURRENT_SEASON}</strong> &nbsp;|&nbsp; रिपोर्ट तिथि: <strong>${formatBackendDateToDDMMYYYY(getLocalTodayISO())}</strong></p>
+                    </div>
+                    <div style="text-align:right;">
+                        <div style="font-size:11px; color:#94a3b8;">रिकवरी दर (Recovery)</div>
+                        <div style="font-size:28px; font-weight:800; color:#34d399;">${sm.completionRate}%</div>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; margin-bottom:22px;">
+                    <div style="background:#eef2ff; border:1px solid #c7d2fe; padding:16px; border-radius:14px;">
+                        <div style="font-size:11px; font-weight:700; color:#4338ca;">कुल सकल राजस्व (Gross Revenue)</div>
+                        <div style="font-size:20px; font-weight:800; color:#1e1b4b; margin-top:4px;">₹${sm.totalAmount.toLocaleString('en-IN')}</div>
+                        <div style="font-size:10px; color:#6366f1; margin-top:3px;">ग्राहक बिल + नकद काउंटर</div>
+                    </div>
+                    <div style="background:#ecfdf5; border:1px solid #a7f3d0; padding:16px; border-radius:14px;">
+                        <div style="font-size:11px; font-weight:700; color:#047857;">वास्तविक प्राप्त राशि (Realized Cash)</div>
+                        <div style="font-size:20px; font-weight:800; color:#065f46; margin-top:4px;">₹${sm.totalRealizedCash.toLocaleString('en-IN')}</div>
+                        <div style="font-size:10px; color:#059669; margin-top:3px;">चुकता (₹${sm.paidAmount.toLocaleString('en-IN')}) + कैश (₹${sm.totalInCash.toLocaleString('en-IN')})</div>
+                    </div>
+                    <div style="background:#fef2f2; border:1px solid #fecaca; padding:16px; border-radius:14px;">
+                        <div style="font-size:11px; font-weight:700; color:#b91c1c;">कुल मार्केट बकाया (Pending Due)</div>
+                        <div style="font-size:20px; font-weight:800; color:#991b1b; margin-top:4px;">₹${sm.pendingAmount.toLocaleString('en-IN')}</div>
+                        <div style="font-size:10px; color:#dc2626; margin-top:3px;">${sm.pendingCustomersCount} बकाया ग्राहक शेष</div>
+                    </div>
+
+                    <div style="background:#fffbeb; border:1px solid #fde68a; padding:16px; border-radius:14px;">
+                        <div style="font-size:11px; font-weight:700; color:#b45309;">कुल परिचालन खर्च (Total Expense)</div>
+                        <div style="font-size:20px; font-weight:800; color:#92400e; margin-top:4px;">₹${sm.totalExpenses.toLocaleString('en-IN')}</div>
+                        <div style="font-size:10px; color:#d97706; margin-top:3px;">राजस्व का ${expenseRatio}% खर्च अनुपात</div>
+                    </div>
+                    <div style="background:#f0fdf4; border:1px solid #bbf7d0; padding:16px; border-radius:14px;">
+                        <div style="font-size:11px; font-weight:700; color:#15803d;">शुद्ध लाभ (Net Profit - Book)</div>
+                        <div style="font-size:20px; font-weight:800; color:#14532d; margin-top:4px;">₹${sm.netProfit.toLocaleString('en-IN')}</div>
+                        <div style="font-size:10px; color:#16a34a; margin-top:3px;">सकल राजस्व - कुल खर्च</div>
+                    </div>
+                    <div style="background:#f8fafc; border:1px solid #cbd5e1; padding:16px; border-radius:14px;">
+                        <div style="font-size:11px; font-weight:700; color:#334155;">शुद्ध नकद शेष (Net Cash in Hand)</div>
+                        <div style="font-size:20px; font-weight:800; color:#0f172a; margin-top:4px;">₹${sm.netCashInHand.toLocaleString('en-IN')}</div>
+                        <div style="font-size:10px; color:#475569; margin-top:3px;">प्राप्त कुल कैश - कुल खर्च</div>
+                    </div>
+                </div>
+
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; padding:16px 20px; margin-bottom:24px; display:flex; justify-content:space-between; text-align:center;">
+                    <div style="flex:1;">
+                        <span style="font-size:11px; color:#64748b;">डीजल व्यय (Diesel)</span>
+                        <div style="font-size:16px; font-weight:800; color:#4f46e5;">₹${sm.totalDiesel.toLocaleString('en-IN')} <span style="font-size:11px; font-weight:500;">(${dieselShare}%)</span></div>
+                    </div>
+                    <div style="flex:1; border-left:1px solid #cbd5e1; border-right:1px solid #cbd5e1;">
+                        <span style="font-size:11px; color:#64748b;">अन्य व्यय (Other Exp)</span>
+                        <div style="font-size:16px; font-weight:800; color:#475569;">₹${sm.totalOther.toLocaleString('en-IN')} <span style="font-size:11px; font-weight:500;">(${100 - dieselShare}%)</span></div>
+                    </div>
+                    <div style="flex:1; border-right:1px solid #cbd5e1;">
+                        <span style="font-size:11px; color:#64748b;">औसत ग्राहक बिल (Avg Bill)</span>
+                        <div style="font-size:16px; font-weight:800; color:#0f172a;">₹${avgTicketSize.toLocaleString('en-IN')}</div>
+                    </div>
+                    <div style="flex:1;">
+                        <span style="font-size:11px; color:#64748b;">कुल ग्राहक (Paid / Total)</span>
+                        <div style="font-size:16px; font-weight:800; color:#059669;">${sm.paidCustomersCount} / ${sm.totalCustomers}</div>
+                    </div>
+                </div>
+
+                <h3 style="color:#1e1b4b; font-size:16px; font-weight:800; margin-bottom:10px; border-left:4px solid #4f46e5; padding-left:10px;">
+                    1. ग्राम-वार बकाया एवं रिकवरी विश्लेषण (Village-Wise Pending Breakdown)
+                </h3>
+                <table style="width:100%; border-collapse:collapse; margin-bottom:26px; font-size:12px;">
                     <thead>
-                        <tr style="background-color:#4f46e5; color:#ffffff;">
-                            <th style="padding:12px; text-align:left;">प्रविष्टि दिनांक</th>
-                            <th style="padding:12px; text-align:left;">प्राप्त नकद (Cash)</th>
-                            <th style="padding:12px; text-align:left;">सकल व्यय (Exp)</th>
-                            <th style="padding:12px; text-align:left;">डीजल खर्च</th>
-                            <th style="padding:12px; text-align:left;">अन्य खर्च</th>
+                        <tr style="background:#312e81; color:#ffffff;">
+                            <th style="padding:10px; text-align:left;">गाँव का नाम</th>
+                            <th style="padding:10px; text-align:center;">कुल / बकाया खाते</th>
+                            <th style="padding:10px; text-align:right;">कुल बिल राशि</th>
+                            <th style="padding:10px; text-align:right;">चुकता राशि</th>
+                            <th style="padding:10px; text-align:right;">शेष बकाया (Pending)</th>
+                            <th style="padding:10px; text-align:center;">रिकवरी %</th>
                         </tr>
                     </thead>
-                    <tbody>${dailyRows}</tbody>
+                    <tbody>
+                        ${villageAnalyticsRows}
+                        <tr style="background:#e0e7ff; font-weight:800; color:#1e1b4b;">
+                            <td style="padding:10px;">कुल योग (Total)</td>
+                            <td style="padding:10px; text-align:center;">${sm.totalCustomers} (${sm.pendingCustomersCount} बकाया)</td>
+                            <td style="padding:10px; text-align:right;">₹${sm.totalCustomerAmount.toLocaleString('en-IN')}</td>
+                            <td style="padding:10px; text-align:right; color:#047857;">₹${sm.paidAmount.toLocaleString('en-IN')}</td>
+                            <td style="padding:10px; text-align:right; color:#b91c1c;">₹${sm.pendingAmount.toLocaleString('en-IN')}</td>
+                            <td style="padding:10px; text-align:center;">${sm.completionRate}%</td>
+                        </tr>
+                    </tbody>
                 </table>
 
-                <h3 style="color:#10b981; margin-top:0; margin-bottom:15px; font-size:18px; font-weight:700;"><i class="fas fa-check-circle"></i> चुकता किए गए ग्राहकों की प्रमाणित सूची</h3>
-                <table style="width:100%; border-collapse:collapse; box-shadow:0 4px 6px -1px rgba(0,0,0,0.05);">
+                <h3 style="color:#065f46; font-size:16px; font-weight:800; margin-bottom:10px; border-left:4px solid #10b981; padding-left:10px;">
+                    2. चुकता किए गए ग्राहकों की सूची (Paid Customers List - ${paidUsers.length})
+                </h3>
+                <table style="width:100%; border-collapse:collapse; margin-bottom:26px; font-size:12px;">
                     <thead>
-                        <tr style="background-color:#10b981; color:#ffffff;">
-                            <th style="padding:12px; text-align:left;">क्र.सं.</th>
-                            <th style="padding:12px; text-align:left;">सफल ग्राहक का नाम</th>
-                            <th style="padding:12px; text-align:left;">गाँव क्षेत्र</th>
-                            <th style="padding:12px; text-align:left;">प्राप्त शुद्ध राशि</th>
+                        <tr style="background:#059669; color:#ffffff;">
+                            <th style="width:8%; padding:10px; text-align:center;">क्र.</th>
+                            <th style="width:36%; padding:10px; text-align:left;">ग्राहक का नाम</th>
+                            <th style="width:20%; padding:10px; text-align:left;">गाँव</th>
+                            <th style="width:18%; padding:10px; text-align:center;">पंजीकरण तिथि</th>
+                            <th style="width:18%; padding:10px; text-align:right;">प्राप्त राशि</th>
                         </tr>
                     </thead>
                     <tbody>${paidRows}</tbody>
                 </table>
+
+                <h3 style="color:#92400e; font-size:16px; font-weight:800; margin-bottom:10px; border-left:4px solid #f59e0b; padding-left:10px;">
+                    3. दैनिक नकद एवं खर्च लेजर (Daily Cash & Expense Entries)
+                </h3>
+                <table style="width:100%; border-collapse:collapse; font-size:12px;">
+                    <thead>
+                        <tr style="background:#1e293b; color:#ffffff;">
+                            <th style="padding:10px; text-align:left;">दिनांक</th>
+                            <th style="padding:10px; text-align:right;">प्राप्त नकद</th>
+                            <th style="padding:10px; text-align:right;">डीजल खर्च</th>
+                            <th style="padding:10px; text-align:right;">अन्य खर्च</th>
+                            <th style="padding:10px; text-align:right;">कुल खर्च</th>
+                            <th style="padding:10px; text-align:right;">दैनिक नेट कैश</th>
+                        </tr>
+                    </thead>
+                    <tbody>${dailyRows}</tbody>
+                </table>
             </div>
         `;
 
-        template.innerHTML = pageOneInfographicsHtml + pageTwoLogsHtml;
-
-        const pageContainers = template.querySelectorAll('.pdf-page-container');
-        pageContainers.forEach(page => {
-            const currentHeight = page.offsetHeight;
-            const safeTargetBoundary = Math.ceil(currentHeight / 1185) * 1185; 
-            page.style.minHeight = safeTargetBoundary + 'px';
-        });
-
-        if(!isPdfCancelled) await triggerMultiPagePdf(`वित्तीय_मास्टर_रिपोर्ट_${CURRENT_SEASON}.pdf`);
+        if(!isPdfCancelled) await triggerMultiPagePdf(`Master_Finance_Analytics_${CURRENT_SEASON}.pdf`);
     });
 
     async function triggerMultiPagePdf(fileName) {
@@ -1118,23 +1709,29 @@ body {
             const canvas = await html2canvas(element, { scale: 2, useCORS: true, logging: false });
             if(isPdfCancelled) return;
             
-            const imgData = canvas.toDataURL('image/jpeg', 1.0);
+            const imgData = canvas.toDataURL('image/jpeg', 0.98);
             const { jsPDF } = window.jspdf;
             const pdf = new jsPDF('p', 'mm', 'a4');
             
-            const imgWidth = 190; const pageHeight = 285;
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+            const margin = 8;
+            const imgWidth = pdfWidth - (margin * 2);
+            const pageContentHeight = pdfHeight - (margin * 2);
             const imgHeight = (canvas.height * imgWidth) / canvas.width;
-            let heightLeft = imgHeight; let position = 10; 
 
-            pdf.addImage(imgData, 'JPEG', 10, position, imgWidth, imgHeight);
-            heightLeft -= pageHeight;
+            let heightLeft = imgHeight;
+            let position = margin;
+
+            pdf.addImage(imgData, 'JPEG', margin, position, imgWidth, imgHeight);
+            heightLeft -= pageContentHeight;
 
             while (heightLeft > 0) {
                 if(isPdfCancelled) return;
-                position = heightLeft - imgHeight + 10;
+                position = heightLeft - imgHeight + margin;
                 pdf.addPage();
-                pdf.addImage(imgData, 'JPEG', 10, position, imgWidth, imgHeight);
-                heightLeft -= pageHeight;
+                pdf.addImage(imgData, 'JPEG', margin, position, imgWidth, imgHeight);
+                heightLeft -= pageContentHeight;
             }
             
             if(!isPdfCancelled) {
@@ -1148,7 +1745,49 @@ body {
         }
     }
 
-    function navigateStep(stepNumber) {
+    // ============================================================
+    // 2. ADD ENTRY STEP WIZARD (TODAY PRE-SELECTED, NO TODAY CHIP)
+    // ============================================================
+    function openStepWizardCanvas() {
+        resetDatePickersToToday();
+        document.querySelectorAll('#entryDatePresetChips .chip-option').forEach(c => c.classList.remove('selected'));
+        jumpToStep(1);
+        openCanvas('canvasStepWizard');
+    }
+
+    function onManualEntryDateChange() {
+        document.querySelectorAll('#entryDatePresetChips .chip-option').forEach(c => c.classList.remove('selected'));
+        syncCustomDateDisplay('moneyDate', 'moneyDateDisplay');
+    }
+
+    function setEntryDatePreset(daysAgo, chipEl) {
+        document.querySelectorAll('#entryDatePresetChips .chip-option').forEach(c => c.classList.remove('selected'));
+        if (chipEl) chipEl.classList.add('selected');
+
+        const d = new Date();
+        d.setDate(d.getDate() - daysAgo);
+        const yyyy = d.getFullYear();
+        const mm = String(d.getMonth() + 1).padStart(2, '0');
+        const dd = String(d.getDate()).padStart(2, '0');
+        document.getElementById('moneyDate').value = `${yyyy}-${mm}-${dd}`;
+        syncCustomDateDisplay('moneyDate', 'moneyDateDisplay');
+    }
+
+    function addStepAmount(inputId, addVal, labelId, prefixText) {
+        const inp = document.getElementById(inputId);
+        const curr = parseFloat(inp.value) || 0;
+        const updated = curr + addVal;
+        inp.value = updated;
+        updateStepAmountLabel(inputId, labelId, prefixText);
+    }
+
+    function updateStepAmountLabel(inputId, labelId, prefixText) {
+        const val = parseFloat(document.getElementById(inputId).value) || 0;
+        document.getElementById(labelId).textContent = `${prefixText}: ₹${val.toLocaleString('en-IN')}`;
+    }
+
+    function jumpToStep(stepNumber) {
+        currentWizardStep = stepNumber;
         document.querySelectorAll('.step-container').forEach(step => step.classList.remove('active'));
         document.getElementById(`step${stepNumber}`).classList.add('active');
         
@@ -1161,44 +1800,88 @@ body {
                 ind.classList.add('active');
             }
         }
+        document.getElementById('wizardProgressFill').style.width = `${((stepNumber - 1) / 3) * 100}%`;
+
+        const fabBtn = document.getElementById('wizardNextFabBtn');
+        if (stepNumber === 4) {
+            fabBtn.innerHTML = '<i class="fas fa-check"></i>';
+            fabBtn.title = 'प्रीव्यू देखें';
+        } else {
+            fabBtn.innerHTML = '<i class="fas fa-arrow-right"></i>';
+            fabBtn.title = 'आगे बढ़ें';
+        }
+    }
+
+    function handleWizardFabNext() {
+        if (currentWizardStep === 1) {
+            if (!document.getElementById('moneyDate').value) {
+                alert('कृपया एंट्री की तिथि चुनें।');
+                return;
+            }
+        }
+        if (currentWizardStep < 4) {
+            jumpToStep(currentWizardStep + 1);
+        } else {
+            openEntryPreviewBottomSheet();
+        }
+    }
+
+    function openEntryPreviewBottomSheet() {
+        const date = document.getElementById('moneyDate').value;
+        const inCash = parseFloat(document.getElementById('inCash').value) || 0;
+        const dieselExp = parseFloat(document.getElementById('dieselExp').value) || 0;
+        const otherExp = parseFloat(document.getElementById('otherExp').value) || 0;
+        const totalExp = dieselExp + otherExp;
+        const netBalance = inCash - totalExp;
+
+        const existingEntry = globalMoneyData.data.find(e => normalizeDateForInput(e.date) === date);
+        const warningNote = existingEntry 
+            ? `<div style="background:var(--warning-light); color:#92400e; padding:8px 12px; border-radius:8px; font-size:0.78rem; margin-top:4px;"><i class="fas fa-info-circle"></i> इस तिथि की पुरानी एंट्री अपडेट हो जाएगी।</div>`
+            : '';
+
+        document.getElementById('entryPreviewContent').innerHTML = `
+            <div class="summary-row"><span>सत्र (Session)</span><strong>${CURRENT_SEASON}</strong></div>
+            <div class="summary-row"><span>एंट्री तिथि</span><strong>${formatBackendDateToDDMMYYYY(date)}</strong></div>
+            <div class="summary-row"><span>प्राप्त नकद (In Cash)</span><strong style="color:var(--success);">₹${inCash.toLocaleString('en-IN')}</strong></div>
+            <div class="summary-row"><span>डीजल खर्च (Diesel)</span><strong>₹${dieselExp.toLocaleString('en-IN')}</strong></div>
+            <div class="summary-row"><span>अन्य खर्च (Other)</span><strong>₹${otherExp.toLocaleString('en-IN')}</strong></div>
+            <div class="summary-row"><span>कुल खर्च (Total Exp)</span><strong style="color:var(--warning);">₹${totalExp.toLocaleString('en-IN')}</strong></div>
+            <div class="summary-row"><span>शुद्ध दैनिक कैश</span><strong style="color:var(--primary); font-size:1.05rem;">₹${netBalance.toLocaleString('en-IN')}</strong></div>
+            ${warningNote}
+        `;
+        openBottomSheet('entryPreviewSheet');
     }
 
     function closeWizard() {
         document.getElementById('moneyUpdateForm').reset();
-        formatWizardAmount(document.getElementById('inCash'), 'cashFormattedLabel');
-        formatWizardAmount(document.getElementById('dieselExp'), 'dieselFormattedLabel');
-        formatWizardAmount(document.getElementById('otherExp'), 'otherFormattedLabel');
-        resetDatePickerToToday();
-        navigateStep(1);
+        updateStepAmountLabel('inCash', 'cashFormattedLabel', 'कुल नकद राशि');
+        updateStepAmountLabel('dieselExp', 'dieselFormattedLabel', 'डीजल खर्च');
+        updateStepAmountLabel('otherExp', 'otherFormattedLabel', 'अन्य खर्च');
+        resetDatePickersToToday();
+        jumpToStep(1);
         closeCanvas('canvasStepWizard');
     }
 
-    function formatWizardAmount(inputElem, labelId) {
-        const val = parseFloat(inputElem.value) || 0;
-        const prefix = labelId.includes('cash') ? 'कुल नकद राशि' : labelId.includes('diesel') ? 'डीजल खर्च' : 'अन्य खर्च';
-        document.getElementById(labelId).textContent = `${prefix} (₹${val.toLocaleString('en-IN')})`;
-    }
-
-    document.getElementById('moneyUpdateForm').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        document.getElementById('pdfProgressTitle').textContent = "क्लाउड डेटाबेस सिंक सक्रिय है";
+    async function confirmAndUploadMoneyEntry() {
+        closeBottomSheet('entryPreviewSheet');
+        document.getElementById('pdfProgressTitle').textContent = "क्लाउड डेटाबेस पर अपलोड हो रहा है...";
         document.getElementById('pdfProgressPopup').style.display = 'flex';
 
-        const date = document.getElementById('moneyDate').value;
+        const date = document.getElementById('moneyDate').value; // Strictly YYYY-MM-DD backend
         const inCash = parseFloat(document.getElementById('inCash').value) || 0;
         const dieselExp = parseFloat(document.getElementById('dieselExp').value) || 0;
         const otherExp = parseFloat(document.getElementById('otherExp').value) || 0;
 
         const newEntry = { date, inCash, dieselExp, otherExp };
-        let currentData = globalMoneyData.data.filter(entry => entry.date !== date);
+        let currentData = globalMoneyData.data.filter(entry => normalizeDateForInput(entry.date) !== date);
         currentData.push(newEntry);
-        currentData.sort((a, b) => new Date(a.date) - new Date(b.date)); 
+        currentData.sort((a, b) => new Date(normalizeDateForInput(a.date)) - new Date(normalizeDateForInput(b.date))); 
 
         const commitData = {
-            message: `Update daily money entry via premium wizard for ${date}`,
-            content: encodeToBase64(JSON.stringify({ dailyEntries: currentData }, null, 2)),
-            sha: globalMoneyData.sha 
+            message: `Update daily money entry for ${date}`,
+            content: encodeToBase64(JSON.stringify({ dailyEntries: currentData }, null, 2))
         };
+        if (globalMoneyData.sha) commitData.sha = globalMoneyData.sha;
 
         try {
             const response = await fetch(MONEY_API_URL, {
@@ -1219,7 +1902,7 @@ body {
             updatePaidUI();
 
             document.getElementById('pdfProgressPopup').style.display = 'none';
-            document.getElementById('successPopupMessage').textContent = `तारीख ${date} का डेटा सुरक्षित रूप से दर्ज कर लिया गया है।`;
+            document.getElementById('successPopupMessage').textContent = `दिनांक ${formatBackendDateToDDMMYYYY(date)} का डेटा क्लाउड पर सुरक्षित रूप से सेव हो गया है।`;
             document.getElementById('successPopup').style.display = 'flex';
             
             closeWizard();
@@ -1227,18 +1910,36 @@ body {
             document.getElementById('pdfProgressPopup').style.display = 'none';
             alert(`❌ सिंक त्रुटि: ` + error.message);
         }
-    });
+    }
+
+    // ============================================================
+    // 2. SINGLE DATE LEDGER LOOKUP (AUTO-LOADS TODAY ON OPEN)
+    // ============================================================
+    function openSingleDayLedgerCanvas() {
+        const todayStr = getLocalTodayISO();
+        const picker = document.getElementById('ledgerDatePicker');
+        picker.max = todayStr;
+        picker.value = todayStr;
+        syncCustomDateDisplay('ledgerDatePicker', 'ledgerDateDisplay');
+        openCanvas('canvasDayLedger');
+        compileSingleDateLedger();
+    }
+
+    function onLedgerDateChange() {
+        syncCustomDateDisplay('ledgerDatePicker', 'ledgerDateDisplay');
+        compileSingleDateLedger();
+    }
 
     function compileSingleDateLedger() {
         const targetDate = document.getElementById('ledgerDatePicker').value;
         if(!targetDate) { alert('कृपया एक वैध तिथि का चयन करें'); return; }
 
-        const moneyEntry = globalMoneyData.data.find(entry => entry.date === targetDate);
+        const moneyEntry = globalMoneyData.data.find(entry => normalizeDateForInput(entry.date) === targetDate);
         const dailyInCash = moneyEntry ? (parseFloat(moneyEntry.inCash) || 0) : 0;
         const dieselExp = moneyEntry ? (parseFloat(moneyEntry.dieselExp) || 0) : 0;
         const otherExp = moneyEntry ? (parseFloat(moneyEntry.otherExp) || 0) : 0;
 
-        const sampledCustomers = globalCustomerData.filter(user => user.date === targetDate);
+        const sampledCustomers = globalCustomerData.filter(user => normalizeDateForInput(user.date) === targetDate);
         let accumulatedCustomerAmt = 0;
 
         const listContainer = document.getElementById('lDayCustomersList');
@@ -1262,7 +1963,7 @@ body {
         });
 
         if(sampledCustomers.length === 0) {
-            listContainer.innerHTML = `<p style="color:var(--text-muted); font-size:0.85rem; text-align:center; padding:10px;">इस तिथि को कोई नया ग्राहक पंजीकरण नहीं हुआ है।</p>`;
+            listContainer.innerHTML = `<p style="color:var(--text-muted); font-size:0.85rem; text-align:center; padding:10px;">इस तिथि (${formatBackendDateToDDMMYYYY(targetDate)}) को कोई नया ग्राहक पंजीकरण नहीं हुआ है।</p>`;
         }
 
         const aggregateDayRevenue = dailyInCash + accumulatedCustomerAmt;
@@ -1278,13 +1979,11 @@ body {
 
     async function runAnalysis() {
         await fetchAllData(); 
-        if (globalCustomerData.length > 0 || globalMoneyData.data.length > 0) {
-            const analysisResult = analyzeData(globalCustomerData, globalMoneyData);
-            globalAnalysisResult = analysisResult;
-            renderSummary(analysisResult.summary);
-            updatePendingUI();
-            updatePaidUI();
-        }
+        const analysisResult = analyzeData(globalCustomerData, globalMoneyData);
+        globalAnalysisResult = analysisResult;
+        renderSummary(analysisResult.summary);
+        updatePendingUI();
+        updatePaidUI();
     }
     </script> 
 </body>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="google-site-verification" content="9UoZCGd53oCotIPtcfhIGoPhg6UdY2nNtYHRPCTjQb4" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Customer Management </title>
+    <title>Customer Management</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -15,6 +15,7 @@
             --success: #10b981;
             --success-light: #d1fae5;
             --warning: #f59e0b;
+            --warning-light: #fef3c7;
             --danger: #ef4444;
             --danger-light: #fee2e2;
             --background: #f8fafc;
@@ -49,6 +50,7 @@
             overflow: hidden;
         }
 
+        /* HEADER */
         #mainHeader {
             background: var(--surface);
             padding: 16px 20px;
@@ -63,11 +65,19 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+
+        .header-left:hover {
+            background: var(--primary-light);
         }
 
         .header-left h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-size: 1.15rem;
+            font-weight: 800;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -86,8 +96,8 @@
 
         .header-right button, .header-right a {
             background: var(--background);
-            border: none;
-            color: var(--text-main);
+            border: 1px solid var(--border);
+            color: var(--primary);
             font-size: 1.1rem;
             width: 42px;
             height: 42px;
@@ -101,10 +111,12 @@
         }
 
         .header-right button:hover, .header-right a:hover {
-            background: var(--primary-light);
-            color: var(--primary);
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
         }
 
+        /* CONTROL PANEL */
         .header-controls {
             padding: 16px 20px;
             background: var(--surface);
@@ -160,6 +172,9 @@
             color: var(--text-muted);
             transition: var(--transition);
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .inline-picker-btn input[type="date"] {
@@ -183,6 +198,7 @@
             transition: var(--transition);
         }
 
+        /* MAIN LIST */
         #dataListContainer {
             flex-grow: 1;
             overflow-y: auto;
@@ -246,17 +262,30 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
         }
 
         .date-click {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
             font-weight: 500;
             cursor: pointer;
         }
+
+        /* Icon-only status pill on list */
+        .status-icon-badge {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+        .status-icon-badge.paid { background: var(--success-light); color: var(--success); }
+        .status-icon-badge.pending { background: var(--danger-light); color: var(--danger); }
 
         .status-pill {
             font-size: 0.75rem;
@@ -265,7 +294,7 @@
             border-radius: 8px;
             letter-spacing: 0.5px;
         }
-        .status-pill.paid { background: var(--success-light); color: var(--success); cursor: pointer; text-decoration: underline; }
+        .status-pill.paid { background: var(--success-light); color: var(--success); }
         .status-pill.pending { background: var(--danger-light); color: var(--danger); }
 
         .card-action-trigger {
@@ -282,6 +311,7 @@
             transition: var(--transition);
             border: 1px solid var(--border);
             margin-left: 12px;
+            flex-shrink: 0;
         }
 
         .card-action-trigger:hover {
@@ -290,6 +320,7 @@
             border-color: var(--primary);
         }
 
+        /* FAB */
         .fab {
             position: fixed;
             bottom: 30px;
@@ -305,14 +336,16 @@
             box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
             cursor: pointer;
             z-index: 999;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             transition: var(--transition);
+            border: none;
         }
 
         .fab:hover {
-            transform: scale(1.1) rotate(90deg);
+            transform: scale(1.08);
         }
 
+        /* FULL SCREEN VIEWS */
         .app-view-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -320,7 +353,7 @@
             z-index: 2000;
             display: none;
             flex-direction: column;
-            animation: slideInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: slideInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @keyframes slideInUp {
@@ -330,7 +363,7 @@
 
         .screen-header {
             background: var(--surface);
-            padding: 20px;
+            padding: 18px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -338,33 +371,201 @@
         }
 
         .screen-header h2 {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 700;
+        }
+
+        .screen-header-left-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .close-screen-btn {
             background: var(--background);
-            border: none;
-            width: 40px; height: 40px; border-radius: 50%;
+            border: 1px solid var(--border);
+            width: 38px; height: 38px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; font-size: 1.1rem;
+            cursor: pointer; font-size: 1rem;
+            color: var(--text-main);
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        /* Small subtle delete icon button on left side of edit header */
+        .subtle-delete-icon-btn {
+            background: var(--danger-light);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            width: 36px; height: 36px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 0.88rem;
+            color: var(--danger);
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+        .subtle-delete-icon-btn:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* Compact icon buttons inside Session Manager Bottom Sheet */
+        .sheet-header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+        .compact-circle-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--background);
+            color: var(--text-main);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        /* Bottom right + button inside Session Bottom Sheet */
+        .sheet-bottom-actions {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: 14px;
+            padding-top: 6px;
+        }
+        .sheet-add-fab {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            box-shadow: 0 6px 16px rgba(79, 70, 229, 0.3);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .sheet-add-fab:hover:not(:disabled) {
+            transform: scale(1.06);
+        }
+        .sheet-add-fab:disabled {
+            background: #e2e8f0;
+            color: #94a3b8;
+            box-shadow: none;
+            cursor: not-allowed;
         }
 
         .screen-content {
             flex-grow: 1;
             overflow-y: auto;
             padding: 24px;
+            padding-bottom: 100px;
         }
 
-        .native-date-wrapper {
+        /* CUSTOM DD/MM/YYYY DATE DISPLAY OVERLAY */
+        .custom-date-box {
             position: relative;
+            width: 100%;
+            height: 54px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            background: var(--surface);
             display: flex;
             align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            cursor: pointer;
+            transition: var(--transition);
         }
-        .native-date-wrapper input[type="date"] {
-            font-family: inherit;
+        .custom-date-box:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        }
+        .custom-date-box .date-text-display {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+        .custom-date-box i {
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        .custom-date-box input[type="date"] {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            opacity: 0;
+            cursor: pointer;
         }
 
+        /* CUSTOM TOGGLE SWITCH */
+        .switch-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .switch-label-group strong {
+            display: block;
+            font-size: 0.98rem;
+            color: var(--text-main);
+        }
+        .switch-label-group span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #cbd5e1;
+            transition: .3s;
+            border-radius: 34px;
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: var(--success);
+        }
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+
+        /* WIZARD */
         .wizard-progress {
             display: flex;
             justify-content: space-between;
@@ -418,14 +619,14 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .pane-title {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: var(--text-main);
         }
 
         .pane-desc {
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             color: var(--text-muted);
             margin-bottom: 24px;
         }
@@ -440,7 +641,7 @@
             color: var(--text-muted);
             margin-bottom: 8px;
         }
-        .form-group-custom input, .form-group-custom select {
+        .form-group-custom input:not([type="date"]), .form-group-custom select {
             width: 100%;
             padding: 16px;
             border: 1px solid var(--border);
@@ -463,9 +664,9 @@
             margin-top: 10px;
         }
         .chip-option {
-            background: var(--background);
+            background: var(--surface);
             color: var(--text-main);
-            padding: 8px 14px;
+            padding: 10px 16px;
             border-radius: 100px;
             font-size: 0.85rem;
             font-weight: 600;
@@ -502,11 +703,12 @@
             color: white;
         }
 
+        /* BUTTONS */
         .btn-modern {
-            padding: 16px 28px;
+            padding: 15px 24px;
             border-radius: var(--radius-md);
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.98rem;
             border: none;
             cursor: pointer;
             display: inline-flex;
@@ -521,13 +723,14 @@
         .btn-modern.secondary:hover { background: #cbd5e1; }
         .btn-modern:disabled { opacity: 0.5; cursor: not-allowed; }
 
+        /* CENTER MODALS */
         .modal {
             display: none;
             position: fixed;
-            z-index: 3000;
+            z-index: 4000;
             left: 0; top: 0; width: 100%; height: 100%;
             background-color: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(6px);
             align-items: center;
             justify-content: center;
             padding: 20px;
@@ -535,7 +738,7 @@
 
         .modal-content {
             background-color: var(--surface);
-            padding: 28px;
+            padding: 26px;
             width: 100%;
             max-width: 420px;
             border-radius: var(--radius-lg);
@@ -544,13 +747,52 @@
             animation: zoomInSheet 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
+        /* BOTTOM SHEET SYSTEM */
+        .bottom-sheet-overlay {
+            display: none;
+            position: fixed;
+            z-index: 3500;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(5px);
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .bottom-sheet-content {
+            background-color: var(--surface);
+            width: 100%;
+            max-width: 540px;
+            border-top-left-radius: 28px;
+            border-top-right-radius: 28px;
+            padding: 14px 24px 28px 24px;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            max-height: 88vh;
+            overflow-y: auto;
+            animation: slideSheetUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .sheet-drag-handle {
+            width: 44px;
+            height: 5px;
+            background: #cbd5e1;
+            border-radius: 10px;
+            margin: 0 auto 16px auto;
+        }
+
+        @keyframes slideSheetUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
         .modal-dismiss-cross-trigger {
             position: absolute;
-            top: 20px; right: 20px;
+            top: 18px; right: 18px;
             background: var(--background);
-            border: none; width: 32px; height: 32px; border-radius: 50%;
+            border: none; width: 34px; height: 34px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; color: var(--text-muted); font-size: 0.9rem;
+            cursor: pointer; color: var(--text-muted); font-size: 0.95rem;
             transition: var(--transition);
         }
         .modal-dismiss-cross-trigger:hover {
@@ -567,7 +809,7 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin: 20px 0;
+            margin: 16px 0 8px 0;
         }
 
         .custom-radio-option {
@@ -586,10 +828,106 @@
             background: var(--primary-light);
         }
 
-        .custom-radio-option i { font-size: 1.25rem; }
+        .custom-radio-option i { font-size: 1.3rem; }
 
-        #historyLedgerContainer {
-            display: flex; flex-direction: column; gap: 10px;
+        /* SESSION LIST ITEMS IN SHEET */
+        .session-item-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--surface);
+        }
+        .session-item-card.active-view {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+        .session-item-card.holding {
+            transform: scale(0.97);
+            border-color: var(--danger);
+            background: var(--danger-light);
+        }
+        .current-green-dot-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--success);
+            background: var(--success-light);
+            padding: 4px 10px;
+            border-radius: 100px;
+        }
+        .green-pulse-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--success);
+            display: inline-block;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+        }
+
+        /* SUMMARY TABLE IN BOTTOM SHEET */
+        .summary-box {
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin: 16px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.92rem;
+            border-bottom: 1px dashed var(--border);
+            padding-bottom: 8px;
+        }
+        .summary-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .summary-row span:first-child {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .summary-row strong {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        /* DETAIL GRID IN EYE SCREEN */
+        .detail-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border);
+        }
+        .detail-info-item {
+            background: var(--background);
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+        }
+        .detail-info-item small {
+            display: block;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+        .detail-info-item span {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--text-main);
         }
 
         .ledger-row {
@@ -613,18 +951,14 @@
 
     <!-- APP HEADER -->
     <header id="mainHeader">
-        <div class="header-left">
+        <!-- Wallet Icon + Current Session Title triggers Session Switch Bottom Sheet -->
+        <div class="header-left" onclick="openSessionBottomSheet()" title="Switch or Manage Sessions">
             <i class="fas fa-wallet header-icon"></i>
             <h3 id="TitleDisplay">Manager</h3>
         </div>
         <div class="header-right">
-
-            <a href="data.html" title="View Extended Data Tables"><i class="fas fa-database" style="color: var(--primary);"></i></a>
-                        <!-- Season Switcher Icon Button -->
-                        <h6 id="appTitleDisplay"></h6>
-            <button id="seasonSwitchTriggerBtn" onclick="openSeasonSwitchModal()" title="Switch Season"><i class="fas fa-calendar-alt" style="color: var(--primary);"></i></button>
-            
-           
+            <!-- Database Icon (opens Extended Data Tables) -->
+            <a href="data" title="View Extended Data Tables"><i class="fas fa-database"></i></a>
         </div>
     </header>
 
@@ -633,9 +967,9 @@
         <div class="search-row">
             <div class="search-group">
                 <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Search by Name, Amount or Date...">
+                <input type="text" id="searchInput" placeholder="Search Name, Amount or DD/MM/YYYY...">
             </div>
-            <div class="inline-picker-btn" title="Filter by Specific Date">
+            <div class="inline-picker-btn" title="Filter by Specific Date (DD/MM/YYYY)">
                 <i class="fas fa-calendar-day"></i>
                 <input type="date" id="masterDatePicker" onchange="filterByDateDirect(this.value)">
             </div>
@@ -652,50 +986,191 @@
         </div>
     </div>
 
-    <!-- FAB ICON -->
-    <div class="fab" onclick="openAddChoiceModal()" title="Create New Customer Asset"><i class="fas fa-plus"></i></div>
+    <!-- FAB ICON: ADD CUSTOMER -->
+    <div class="fab" onclick="openAddChoiceBottomSheet()" title="Create New Customer Asset"><i class="fas fa-plus"></i></div>
 
-    <!-- SEASON SWITCH CUSTOM MODAL -->
-    <div id="seasonSwitchModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-dismiss-cross-trigger" onclick="closeModalWindow('seasonSwitchModal')"><i class="fas fa-times"></i></button>
-            <h3 style="margin-bottom:12px; color: var(--primary);"><i class="fas fa-calendar-alt"></i> Switch Season</h3>
-            <button id="logoutSessionBtn" title="Logout Session" >$ LOGOUT</button>
-            <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:16px;">Select the target season session you want to open:</p>
-            <div class="form-group-custom">
-                <label>Target Season</label>
-                <select id="modalSeasonSelect">
-                    <option value="2025-26">2025-26</option>
-                    <option value="2026-27">2026-27</option>
-                    <option value="2027-28">2027-28</option>
-                    <option value="2028-29">2028-29</option>
-                    <option value="2024-25">2024-25</option>
-                </select>
+    <!-- ========================================================= -->
+    <!-- BOTTOM SHEET: SESSION SWITCHER & CURRENT MARKER           -->
+    <!-- ========================================================= -->
+    <div id="sessionSwitchSheet" class="bottom-sheet-overlay" onclick="handleOverlayClose(event, 'sessionSwitchSheet')">
+        <div class="bottom-sheet-content">
+            <div class="sheet-drag-handle"></div>
+            <div class="sheet-header-bar">
+                <h3 style="color: var(--primary); font-size:1.15rem;"><i class="fas fa-wallet"></i> Session Manager</h3>
+                <button class="compact-circle-btn" onclick="closeBottomSheet('sessionSwitchSheet')" title="Close">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
-            <button class="btn-modern primary" style="width:100%;" onclick="confirmSeasonSwitch()">Switch Session</button>
+            <p id="addSessionHintText" style="font-size:0.78rem; color:var(--text-muted); margin-bottom:14px;"></p>
+
+            <!-- Mark Selected/Active Session as Current Switch (Triggers confirmation popup) -->
+            <div class="switch-card" style="background: var(--background); margin-bottom: 14px;">
+                <div class="switch-label-group">
+                    <strong id="markCurrentLabel">Mark as Current Session</strong>
+                    <span id="markCurrentSubtext">Set active session as default</span>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="markCurrentSessionSwitch" onchange="onCurrentSessionSwitchAttempt(this)">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <!-- Available Sessions List (Tap to confirm switch, Hold to remove locally) -->
+            <div id="sessionListContainer"></div>
+
+            <!-- Plus Icon moved to Right Bottom Side -->
+            <div class="sheet-bottom-actions">
+                <button id="addNextSessionBtn" class="sheet-add-fab" onclick="openAddNextSessionConfirmModal()" title="Add Next Session">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
         </div>
     </div>
 
-    <!-- ADD CHOICE MODAL -->
-    <div id="addChoiceModal" class="modal">
+    <!-- ========================================================= -->
+    <!-- MODAL: CONFIRM SWITCH SESSION                             -->
+    <!-- ========================================================= -->
+    <div id="switchSessionConfirmModal" class="modal">
+        <div class="modal-content" style="text-align:center;">
+            <button class="modal-dismiss-cross-trigger" onclick="closeModalWindow('switchSessionConfirmModal')"><i class="fas fa-times"></i></button>
+            <div style="width:52px; height:52px; background:var(--primary-light); color:var(--primary); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 12px auto; font-size:1.35rem;">
+                <i class="fas fa-folder-open"></i>
+            </div>
+            <h3 style="margin-bottom:8px;">Switch Session?</h3>
+            <p id="switchSessConfirmDesc" style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px;"></p>
+            <div style="display:flex; gap:12px;">
+                <button class="btn-modern secondary" style="flex:1;" onclick="closeModalWindow('switchSessionConfirmModal')">Cancel</button>
+                <button class="btn-modern primary" style="flex:1.2;" onclick="confirmSessionSwitchAction()">Yes, Switch</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- MODAL: REMOVE SESSION FROM LOCAL LIST (HOLD ACTION)       -->
+    <!-- ========================================================= -->
+    <div id="removeLocalSessionModal" class="modal">
+        <div class="modal-content" style="text-align:center;">
+            <button class="modal-dismiss-cross-trigger" onclick="closeModalWindow('removeLocalSessionModal')"><i class="fas fa-times"></i></button>
+            <div style="width:52px; height:52px; background:var(--danger-light); color:var(--danger); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 12px auto; font-size:1.35rem;">
+                <i class="fas fa-minus-circle"></i>
+            </div>
+            <h3 style="margin-bottom:8px;">Remove Session from List?</h3>
+            <p id="removeSessConfirmDesc" style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px;"></p>
+            <div style="display:flex; gap:12px;">
+                <button class="btn-modern secondary" style="flex:1;" onclick="closeModalWindow('removeLocalSessionModal')">Cancel</button>
+                <button class="btn-modern primary" style="flex:1.2; background:var(--danger);" onclick="confirmRemoveSessionLocally()">Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- MODAL: ADD NEXT SESSION CONFIRMATION & EDITABLE NAME      -->
+    <!-- ========================================================= -->
+    <div id="addSessionConfirmModal" class="modal">
         <div class="modal-content">
-            <button class="modal-dismiss-cross-trigger" onclick="closeModalWindow('addChoiceModal')"><i class="fas fa-times"></i></button>
-            <h3 style="margin-bottom:16px; color: var(--primary);">Add Customer</h3>
+            <button class="modal-dismiss-cross-trigger" onclick="closeModalWindow('addSessionConfirmModal')"><i class="fas fa-times"></i></button>
+            <div style="width:48px; height:48px; background:var(--primary-light); color:var(--primary); border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:12px; font-size:1.25rem;">
+                <i class="fas fa-calendar-plus"></i>
+            </div>
+            <h3 style="margin-bottom:6px;">Add New Session</h3>
+            <p style="font-size:0.86rem; color:var(--text-muted); margin-bottom:16px;">Confirm or edit the next session name below before creating it:</p>
+            <div class="form-group-custom" style="margin-bottom:18px;">
+                <label>Next Session Name (Editable) *</label>
+                <input type="text" id="newSessionEditableInput" placeholder="e.g., 2026-27" required>
+            </div>
+            <div style="display:flex; gap:12px;">
+                <button class="btn-modern secondary" style="flex:1;" onclick="closeModalWindow('addSessionConfirmModal')">Cancel</button>
+                <button class="btn-modern primary" style="flex:1.2;" onclick="confirmAddNextSession()">Create Session</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- MODAL: CONFIRM CHANGE CURRENT SESSION                     -->
+    <!-- ========================================================= -->
+    <div id="currentSessionConfirmModal" class="modal">
+        <div class="modal-content" style="text-align:center;">
+            <button class="modal-dismiss-cross-trigger" onclick="cancelCurrentSessionToggle()"><i class="fas fa-times"></i></button>
+            <div id="currSessConfirmIcon" style="width:52px; height:52px; background:var(--primary-light); color:var(--primary); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 12px auto; font-size:1.35rem;">
+                <i class="fas fa-exchange-alt"></i>
+            </div>
+            <h3 id="currSessConfirmTitle" style="margin-bottom:8px;">Change Current Session?</h3>
+            <p id="currSessConfirmDesc" style="font-size:0.88rem; color:var(--text-muted); margin-bottom:20px;"></p>
+            <div style="display:flex; gap:12px;">
+                <button class="btn-modern secondary" style="flex:1;" onclick="cancelCurrentSessionToggle()">Cancel</button>
+                <button class="btn-modern primary" style="flex:1.2;" onclick="confirmCurrentSessionToggle()">Yes, Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- BOTTOM SHEET: ADD CUSTOMER CHOICE                         -->
+    <!-- ========================================================= -->
+    <div id="addChoiceSheet" class="bottom-sheet-overlay" onclick="handleOverlayClose(event, 'addChoiceSheet')">
+        <div class="bottom-sheet-content">
+            <div class="sheet-drag-handle"></div>
+            <button class="modal-dismiss-cross-trigger" onclick="closeBottomSheet('addChoiceSheet')"><i class="fas fa-times"></i></button>
+            <h3 style="margin-bottom:6px; color: var(--primary);">Add Customer</h3>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">Choose how you want to add a record to <strong><span id="addSheetSessionName"></span></strong>:</p>
             <div class="custom-radio-list">
                 <div class="custom-radio-option" onclick="handleNewCustomerChoice('new')">
                     <i class="fas fa-user-plus" style="color: var(--primary);"></i>
                     <div>
-                        <strong>Add New Customer</strong>
-                        <div style="font-size:0.8rem; color:var(--text-muted);">Create a fresh customer record</div>
+                        <strong>Create New Customer</strong>
+                        <div style="font-size:0.8rem; color:var(--text-muted);">Enter fresh customer details step-by-step</div>
                     </div>
                 </div>
                 <div class="custom-radio-option" onclick="handleNewCustomerChoice('import')">
                     <i class="fas fa-file-import" style="color: var(--success);"></i>
                     <div>
-                        <strong>Import from Old Season</strong>
-                        <div style="font-size:0.8rem; color:var(--text-muted);">Bring forward from a previous season</div>
+                        <strong>Import from Sessions</strong>
+                        <div style="font-size:0.8rem; color:var(--text-muted);">Bring forward pending records from another session</div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- BOTTOM SHEET: FINAL SUMMARY BEFORE UPLOAD                 -->
+    <!-- ========================================================= -->
+    <div id="finalSummarySheet" class="bottom-sheet-overlay" onclick="handleOverlayClose(event, 'finalSummarySheet')">
+        <div class="bottom-sheet-content">
+            <div class="sheet-drag-handle"></div>
+            <button class="modal-dismiss-cross-trigger" onclick="closeBottomSheet('finalSummarySheet')"><i class="fas fa-times"></i></button>
+            <h3 style="margin-bottom:6px; color: var(--primary);"><i class="fas fa-clipboard-check"></i> Review Customer Summary</h3>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Please cross-check all details below before uploading to the database.</p>
+
+            <div class="summary-box" id="finalSummaryContent"></div>
+
+            <div style="display: flex; gap: 12px;">
+                <button class="btn-modern secondary" style="flex:1;" onclick="closeBottomSheet('finalSummarySheet')">Edit Details</button>
+                <button class="btn-modern primary" style="flex:1.4; background: var(--success);" id="confirmUploadSummaryBtn">
+                    <i class="fas fa-cloud-upload-alt"></i> Confirm & Upload
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- BOTTOM SHEET: PAYMENT STATUS VERIFICATION                 -->
+    <!-- ========================================================= -->
+    <div id="paymentVerifySheet" class="bottom-sheet-overlay" onclick="handleOverlayClose(event, 'paymentVerifySheet')">
+        <div class="bottom-sheet-content">
+            <div class="sheet-drag-handle"></div>
+            <button class="modal-dismiss-cross-trigger" onclick="closeBottomSheet('paymentVerifySheet')"><i class="fas fa-times"></i></button>
+            <div id="paymentVerifyIcon" style="width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:12px; font-size:1.4rem;"></div>
+            <h3 id="paymentVerifyTitle" style="margin-bottom:6px;">Verify Payment Status</h3>
+            <p id="paymentVerifyDesc" style="font-size:0.88rem; color:var(--text-muted); margin-bottom:18px;"></p>
+
+            <div id="paymentVerifyAmountGroup" class="form-group-custom">
+                <label>Confirm Final Paid Amount (₹)</label>
+                <input type="number" id="verifyPaidAmountInput">
+            </div>
+
+            <div style="display:flex; gap:12px;">
+                <button class="btn-modern secondary" style="flex:1;" onclick="cancelPaymentSwitchVerification()">Cancel</button>
+                <button class="btn-modern primary" style="flex:1.3;" id="confirmPaymentSwitchBtn" onclick="confirmPaymentSwitchVerification()">Confirm</button>
             </div>
         </div>
     </div>
@@ -704,16 +1179,10 @@
     <div id="oldSeasonSelectModal" class="modal">
         <div class="modal-content">
             <button class="modal-dismiss-cross-trigger" onclick="closeModalWindow('oldSeasonSelectModal')"><i class="fas fa-times"></i></button>
-            <h3 style="margin-bottom:12px;">Select Old Season</h3>
+            <h3 style="margin-bottom:12px;">Select Source Session</h3>
             <div class="form-group-custom">
-                <label>Season Timeline</label>
-                <select id="importSeasonDropdown">
-                    <option value="2025-26">2025-26</option>
-                    <option value="2026-27">2026-27</option>
-                    <option value="2027-28">2027-28</option>
-                    <option value="2028-29">2028-29</option>
-                    <option value="2024-25">2024-25</option>
-                </select>
+                <label>Session Timeline</label>
+                <select id="importSeasonDropdown"></select>
             </div>
             <button class="btn-modern primary" style="width:100%;" onclick="loadOldSeasonPendingCustomers()">Fetch Pending Customers</button>
         </div>
@@ -758,15 +1227,17 @@
                 </div>
                 <div class="form-group-custom">
                     <label>Record Date (DD/MM/YYYY) *</label>
-                    <div class="native-date-wrapper">
-                        <input type="date" id="importEditDate" required>
+                    <div class="custom-date-box">
+                        <span class="date-text-display" id="importEditDateDisplay">--/--/----</span>
+                        <i class="fas fa-calendar-alt"></i>
+                        <input type="date" id="importEditDate" onchange="syncCustomDateDisplay('importEditDate', 'importEditDateDisplay')" required>
                     </div>
                 </div>
                 <div class="form-group-custom">
                     <label>Amount (₹) *</label>
                     <input type="number" id="importEditAmount" placeholder="Enter Amount" required>
                 </div>
-                <div class="fab" onclick="commitImportedCustomerSave()" title="Save Customer"><i class="fas fa-arrow-right"></i></div>
+                <div class="fab" onclick="openImportSummarySheet()" title="Review & Save"><i class="fas fa-arrow-right"></i></div>
             </form>
         </div>
     </div>
@@ -789,23 +1260,25 @@
             <form id="wizardFormInstance" onsubmit="event.preventDefault();">
                 <div class="form-step-pane active" id="paneStep1">
                     <div class="pane-title">Select Timeline</div>
-                    <div class="pane-desc">Choose record timeline mapping (Day/Month/Year layout). No future dates allowed.</div>
+                    <div class="pane-desc">Choose record date (DD/MM/YYYY). Future dates are disabled.</div>
                     <div class="form-group-custom">
                         <label>Record Date (DD/MM/YYYY) *</label>
-                        <div class="native-date-wrapper">
-                            <input type="date" id="addDate" required>
+                        <div class="custom-date-box">
+                            <span class="date-text-display" id="addDateDisplay">--/--/----</span>
+                            <i class="fas fa-calendar-alt"></i>
+                            <input type="date" id="addDate" onchange="syncCustomDateDisplay('addDate', 'addDateDisplay')" required>
                         </div>
                         <div class="chips-container" id="dateChipsContainer">
-                            <div class="chip-option" onclick="setDatePreset('today')">Today</div>
                             <div class="chip-option" onclick="setDatePreset('yesterday')">Yesterday</div>
                             <div class="chip-option" onclick="setDatePreset('2days')">2 Days Ago</div>
+                            <div class="chip-option" onclick="setDatePreset('3days')">3 Days Ago</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-step-pane" id="paneStep2">
                     <div class="pane-title">Select Location</div>
-                    <div class="pane-desc">Map the customer asset profile to a tracking village sector.</div>
+                    <div class="pane-desc">Map the customer profile to a tracking village sector.</div>
                     <div class="form-group-custom">
                         <label>Village Location *</label>
                         <div class="chips-container" id="villageChipsContainer"></div>
@@ -815,7 +1288,7 @@
 
                 <div class="form-step-pane" id="paneStep3">
                     <div class="pane-title">Financial Matrix</div>
-                    <div class="pane-desc">Input base ledger liability or payment requirement asset amount.</div>
+                    <div class="pane-desc">Input base ledger liability or payment amount.</div>
                     <div class="form-group-custom">
                         <label>Amount (₹) *</label>
                         <input type="number" id="addAmount" placeholder="Enter Amount" required>
@@ -830,7 +1303,7 @@
 
                 <div class="form-step-pane" id="paneStep4">
                     <div class="pane-title">Customer Identity</div>
-                    <div class="pane-desc">Provide complete legal identification properties.</div>
+                    <div class="pane-desc">Provide complete identification details.</div>
                     <div class="form-group-custom">
                         <label>First Name *</label>
                         <input type="text" id="addFirstName" placeholder="E.g., Amit" required>
@@ -852,50 +1325,93 @@
         </div>
     </div>
 
-    <!-- NEW DETAILED CUSTOMER DASHBOARD (EYE ICON WORKSPACE) -->
+    <!-- ========================================================= -->
+    <!-- FULLSCREEN CUSTOMER DETAIL & HISTORY (EYE ICON)           -->
+    <!-- ========================================================= -->
     <div id="customerDashboardScreen" class="app-view-screen">
         <div class="screen-header">
             <h2 id="dashCustomerNameTitle">Customer Details</h2>
             <button class="close-screen-btn" onclick="closeCustomerDashboardScreen()"><i class="fas fa-times"></i></button>
         </div>
-        <div class="screen-content" style="display: flex; flex-direction: column; gap: 24px; max-width: 600px; margin: 0 auto; width: 100%;">
-            <!-- Summary Card -->
+        <div class="screen-content" style="display: flex; flex-direction: column; gap: 20px; max-width: 600px; margin: 0 auto; width: 100%;">
+            <!-- Complete Available Customer Details Card -->
             <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; box-shadow: var(--shadow-sm);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <strong id="dashFullName" style="font-size: 1.25rem;">-</strong>
-                    <span id="dashVillageBadge" class="v-badge">-</span>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                    <div>
+                        <strong id="dashFullName" style="font-size: 1.3rem; display:block;">-</strong>
+                        <span style="font-size:0.75rem; color:var(--text-muted);" id="dashCustomerIdLabel">ID: -</span>
+                    </div>
+                    <span id="dashStatusPill" class="status-pill pending">-</span>
                 </div>
-                <div style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 8px; cursor: pointer;" id="dashNumberDisplay" onclick="handleCustomerNumberClick()" title="Click to call or copy"><i class="fas fa-phone"></i> -</div>
-                <div style="font-size: 1.8rem; font-weight: 800; color: var(--text-main); margin-bottom: 12px;" id="dashAmountDisplay">₹ 0</div>
-                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--text-muted);">
-                    <span id="dashDateDisplay"><i class="fas fa-calendar-alt"></i> -</span>
-                    <span id="dashStatusPill" class="status-pill pending" onclick="togglePaymentStatusFromDashboard()">-</span>
-                </div>
-                <div style="display: flex; gap: 12px; margin-top: 20px; border-top: 1px solid var(--border); padding-top: 16px;">
-                    <button class="btn-modern secondary" style="flex:1;" onclick="openEditFromDashboard()"><i class="fas fa-edit"></i> Edit</button>
-                    <button class="btn-modern secondary" style="flex:1; background: var(--danger-light); color: var(--danger);" onclick="openDeleteFromDashboard()"><i class="fas fa-trash-alt"></i> Delete</button>
+
+                <div style="font-size: 1.9rem; font-weight: 800; color: var(--primary); margin: 8px 0;" id="dashAmountDisplay">₹ 0</div>
+
+                <div class="detail-info-grid">
+                    <div class="detail-info-item">
+                        <small><i class="fas fa-map-marker-alt"></i> Village Sector</small>
+                        <span id="dashVillageBadge">-</span>
+                    </div>
+                    <div class="detail-info-item">
+                        <small><i class="fas fa-calendar-alt"></i> Record Date</small>
+                        <span id="dashDateDisplay">-</span>
+                    </div>
+                    <div class="detail-info-item" style="cursor:pointer;" onclick="handleCustomerNumberClick()" title="Tap to copy & call">
+                        <small><i class="fas fa-phone"></i> Mobile Number</small>
+                        <span id="dashNumberDisplay">-</span>
+                    </div>
+                    <div class="detail-info-item">
+                        <small><i class="fas fa-layer-group"></i> Session</small>
+                        <span id="dashSessionDisplay">-</span>
+                    </div>
                 </div>
             </div>
 
             <!-- Scrollable History Section -->
-            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; flex-grow: 1; max-height: 300px;">
-                <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-muted); margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 6px;">📋 History Logs</h4>
-                <div id="dashHistoryContainer" style="overflow-y: auto; flex-grow: 1; display: flex; flex-direction: column; gap: 10px;"></div>
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; flex-grow: 1; min-height: 240px;">
+                <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-muted); margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+                    <i class="fas fa-history"></i> Activity & History Logs
+                </h4>
+                <div id="dashHistoryContainer" style="overflow-y: auto; flex-grow: 1; display: flex; flex-direction: column; gap: 10px; max-height: 360px;"></div>
             </div>
 
-            <!-- Payment Confirmation FAB (Hidden if paid) -->
-            <div class="fab" id="dashPaymentFab" onclick="openPaymentConfirmationModal()" title="Mark Payment as Done"><i class="fas fa-check"></i></div>
+            <!-- EDIT ICON AS FAB -->
+            <div class="fab" onclick="openEditFromDashboard()" title="Edit Customer Information">
+                <i class="fas fa-edit"></i>
+            </div>
         </div>
     </div>
 
-    <!-- FULLSCREEN WORKSPACE: RECORD MODIFY/EDIT ENGINE CANVAS -->
+    <!-- ========================================================= -->
+    <!-- FULLSCREEN WORKSPACE: EDIT CUSTOMER (DELETE ICON ON LEFT) -->
+    <!-- ========================================================= -->
     <div id="editPaneScreen" class="app-view-screen">
         <div class="screen-header">
-            <h2>Modify Customer Record Canvas</h2>
-            <button class="close-screen-btn" onclick="closeEditPaneScreen()"><i class="fas fa-times"></i></button>
+            <div class="screen-header-left-group">
+                <!-- Delete Icon moved to Left Side -->
+                <button type="button" class="subtle-delete-icon-btn" onclick="openDeleteFromEditScreen()" title="Delete Customer Record">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+                <h2>Edit Customer</h2>
+            </div>
+            <button type="button" class="close-screen-btn" onclick="closeEditPaneScreen()" title="Close">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
         <div class="screen-content">
             <form id="editDirectForm" onsubmit="event.preventDefault();" style="max-width: 600px; margin: 0 auto;">
+                
+                <!-- Custom Switch to Mark as Paid / Unpaid (verified via custom bottom sheet) -->
+                <div class="switch-card">
+                    <div class="switch-label-group">
+                        <strong id="editPaymentSwitchTitle">Payment Status: Pending</strong>
+                        <span id="editPaymentSwitchSub">Toggle switch to mark payment as Paid</span>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="editPaymentStatusSwitch" onchange="onEditPaymentSwitchChange(this)">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
                 <div class="form-group-custom">
                     <label>First Name</label>
                     <input type="text" id="editFirstName" required>
@@ -913,47 +1429,21 @@
                     <select id="editVillage" required></select>
                 </div>
                 <div class="form-group-custom">
-                    <label>Timeline Date (DD/MM/YYYY)</label>
-                    <div class="native-date-wrapper">
-                        <input type="date" id="editDate" required>
+                    <label>Record Date (DD/MM/YYYY)</label>
+                    <div class="custom-date-box">
+                        <span class="date-text-display" id="editDateDisplay">--/--/----</span>
+                        <i class="fas fa-calendar-alt"></i>
+                        <input type="date" id="editDate" onchange="syncCustomDateDisplay('editDate', 'editDateDisplay')" required>
                     </div>
                 </div>
                 <div class="form-group-custom">
                     <label>Amount (₹)</label>
                     <input type="number" id="editAmount" required>
                 </div>
-                <button type="button" class="btn-modern primary" style="width:100%;" onclick="processDataUpdateOperation()">Commit Structural Upgrades</button>
+                <button type="button" class="btn-modern primary" style="width:100%;" onclick="processDataUpdateOperation()">
+                    <i class="fas fa-save"></i> Save Changes
+                </button>
             </form>
-        </div>
-    </div>
-
-    <!-- PAYMENT CONFIRMATION & AMOUNT ADJUST MODAL -->
-    <div id="paymentConfirmModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-dismiss-cross-trigger" onclick="closeModalWindow('paymentConfirmModal')"><i class="fas fa-times"></i></button>
-            <h3 style="margin-bottom:12px; color: var(--success);"><i class="fas fa-check-circle"></i> Confirm Payment</h3>
-            <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:16px;">You can adjust the final amount before marking the payment as done.</p>
-            <div class="form-group-custom">
-                <label>Final Paid Amount (₹)</label>
-                <input type="number" id="confirmPaymentAmountInput" required>
-            </div>
-            <button class="btn-modern primary" style="width:100%; background: var(--success);" onclick="executePaymentCompletion()">Mark as Paid & Save</button>
-        </div>
-    </div>
-
-    <!-- CUSTOM STATUS CHANGE CONFIRMATION MODAL -->
-    <div id="statusToggleModal" class="modal">
-        <div class="modal-content" style="text-align: center;">
-            <button class="modal-dismiss-cross-trigger" onclick="closeModalWindow('statusToggleModal')"><i class="fas fa-times"></i></button>
-            <div style="width:56px; height:56px; background:var(--warning-light, #fef3c7); color:var(--warning, #f59e0b); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 14px auto; font-size:1.5rem;">
-                <i class="fas fa-exclamation-circle"></i>
-            </div>
-            <h3 style="margin-bottom:8px;">Change Payment Status?</h3>
-            <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">Do you want to change this customer status from Paid back to Pending?</p>
-            <div style="display:flex; gap:12px;">
-                <button class="btn-modern secondary" style="flex:1;" onclick="closeModalWindow('statusToggleModal')">Cancel</button>
-                <button class="btn-modern primary" style="flex:1; background:var(--warning);" onclick="confirmStatusToggleToPending()">Mark as Pending</button>
-            </div>
         </div>
     </div>
 
@@ -962,10 +1452,14 @@
         <div class="modal-content">
             <div id="confirmPromptBlock" style="display:none;">
                 <button class="modal-dismiss-cross-trigger" onclick="closeModalWindow('cloudActionProcessModal')"><i class="fas fa-times"></i></button>
-                <h3 style="margin-bottom:12px;">Destructive Action Validation</h3>
-                <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">Are you confident you want to delete this customer permanently from servers?</p>
+                <div style="width:48px; height:48px; background:var(--danger-light); color:var(--danger); border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:12px; font-size:1.25rem;">
+                    <i class="fas fa-trash-alt"></i>
+                </div>
+                <h3 style="margin-bottom:8px;">Delete Customer Record?</h3>
+                <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:20px;">This action cannot be undone. Are you sure you want to permanently delete this customer from the database?</p>
                 <div style="display:flex; gap:12px;">
-                    <button class="btn-modern primary" style="flex:1; background:var(--danger);" onclick="commitDataPurgeExecution()">Sure, Delete Entry</button>
+                    <button class="btn-modern secondary" style="flex:1;" onclick="closeModalWindow('cloudActionProcessModal')">Cancel</button>
+                    <button class="btn-modern primary" style="flex:1; background:var(--danger);" onclick="commitDataPurgeExecution()">Yes, Delete</button>
                 </div>
             </div>
 
@@ -978,23 +1472,8 @@
 
             <div id="processingEngineStatusBlock" style="display:none;" class="processing-modal-box">
                 <div class="spinner-radar"></div>
-                <h4 id="processingBoxLabel">Communicating with Cluster Array...</h4>
-                <p style="font-size:0.8rem; color:var(--text-muted);">Synchronizing changes to cloud ledger matrix...</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- TERMINATED SESSION OVERRIDE POPUP -->
-    <div id="sessionOverrideNoticeModal" class="modal" style="display:none;">
-        <div class="modal-content" style="text-align: center;">
-            <button class="modal-dismiss-cross-trigger" onclick="closeModalWindow('sessionOverrideNoticeModal')" title="Dismiss Warning"><i class="fas fa-times"></i></button>
-            <div style="width:56px; height:56px; background:var(--danger-light); color:var(--danger); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 14px auto; font-size:1.5rem;">
-                <i class="fas fa-sign-out-alt"></i>
-            </div>
-            <h3 style="margin-bottom:8px; padding-top:6px;">Session Termination Matrix</h3>
-            <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">Your workspace parameters will be cleared completely. Click OK to confirm window reload references.</p>
-            <div style="display:flex; gap:12px;">
-                <button class="btn-modern primary" style="flex:1; background:var(--danger);" onclick="executeSessionPurgeReloadSequence()">OK</button>
+                <h4 id="processingBoxLabel">Communicating with Server...</h4>
+                <p style="font-size:0.8rem; color:var(--text-muted);">Synchronizing changes to database...</p>
             </div>
         </div>
     </div>
@@ -1002,29 +1481,32 @@
     <!-- SETUP CREDENTIAL MODAL -->
     <div id="setupWizardModal" class="modal" style="display: none;">
         <div class="modal-content">
-            <h3 style="margin-bottom:12px;">⚙️ Cluster Connection Gateway</h3>
+            <h3 style="margin-bottom:12px;">⚙️ Connection Setup</h3>
             <form id="setupWizardForm">
                 <div class="form-group-custom">
-                    <label>Work Session Timeline Profile</label>
+                    <label>Initial Session Timeline</label>
                     <select id="setupSeason" required>
                         <option value="2025-26">2025-26</option>
                         <option value="2026-27">2026-27</option>
-                        <option value="2027-28">2027-28</option>
-                        <option value="2028-29">2028-29</option>
                         <option value="2024-25">2024-25</option>
                     </select>
                 </div>
                 <div class="form-group-custom">
-                    <label>GitHub Security Personal Access Token</label>
+                    <label>GitHub Personal Access Token</label>
                     <input type="password" id="setupToken" placeholder="ghp_xxxxxxxxxxxx" required>
                 </div>
-                <button type="submit" class="btn-modern primary" style="width:100%;">Establish Dashboard Stream</button>
+                <button type="submit" class="btn-modern primary" style="width:100%;">Connect & Launch</button>
             </form>
         </div>
     </div>
 
     <script>
-        let CURRENT_SEASON = localStorage.getItem('season') || "";
+        // --- SESSION STATE & STORAGE ---
+        const DEFAULT_BASE_SEASON = "2025-26";
+        let AVAILABLE_SESSIONS = JSON.parse(localStorage.getItem('available_sessions') || 'null') || [DEFAULT_BASE_SEASON];
+        let MARKED_CURRENT_SESSION = localStorage.getItem('marked_current_session') || "";
+        let ACTIVE_VIEW_SESSION = MARKED_CURRENT_SESSION || localStorage.getItem('season') || AVAILABLE_SESSIONS[0];
+
         let GITHUB_TOKEN = localStorage.getItem('who') || "";
         const GITHUB_USERNAME = "mitpooniya";
         const GITHUB_REPO = "work";
@@ -1041,24 +1523,60 @@
         let selectedImportCustomerObj = null;
         let selectedImportSeasonVal = "";
 
-        function parseInputToUIDateText(isoString) {
-            if (!isoString) return "";
-            const segment = isoString.split('-');
-            if (segment.length === 3) return `${segment[2]}/${segment[1]}/${segment[0]}`;
-            return isoString;
+        // Edit Screen Payment Switch Verified State
+        let editVerifiedPaymentDone = false;
+        let pendingSwitchTargetState = false;
+
+        // Pending Session Action States
+        let pendingCurrentSessionTargetState = false;
+        let pendingSwitchTargetSession = "";
+        let pendingRemoveTargetSession = "";
+
+        // ============================================================
+        // 1. STRICT DATE HELPERS: BACKEND (YYYY-MM-DD) & UI (DD/MM/YYYY)
+        // ============================================================
+        function formatBackendDateToDDMMYYYY(dateStr) {
+            if (!dateStr) return "";
+            const clean = dateStr.replace(/\//g, '-');
+            const parts = clean.split('-');
+            if (parts.length === 3) {
+                return `${parts[2]}/${parts[1]}/${parts[0]}`;
+            }
+            return dateStr;
         }
 
+        function normalizeDateForInput(dateStr) {
+            if (!dateStr) return "";
+            return dateStr.replace(/\//g, '-');
+        }
+
+        function syncCustomDateDisplay(inputId, displayId) {
+            const val = document.getElementById(inputId).value;
+            const displayEl = document.getElementById(displayId);
+            if (displayEl) {
+                displayEl.textContent = val ? formatBackendDateToDDMMYYYY(val) : "--/--/----";
+            }
+        }
+
+        // ============================================================
+        // INITIALIZATION
+        // ============================================================
         window.addEventListener('DOMContentLoaded', () => {
             initSessionSecurityCheck();
             setupVillageChips();
         });
 
         function initSessionSecurityCheck() {
-            if (!CURRENT_SEASON || !GITHUB_TOKEN) {
+            if (!GITHUB_TOKEN) {
                 document.getElementById('setupToken').value = GITHUB_TOKEN;
                 document.getElementById('setupWizardModal').style.display = 'flex';
             } else {
                 document.getElementById('setupWizardModal').style.display = 'none';
+                if (MARKED_CURRENT_SESSION && AVAILABLE_SESSIONS.includes(MARKED_CURRENT_SESSION)) {
+                    ACTIVE_VIEW_SESSION = MARKED_CURRENT_SESSION;
+                } else if (!AVAILABLE_SESSIONS.includes(ACTIVE_VIEW_SESSION)) {
+                    ACTIVE_VIEW_SESSION = AVAILABLE_SESSIONS[0];
+                }
                 bootstrapAppCoreSystem();
             }
         }
@@ -1067,74 +1585,258 @@
             e.preventDefault();
             const inputSeason = document.getElementById('setupSeason').value;
             const inputToken = document.getElementById('setupToken').value.trim();
+
+            if (!AVAILABLE_SESSIONS.includes(inputSeason)) {
+                AVAILABLE_SESSIONS.push(inputSeason);
+                localStorage.setItem('available_sessions', JSON.stringify(AVAILABLE_SESSIONS));
+            }
             localStorage.setItem('season', inputSeason);
             localStorage.setItem('who', inputToken);
-            CURRENT_SEASON = inputSeason;
+
+            ACTIVE_VIEW_SESSION = inputSeason;
             GITHUB_TOKEN = inputToken;
             document.getElementById('setupWizardModal').style.display = 'none';
             bootstrapAppCoreSystem();
         });
 
-        function triggerCustomAlertNotice(title, body, isSuccess, callback = null) {
-            document.getElementById('confirmPromptBlock').style.display = 'none';
-            document.getElementById('processingEngineStatusBlock').style.display = 'none';
-            
-            const iconBox = document.getElementById('alertIconSphere');
-            if (isSuccess) {
-                iconBox.style.background = 'var(--success-light)';
-                iconBox.style.color = 'var(--success)';
-                iconBox.innerHTML = '<i class="fas fa-check-circle"></i>';
-            } else {
-                iconBox.style.background = 'var(--danger-light)';
-                iconBox.style.color = 'var(--danger)';
-                iconBox.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
-            }
-            
-            document.getElementById('alertHeaderTitle').textContent = title;
-            document.getElementById('alertBodyParagraph').textContent = body;
-            
-            const dismissBtn = document.getElementById('alertFeedbackDismissBtn');
-            dismissBtn.onclick = () => {
-                closeModalWindow('cloudActionProcessModal');
-                if(callback) callback();
-            };
-            
-            document.getElementById('alertFeedbackNoticeBlock').style.display = 'block';
-            openModalWindow('cloudActionProcessModal');
-        }
-
-        document.getElementById('logoutSessionBtn').addEventListener('click', () => {
-            document.getElementById('sessionOverrideNoticeModal').style.display = 'flex';
-        });
-
-        function executeSessionPurgeReloadSequence() {
-            localStorage.removeItem('season');
-            window.location.reload();
-        }
-
         function bootstrapAppCoreSystem() {
-            document.getElementById('appTitleDisplay').textContent = ` (${CURRENT_SEASON|| 20})`;
-            API_BASE_URL = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${CURRENT_SEASON}/customer.json`;
+            localStorage.setItem('season', ACTIVE_VIEW_SESSION);
+            const isCurrent = (ACTIVE_VIEW_SESSION === MARKED_CURRENT_SESSION);
+            const statusTag = isCurrent ? " • Current" : "";
+            document.getElementById('TitleDisplay').textContent = `Session: ${ACTIVE_VIEW_SESSION}${statusTag}`;
+            
+            API_BASE_URL = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${ACTIVE_VIEW_SESSION}/customer.json`;
             populateVillageSelectors();
             loadCloudDataFeed();
         }
 
-        // --- SEASON SWITCHER FUNCTIONS ---
-        function openSeasonSwitchModal() {
-            document.getElementById('modalSeasonSelect').value = CURRENT_SEASON || "2025-26";
-            openModalWindow('seasonSwitchModal');
+        // ============================================================
+        // SESSION SWITCHER BOTTOM SHEET (TAP TO CONFIRM, HOLD TO REMOVE,
+        // ONLY CURRENT SESSION MARKED WITH GREEN DOT, BOTTOM-RIGHT +)
+        // ============================================================
+        function openSessionBottomSheet() {
+            renderSessionBottomSheetUI();
+            openBottomSheet('sessionSwitchSheet');
         }
 
-        function confirmSeasonSwitch() {
-            const targetSeason = document.getElementById('modalSeasonSelect').value;
-            closeModalWindow('seasonSwitchModal');
-            if(targetSeason === CURRENT_SEASON) return;
+        function renderSessionBottomSheetUI() {
+            const isCurrent = (ACTIVE_VIEW_SESSION === MARKED_CURRENT_SESSION);
+            document.getElementById('markCurrentLabel').textContent = `Mark "${ACTIVE_VIEW_SESSION}" as Current`;
+            document.getElementById('markCurrentSubtext').textContent = isCurrent 
+                ? "This session is marked as Current" 
+                : "Turn ON to mark this as the Current Session";
+            document.getElementById('markCurrentSessionSwitch').checked = isCurrent;
 
-            localStorage.setItem('season', targetSeason);
-            CURRENT_SEASON = targetSeason;
+            const listContainer = document.getElementById('sessionListContainer');
+            listContainer.innerHTML = '';
+
+            AVAILABLE_SESSIONS.forEach(sess => {
+                const isViewing = (sess === ACTIVE_VIEW_SESSION);
+                const isMarkedCurrent = (sess === MARKED_CURRENT_SESSION);
+                
+                // Only mark the Current Session with a green dot (no 'Old' badge)
+                const currentDotHtml = isMarkedCurrent
+                    ? `<span class="current-green-dot-badge"><span class="green-pulse-dot"></span> Current</span>`
+                    : '';
+
+                const card = document.createElement('div');
+                card.className = `session-item-card ${isViewing ? 'active-view' : ''}`;
+                card.innerHTML = `
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <i class="fas ${isViewing ? 'fa-folder-open' : 'fa-folder'}" style="color: ${isViewing ? 'var(--primary)' : 'var(--text-muted)'};"></i>
+                        <strong style="font-size:1rem;">${sess}</strong>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        ${currentDotHtml}
+                    </div>
+                `;
+
+                // Long-press (Hold) to remove from local list + Tap to confirm switch
+                let pressTimer = null;
+                let longPressTriggered = false;
+
+                const startHold = () => {
+                    longPressTriggered = false;
+                    card.classList.add('holding');
+                    pressTimer = setTimeout(() => {
+                        longPressTriggered = true;
+                        card.classList.remove('holding');
+                        promptRemoveSessionLocally(sess);
+                    }, 650);
+                };
+
+                const cancelHold = () => {
+                    card.classList.remove('holding');
+                    if (pressTimer) {
+                        clearTimeout(pressTimer);
+                        pressTimer = null;
+                    }
+                };
+
+                card.addEventListener('touchstart', startHold, { passive: true });
+                card.addEventListener('touchend', cancelHold);
+                card.addEventListener('touchmove', cancelHold);
+                card.addEventListener('mousedown', startHold);
+                card.addEventListener('mouseup', cancelHold);
+                card.addEventListener('mouseleave', cancelHold);
+
+                card.addEventListener('click', () => {
+                    if (longPressTriggered) return;
+                    if (ACTIVE_VIEW_SESSION !== sess) {
+                        pendingSwitchTargetSession = sess;
+                        document.getElementById('switchSessConfirmDesc').textContent = `Do you want to switch from "${ACTIVE_VIEW_SESSION}" to session "${sess}"?`;
+                        openModalWindow('switchSessionConfirmModal');
+                    }
+                });
+
+                listContainer.appendChild(card);
+            });
+
+            // Enable bottom-right + icon button only when first customer exists & a current session is marked
+            const hasCustomers = (globalCachedDataObject.customers && globalCachedDataObject.customers.length > 0);
+            const hasMarkedCurrent = Boolean(MARKED_CURRENT_SESSION);
+            const addBtn = document.getElementById('addNextSessionBtn');
+            const hintText = document.getElementById('addSessionHintText');
+
+            if (hasCustomers && hasMarkedCurrent) {
+                addBtn.disabled = false;
+                hintText.textContent = "Tap a session to switch, or hold a session to remove it from this list.";
+            } else {
+                addBtn.disabled = true;
+                if (!hasCustomers && !hasMarkedCurrent) {
+                    hintText.textContent = "Add your first customer & mark a Current Session to unlock adding a new session. Hold any session to remove from list.";
+                } else if (!hasCustomers) {
+                    hintText.textContent = "Add at least one customer record first to unlock adding a new session.";
+                } else {
+                    hintText.textContent = "Mark a Current Session first to unlock adding a new session.";
+                }
+            }
+        }
+
+        // Confirm Switch Session from Popup
+        function confirmSessionSwitchAction() {
+            closeModalWindow('switchSessionConfirmModal');
+            if (!pendingSwitchTargetSession || pendingSwitchTargetSession === ACTIVE_VIEW_SESSION) return;
+            ACTIVE_VIEW_SESSION = pendingSwitchTargetSession;
+            pendingSwitchTargetSession = "";
             bootstrapAppCoreSystem();
+            renderSessionBottomSheetUI();
         }
 
+        // Hold Action: Prompt & Remove Session from Local List Only (Never deletes server files)
+        function promptRemoveSessionLocally(sess) {
+            if (AVAILABLE_SESSIONS.length <= 1) {
+                triggerCustomAlertNotice("Cannot Remove", "At least one session must remain in your list.", false);
+                return;
+            }
+            pendingRemoveTargetSession = sess;
+            document.getElementById('removeSessConfirmDesc').textContent = `Remove "${sess}" from your local session list? Your data on the server will remain completely safe.`;
+            openModalWindow('removeLocalSessionModal');
+        }
+
+        function confirmRemoveSessionLocally() {
+            closeModalWindow('removeLocalSessionModal');
+            if (!pendingRemoveTargetSession) return;
+
+            AVAILABLE_SESSIONS = AVAILABLE_SESSIONS.filter(s => s !== pendingRemoveTargetSession);
+            localStorage.setItem('available_sessions', JSON.stringify(AVAILABLE_SESSIONS));
+
+            if (MARKED_CURRENT_SESSION === pendingRemoveTargetSession) {
+                MARKED_CURRENT_SESSION = "";
+                localStorage.removeItem('marked_current_session');
+            }
+
+            if (ACTIVE_VIEW_SESSION === pendingRemoveTargetSession) {
+                ACTIVE_VIEW_SESSION = MARKED_CURRENT_SESSION || AVAILABLE_SESSIONS[0];
+                bootstrapAppCoreSystem();
+            }
+
+            pendingRemoveTargetSession = "";
+            renderSessionBottomSheetUI();
+        }
+
+        // Confirmation popup before changing Current Session
+        function onCurrentSessionSwitchAttempt(checkboxEl) {
+            pendingCurrentSessionTargetState = checkboxEl.checked;
+            checkboxEl.checked = (ACTIVE_VIEW_SESSION === MARKED_CURRENT_SESSION);
+
+            const titleEl = document.getElementById('currSessConfirmTitle');
+            const descEl = document.getElementById('currSessConfirmDesc');
+
+            if (pendingCurrentSessionTargetState) {
+                titleEl.textContent = `Set "${ACTIVE_VIEW_SESSION}" as Current?`;
+                descEl.textContent = MARKED_CURRENT_SESSION 
+                    ? `"${ACTIVE_VIEW_SESSION}" will be marked as Current with the green dot, replacing "${MARKED_CURRENT_SESSION}".`
+                    : `"${ACTIVE_VIEW_SESSION}" will be marked as your default Current Session.`;
+            } else {
+                titleEl.textContent = `Unmark "${ACTIVE_VIEW_SESSION}" as Current?`;
+                descEl.textContent = `Are you sure you want to remove "${ACTIVE_VIEW_SESSION}" as your Current Session?`;
+            }
+
+            openModalWindow('currentSessionConfirmModal');
+        }
+
+        function cancelCurrentSessionToggle() {
+            closeModalWindow('currentSessionConfirmModal');
+            document.getElementById('markCurrentSessionSwitch').checked = (ACTIVE_VIEW_SESSION === MARKED_CURRENT_SESSION);
+        }
+
+        function confirmCurrentSessionToggle() {
+            closeModalWindow('currentSessionConfirmModal');
+            if (pendingCurrentSessionTargetState) {
+                MARKED_CURRENT_SESSION = ACTIVE_VIEW_SESSION;
+                localStorage.setItem('marked_current_session', MARKED_CURRENT_SESSION);
+            } else {
+                if (MARKED_CURRENT_SESSION === ACTIVE_VIEW_SESSION) {
+                    MARKED_CURRENT_SESSION = "";
+                    localStorage.removeItem('marked_current_session');
+                }
+            }
+            bootstrapAppCoreSystem();
+            renderSessionBottomSheetUI();
+        }
+
+        // Bottom-right + Icon opens editable confirmation popup for Next Session
+        function computeNextSessionString(baseSession) {
+            const parts = baseSession.split('-');
+            if (parts.length === 2 && !isNaN(parseInt(parts[0]))) {
+                const startYear = parseInt(parts[0]) + 1;
+                const endShort = (startYear + 1).toString().slice(-2);
+                return `${startYear}-${endShort}`;
+            }
+            return `${baseSession}-Next`;
+        }
+
+        function openAddNextSessionConfirmModal() {
+            const hasCustomers = (globalCachedDataObject.customers && globalCachedDataObject.customers.length > 0);
+            if (!hasCustomers || !MARKED_CURRENT_SESSION) return;
+
+            const suggestedNext = computeNextSessionString(MARKED_CURRENT_SESSION);
+            document.getElementById('newSessionEditableInput').value = suggestedNext;
+            openModalWindow('addSessionConfirmModal');
+        }
+
+        function confirmAddNextSession() {
+            const customSessionName = document.getElementById('newSessionEditableInput').value.trim();
+            if (!customSessionName) {
+                triggerCustomAlertNotice("Validation Error", "Please enter a valid session name.", false);
+                return;
+            }
+            const cleanSessionName = customSessionName.replace(/\//g, '-');
+
+            if (!AVAILABLE_SESSIONS.includes(cleanSessionName)) {
+                AVAILABLE_SESSIONS.push(cleanSessionName);
+                localStorage.setItem('available_sessions', JSON.stringify(AVAILABLE_SESSIONS));
+            }
+            ACTIVE_VIEW_SESSION = cleanSessionName;
+            closeModalWindow('addSessionConfirmModal');
+            bootstrapAppCoreSystem();
+            renderSessionBottomSheetUI();
+        }
+
+        // ============================================================
+        // SORTING & SEARCHING
+        // ============================================================
         function cycleSortStateEngine() {
             currentSortingCycleState = (currentSortingCycleState + 1) % 4;
             const labels = ["Recent", "Alphabetical", "Old ➔ New", "Amount: Low ➔ High"];
@@ -1183,7 +1885,7 @@
         function filterByDateDirect(dateVal) {
             if(!dateVal) return;
             const queryData = globalCachedDataObject.customers || [];
-            const targetedMatches = queryData.filter(user => user.date === dateVal);
+            const targetedMatches = queryData.filter(user => normalizeDateForInput(user.date) === dateVal);
             renderCustomerDataGrid({ customers: targetedMatches });
         }
 
@@ -1194,7 +1896,7 @@
             if (query) {
                 matrixDataset = matrixDataset.filter(user => {
                     const fullName = `${user.firstName || ''} ${user.lastName || ''}`.toLowerCase();
-                    const formattedDate = parseInputToUIDateText(user.date);
+                    const formattedDate = formatBackendDateToDDMMYYYY(user.date);
                     return fullName.includes(query) || 
                            (user.village || '').toLowerCase().includes(query) || 
                            String(user.amount || '').includes(query) ||
@@ -1204,7 +1906,7 @@
             }
 
             if (currentSortingCycleState === 0) {
-                matrixDataset.sort((a, b) => new Date(b.date) - new Date(a.date));
+                matrixDataset.sort((a, b) => new Date(normalizeDateForInput(b.date)) - new Date(normalizeDateForInput(a.date)));
             } else if (currentSortingCycleState === 1) {
                 matrixDataset.sort((a, b) => {
                     const strA = `${a.firstName || ''}`.toLowerCase();
@@ -1212,7 +1914,7 @@
                     return strA.localeCompare(strB, 'hi');
                 });
             } else if (currentSortingCycleState === 2) {
-                matrixDataset.sort((a, b) => new Date(a.date) - new Date(b.date));
+                matrixDataset.sort((a, b) => new Date(normalizeDateForInput(a.date)) - new Date(normalizeDateForInput(b.date)));
             } else if (currentSortingCycleState === 3) {
                 matrixDataset.sort((a, b) => (parseFloat(a.amount) || 0) - (parseFloat(b.amount) || 0));
             }
@@ -1220,13 +1922,16 @@
             renderCustomerDataGrid({ customers: matrixDataset });
         }
 
+        // ============================================================
+        // CUSTOMER LIST: SHOW ONLY ICON FOR PENDING / PAID
+        // ============================================================
         function renderCustomerDataGrid(dataPackage) {
             const container = document.getElementById('dataList');
             container.innerHTML = '';
             let targetList = dataPackage.customers || [];
 
             if (targetList.length === 0) {
-                container.innerHTML = '<p style="text-align:center; padding:40px; color:var(--text-muted);">No records match criteria.</p>';
+                container.innerHTML = '<p style="text-align:center; padding:40px; color:var(--text-muted);">No records found in this session.</p>';
                 return;
             }
 
@@ -1234,6 +1939,10 @@
                 const card = document.createElement('div');
                 card.className = `customer-card ${user.paymentDone ? 'done' : ''}`;
                 
+                const statusIconHtml = user.paymentDone
+                    ? `<span class="status-icon-badge paid" title="Paid"><i class="fas fa-check"></i></span>`
+                    : `<span class="status-icon-badge pending" title="Pending"><i class="fas fa-clock"></i></span>`;
+
                 card.innerHTML = `
                     <div class="card-details">
                         <div class="card-title-row">
@@ -1242,15 +1951,13 @@
                         </div>
                         <span class="amt-display">₹ ${(parseFloat(user.amount)||0).toLocaleString('en-IN')}</span>
                         <div class="card-meta-row">
-                            <span class="date-click" onclick="filterByDateDirect('${user.date}')">
-                                <i class="fas fa-calendar-alt"></i> ${parseInputToUIDateText(user.date)}
+                            <span class="date-click" onclick="filterByDateDirect('${normalizeDateForInput(user.date)}')">
+                                <i class="fas fa-calendar-alt"></i> ${formatBackendDateToDDMMYYYY(user.date)}
                             </span>
-                            <span class="status-pill ${user.paymentDone ? 'paid' : 'pending'}">
-                                ${user.paymentDone ? '✓ PAID' : '⏳ PENDING'}
-                            </span>
+                            ${statusIconHtml}
                         </div>
                     </div>
-                    <div class="card-action-trigger" title="Manage Record Properties">
+                    <div class="card-action-trigger" title="View Full Details & History">
                         <i class="fas fa-eye"></i>
                     </div>
                 `;
@@ -1264,15 +1971,30 @@
             });
         }
 
-        function openAddChoiceModal() {
-            openModalWindow('addChoiceModal');
+        // ============================================================
+        // ADD CUSTOMER CHOICE BOTTOM SHEET & IMPORT FLOW
+        // ============================================================
+        function openAddChoiceBottomSheet() {
+            document.getElementById('addSheetSessionName').textContent = ACTIVE_VIEW_SESSION;
+            openBottomSheet('addChoiceSheet');
         }
 
         function handleNewCustomerChoice(choice) {
-            closeModalWindow('addChoiceModal');
+            closeBottomSheet('addChoiceSheet');
             if (choice === 'new') {
                 openAddWizardScreen();
             } else if (choice === 'import') {
+                const dropdown = document.getElementById('importSeasonDropdown');
+                dropdown.innerHTML = '';
+                const allPossible = Array.from(new Set([...AVAILABLE_SESSIONS, "2024-25", "2025-26", "2026-27"]));
+                allPossible.forEach(s => {
+                    if (s !== ACTIVE_VIEW_SESSION) {
+                        const opt = document.createElement('option');
+                        opt.value = s;
+                        opt.textContent = s;
+                        dropdown.appendChild(opt);
+                    }
+                });
                 openModalWindow('oldSeasonSelectModal');
             }
         }
@@ -1293,7 +2015,7 @@
                 });
                 closeModalWindow('cloudActionProcessModal');
                 if (!response.ok) {
-                    triggerCustomAlertNotice("Import Error", "Could not load data from the selected season.", false);
+                    triggerCustomAlertNotice("Import Error", "Could not load data from the selected session.", false);
                     return;
                 }
                 const data = await response.json();
@@ -1304,7 +2026,7 @@
                 openModalWindow('importCustomerListModal');
             } catch (err) {
                 closeModalWindow('cloudActionProcessModal');
-                triggerCustomAlertNotice("Import Error", "Failed to connect or parse old season data.", false);
+                triggerCustomAlertNotice("Import Error", "Failed to connect or parse session data.", false);
             }
         }
 
@@ -1315,7 +2037,7 @@
             document.getElementById('importProceedFabBtn').style.display = 'none';
 
             if (list.length === 0) {
-                container.innerHTML = '<p style="text-align:center; padding:20px; color:var(--text-muted);">No pending customers found in this season.</p>';
+                container.innerHTML = '<p style="text-align:center; padding:20px; color:var(--text-muted);">No pending customers found in this session.</p>';
                 return;
             }
 
@@ -1381,6 +2103,7 @@
             const dateInput = document.getElementById('importEditDate');
             dateInput.max = todayStr;
             dateInput.value = todayStr;
+            syncCustomDateDisplay('importEditDate', 'importEditDateDisplay');
 
             document.getElementById('importEditAmount').value = selectedImportCustomerObj.amount || 0;
 
@@ -1391,25 +2114,50 @@
             document.getElementById('importEditScreen').style.display = 'none';
         }
 
-        async function commitImportedCustomerSave() {
+        function openImportSummarySheet() {
             const village = document.getElementById('importEditVillage').value;
             const date = document.getElementById('importEditDate').value;
             const newAmount = parseInt(document.getElementById('importEditAmount').value);
-            const number = document.getElementById('importEditNumber').value.trim() || "null";
+            const number = document.getElementById('importEditNumber').value.trim() || "Not Provided";
 
             if(!village || !date || isNaN(newAmount)) {
                 triggerCustomAlertNotice("Validation Error", "Please fill out all required fields correctly.", false);
                 return;
             }
 
+            const summaryHtml = `
+                <div class="summary-row"><span>Target Session</span><strong>${ACTIVE_VIEW_SESSION}</strong></div>
+                <div class="summary-row"><span>Imported From</span><strong>${selectedImportSeasonVal}</strong></div>
+                <div class="summary-row"><span>Customer Name</span><strong>${selectedImportCustomerObj.firstName} ${selectedImportCustomerObj.lastName}</strong></div>
+                <div class="summary-row"><span>Mobile Number</span><strong>${number}</strong></div>
+                <div class="summary-row"><span>Village Sector</span><strong>${village}</strong></div>
+                <div class="summary-row"><span>Record Date</span><strong>${formatBackendDateToDDMMYYYY(date)}</strong></div>
+                <div class="summary-row"><span>Final Amount</span><strong style="color:var(--primary); font-size:1.05rem;">₹ ${newAmount.toLocaleString('en-IN')}</strong></div>
+            `;
+            document.getElementById('finalSummaryContent').innerHTML = summaryHtml;
+
+            const confirmBtn = document.getElementById('confirmUploadSummaryBtn');
+            confirmBtn.onclick = () => {
+                closeBottomSheet('finalSummarySheet');
+                commitImportedCustomerSave();
+            };
+
+            openBottomSheet('finalSummarySheet');
+        }
+
+        async function commitImportedCustomerSave() {
+            const village = document.getElementById('importEditVillage').value;
+            const date = document.getElementById('importEditDate').value; // Backend YYYY-MM-DD
+            const newAmount = parseInt(document.getElementById('importEditAmount').value);
+            const number = document.getElementById('importEditNumber').value.trim() || "null";
+
             closeImportEditScreen();
 
             document.getElementById('confirmPromptBlock').style.display = 'none';
             document.getElementById('processingEngineStatusBlock').style.display = 'flex';
-            document.getElementById('processingBoxLabel').textContent = "Updating old season & importing copy...";
+            document.getElementById('processingBoxLabel').textContent = "Updating source session & importing record...";
             openModalWindow('cloudActionProcessModal');
 
-            // 1. Add "Moved to CURRENT_SEASON" entry into the old season's customer history log
             const oldUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${selectedImportSeasonVal}/customer.json`;
             try {
                 const oldRes = await fetch(oldUrl, {
@@ -1425,8 +2173,8 @@
                         if(!oldParsed.history) oldParsed.history = [];
                         oldParsed.history.push({
                             userId: targetOldCust.id,
-                            type: 'Season Migration',
-                            message: `Moved to ${CURRENT_SEASON} season`,
+                            type: 'Session Migration',
+                            message: `Moved to ${ACTIVE_VIEW_SESSION} session`,
                             timestamp: new Date().toISOString()
                         });
 
@@ -1434,15 +2182,14 @@
                         await fetch(oldUrl, {
                             method: 'PUT',
                             headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ message: `Record moved to ${CURRENT_SEASON}`, content: oldRawBase64, sha: oldSha })
+                            body: JSON.stringify({ message: `Record moved to ${ACTIVE_VIEW_SESSION}`, content: oldRawBase64, sha: oldSha })
                         });
                     }
                 }
             } catch (e) {
-                console.error("Error updating old season history:", e);
+                console.error("Error updating old session history:", e);
             }
 
-            // 2. Add customer to current season with detailed history
             const newId = '_' + Math.random().toString(36).substr(2, 9);
             const oldBal = selectedImportCustomerObj.amount || 0;
             const oldDt = selectedImportCustomerObj.date || "N/A";
@@ -1466,25 +2213,29 @@
             dataObject.history.push({
                 userId: newId, 
                 type: 'Imported from ' + selectedImportSeasonVal,
-                message: `${selectedImportCustomerObj.firstName} balance is ${oldBal} and after import ${newAmount} (Old Date: ${parseInputToUIDateText(oldDt)})`,
+                message: `${selectedImportCustomerObj.firstName} balance was ₹${oldBal} and after import ₹${newAmount} (Old Date: ${formatBackendDateToDDMMYYYY(oldDt)})`,
                 timestamp: new Date().toISOString()
             });
 
-            const success = await syncPayloadDataToGitHubCloud(dataObject, `Import customer copy ${newUserObj.firstName}`);
+            const success = await syncPayloadDataToGitHubCloud(dataObject, `Import customer ${newUserObj.firstName}`);
             closeModalWindow('cloudActionProcessModal');
 
             if(success) {
-                triggerCustomAlertNotice("Import Successful", `Customer copy "${newUserObj.firstName} ${newUserObj.lastName}" imported successfully.`, true);
+                triggerCustomAlertNotice("Import Successful", `Customer "${newUserObj.firstName} ${newUserObj.lastName}" imported successfully.`, true);
             } else {
-                triggerCustomAlertNotice("Import Error", "Failed to deploy imported customer copy onto current season cloud nodes.", false);
+                triggerCustomAlertNotice("Import Error", "Failed to save imported customer to database.", false);
             }
         }
 
+        // ============================================================
+        // NEW CUSTOMER WIZARD + FINAL SUMMARY BOTTOM SHEET
+        // ============================================================
         function openAddWizardScreen() {
             const todayStr = new Date().toISOString().split("T")[0];
             const dateInput = document.getElementById('addDate');
             dateInput.max = todayStr;
             dateInput.value = todayStr;
+            syncCustomDateDisplay('addDate', 'addDateDisplay');
 
             wizardCurrentStep = 1;
             renderWizardPaneState();
@@ -1503,8 +2254,11 @@
                 d.setDate(d.getDate() - 1);
             } else if (preset === '2days') {
                 d.setDate(d.getDate() - 2);
+            } else if (preset === '3days') {
+                d.setDate(d.getDate() - 3);
             }
             document.getElementById('addDate').value = d.toISOString().split("T")[0];
+            syncCustomDateDisplay('addDate', 'addDateDisplay');
         }
 
         function jumpWizardStep(targetStep) {
@@ -1520,7 +2274,8 @@
             
             wizardCurrentStep += direction;
             if (wizardCurrentStep > 4) {
-                commitNewUserCloudStorage();
+                wizardCurrentStep = 4;
+                openNewCustomerSummarySheet();
                 return;
             }
             renderWizardPaneState();
@@ -1556,7 +2311,7 @@
             
             const nextFab = document.getElementById('wizardNextFab');
             if (wizardCurrentStep === 4) {
-                nextFab.title = "Finish & Save";
+                nextFab.title = "Review Summary";
                 nextFab.innerHTML = '<i class="fas fa-check"></i>';
             } else {
                 nextFab.title = "Continue";
@@ -1564,25 +2319,95 @@
             }
         }
 
+        function openNewCustomerSummarySheet() {
+            const date = document.getElementById('addDate').value;
+            const village = document.getElementById('addVillageInput').value;
+            const amount = parseInt(document.getElementById('addAmount').value) || 0;
+            const firstName = document.getElementById('addFirstName').value.trim();
+            const lastName = document.getElementById('addLastName').value.trim();
+            const number = document.getElementById('addNumber').value.trim() || "Not Provided";
+
+            const summaryHtml = `
+                <div class="summary-row"><span>Session</span><strong>${ACTIVE_VIEW_SESSION}</strong></div>
+                <div class="summary-row"><span>Customer Name</span><strong>${firstName} ${lastName}</strong></div>
+                <div class="summary-row"><span>Mobile Number</span><strong>${number}</strong></div>
+                <div class="summary-row"><span>Village Sector</span><strong>${village}</strong></div>
+                <div class="summary-row"><span>Record Date</span><strong>${formatBackendDateToDDMMYYYY(date)}</strong></div>
+                <div class="summary-row"><span>Amount</span><strong style="color:var(--primary); font-size:1.05rem;">₹ ${amount.toLocaleString('en-IN')}</strong></div>
+                <div class="summary-row"><span>Payment Status</span><strong style="color:var(--danger);">Pending</strong></div>
+            `;
+            document.getElementById('finalSummaryContent').innerHTML = summaryHtml;
+
+            const confirmBtn = document.getElementById('confirmUploadSummaryBtn');
+            confirmBtn.onclick = () => {
+                closeBottomSheet('finalSummarySheet');
+                commitNewUserCloudStorage();
+            };
+
+            openBottomSheet('finalSummarySheet');
+        }
+
+        async function commitNewUserCloudStorage() {
+            const date = document.getElementById('addDate').value; // Strictly YYYY-MM-DD for backend
+            const village = document.getElementById('addVillageInput').value;
+            const amount = parseInt(document.getElementById('addAmount').value);
+            const firstName = document.getElementById('addFirstName').value.trim();
+            const lastName = document.getElementById('addLastName').value.trim();
+            const number = document.getElementById('addNumber').value.trim() || "null";
+
+            closeAddWizardScreen();
+            
+            document.getElementById('confirmPromptBlock').style.display = 'none';
+            document.getElementById('alertFeedbackNoticeBlock').style.display = 'none';
+            document.getElementById('processingEngineStatusBlock').style.display = 'flex';
+            document.getElementById('processingBoxLabel').textContent = "Uploading customer to database...";
+            openModalWindow('cloudActionProcessModal');
+
+            const newId = '_' + Math.random().toString(36).substr(2, 9);
+            const newUserObj = { id: newId, firstName, lastName, number, amount, village, date, paymentDone: false };
+
+            const dataObject = JSON.parse(JSON.stringify(globalCachedDataObject));
+            if(!dataObject.customers) dataObject.customers = [];
+            if(!dataObject.history) dataObject.history = [];
+
+            dataObject.customers.push(newUserObj);
+            dataObject.history.push({
+                userId: newId, type: 'Customer Created',
+                message: `Record created with balance ₹${amount} at ${village} sector on ${formatBackendDateToDDMMYYYY(date)}`,
+                timestamp: new Date().toISOString()
+            });
+
+            const success = await syncPayloadDataToGitHubCloud(dataObject, `Create customer ${firstName}`);
+            closeModalWindow('cloudActionProcessModal');
+            
+            if(success) {
+                triggerCustomAlertNotice("Registration Successful", `Customer "${firstName} ${lastName}" has been uploaded to the database.`, true);
+            } else {
+                triggerCustomAlertNotice("Registration Error", "Failed to upload customer data to database.", false);
+            }
+        }
+
+        // ============================================================
+        // FULLSCREEN CUSTOMER DETAIL & HISTORY (EYE ICON)
+        // ============================================================
         function openCustomerDashboard(userObject) {
             activeRecordScopeId = userObject.id;
-            document.getElementById('dashCustomerNameTitle').textContent = `Customer: ${userObject.firstName} ${userObject.lastName}`;
+            document.getElementById('dashCustomerNameTitle').textContent = `${userObject.firstName} ${userObject.lastName}`;
             document.getElementById('dashFullName').textContent = `${userObject.firstName} ${userObject.lastName}`;
-            document.getElementById('dashVillageBadge').textContent = userObject.village;
-            document.getElementById('dashNumberDisplay').innerHTML = `<i class="fas fa-phone"></i> ${userObject.number || 'null'}`;
+            document.getElementById('dashCustomerIdLabel').textContent = `ID: ${userObject.id}`;
+            document.getElementById('dashVillageBadge').textContent = userObject.village || '-';
+            document.getElementById('dashNumberDisplay').textContent = (userObject.number && userObject.number !== 'null') ? userObject.number : 'Not Provided';
             document.getElementById('dashAmountDisplay').textContent = `₹ ${(parseFloat(userObject.amount)||0).toLocaleString('en-IN')}`;
-            document.getElementById('dashDateDisplay').innerHTML = `<i class="fas fa-calendar-alt"></i> ${parseInputToUIDateText(userObject.date)}`;
+            document.getElementById('dashDateDisplay').textContent = formatBackendDateToDDMMYYYY(userObject.date);
+            document.getElementById('dashSessionDisplay').textContent = ACTIVE_VIEW_SESSION;
             
             const pill = document.getElementById('dashStatusPill');
-            const fab = document.getElementById('dashPaymentFab');
             if(userObject.paymentDone) {
                 pill.className = 'status-pill paid';
-                pill.textContent = '✓ PAID (Click to change)';
-                fab.style.display = 'none';
+                pill.innerHTML = '<i class="fas fa-check-circle"></i> PAID';
             } else {
                 pill.className = 'status-pill pending';
-                pill.textContent = '⏳ PENDING';
-                fab.style.display = 'flex';
+                pill.innerHTML = '<i class="fas fa-clock"></i> PENDING';
             }
 
             renderDashboardHistoryLogs(userObject.id);
@@ -1607,66 +2432,28 @@
             });
         }
 
-        function togglePaymentStatusFromDashboard() {
-            const targetedUser = globalCachedDataObject.customers.find(u => u.id === activeRecordScopeId);
-            if(!targetedUser) return;
-
-            if(targetedUser.paymentDone) {
-                openModalWindow('statusToggleModal');
-            }
-        }
-
-        async function confirmStatusToggleToPending() {
-            closeModalWindow('statusToggleModal');
-            const targetedUser = globalCachedDataObject.customers.find(u => u.id === activeRecordScopeId);
-            if(!targetedUser) return;
-
-            document.getElementById('processingEngineStatusBlock').style.display = 'flex';
-            document.getElementById('processingBoxLabel').textContent = "Changing status to pending...";
-            openModalWindow('cloudActionProcessModal');
-
-            const dataObject = JSON.parse(JSON.stringify(globalCachedDataObject));
-            const target = dataObject.customers.find(u => u.id === targetedUser.id);
-            if(target) {
-                target.paymentDone = false;
-                if(!dataObject.history) dataObject.history = [];
-                dataObject.history.push({
-                    userId: target.id,
-                    type: 'Status Change',
-                    message: 'Status changed from Paid to Pending',
-                    timestamp: new Date().toISOString()
-                });
-
-                const success = await syncPayloadDataToGitHubCloud(dataObject, `Mark pending for ${target.firstName}`);
-                closeModalWindow('cloudActionProcessModal');
-                if(success) {
-                    openCustomerDashboard(target);
-                    triggerCustomAlertNotice("Updated", "Status changed to pending successfully.", true);
-                } else {
-                    triggerCustomAlertNotice("Error", "Could not sync status change.", false);
-                }
-            } else {
-                closeModalWindow('cloudActionProcessModal');
-            }
-        }
-
         function renderDashboardHistoryLogs(userId) {
             const container = document.getElementById('dashHistoryContainer');
             container.innerHTML = '';
             const historyStack = (globalCachedDataObject.history || []).filter(h => h.userId === userId).sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
             
             if(historyStack.length === 0) {
-                container.innerHTML = '<p style="font-size:0.8rem; color:var(--text-muted);">No historical logs recorded yet.</p>';
+                container.innerHTML = '<p style="font-size:0.85rem; color:var(--text-muted);">No historical logs recorded yet.</p>';
                 return;
             }
             historyStack.forEach(h => {
                 const div = document.createElement('div');
                 div.className = 'ledger-row';
-                div.innerHTML = `<strong>${h.type}:</strong> ${h.message} <div style="font-size:0.7rem; color:var(--text-muted); margin-top:4px;">${new Date(h.timestamp).toLocaleString()}</div>`;
+                const dt = new Date(h.timestamp);
+                const formattedTs = `${String(dt.getDate()).padStart(2,'0')}/${String(dt.getMonth()+1).padStart(2,'0')}/${dt.getFullYear()} ${dt.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+                div.innerHTML = `<strong>${h.type}:</strong> ${h.message} <div style="font-size:0.72rem; color:var(--text-muted); margin-top:4px;">${formattedTs}</div>`;
                 container.appendChild(div);
             });
         }
 
+        // ============================================================
+        // EDIT FULLSCREEN + LEFT-SIDE DELETE ICON + PAYMENT SWITCH
+        // ============================================================
         function openEditFromDashboard() {
             closeCustomerDashboardScreen();
             const targetedUser = globalCachedDataObject.customers.find(u => u.id === activeRecordScopeId);
@@ -1680,74 +2467,110 @@
             const todayStr = new Date().toISOString().split("T")[0];
             const editDateInput = document.getElementById('editDate');
             editDateInput.max = todayStr;
-            editDateInput.value = targetedUser.date || "";
+            editDateInput.value = normalizeDateForInput(targetedUser.date) || "";
+            syncCustomDateDisplay('editDate', 'editDateDisplay');
 
             document.getElementById('editAmount').value = targetedUser.amount || 0;
+
+            editVerifiedPaymentDone = Boolean(targetedUser.paymentDone);
+            updateEditPaymentSwitchUI(editVerifiedPaymentDone);
             
             document.getElementById('editPaneScreen').style.display = 'flex';
         }
 
-        function openDeleteFromDashboard() {
-            closeCustomerDashboardScreen();
+        function updateEditPaymentSwitchUI(isPaid) {
+            const sw = document.getElementById('editPaymentStatusSwitch');
+            const title = document.getElementById('editPaymentSwitchTitle');
+            const sub = document.getElementById('editPaymentSwitchSub');
+            sw.checked = isPaid;
+            if (isPaid) {
+                title.textContent = "Payment Status: PAID";
+                title.style.color = "var(--success)";
+                sub.textContent = "Switch is ON. Turn OFF to revert back to Pending.";
+            } else {
+                title.textContent = "Payment Status: PENDING";
+                title.style.color = "var(--text-main)";
+                sub.textContent = "Turn ON switch to verify and mark payment as Paid.";
+            }
+        }
+
+        function onEditPaymentSwitchChange(checkboxEl) {
+            pendingSwitchTargetState = checkboxEl.checked;
+            checkboxEl.checked = editVerifiedPaymentDone;
+
+            const iconEl = document.getElementById('paymentVerifyIcon');
+            const titleEl = document.getElementById('paymentVerifyTitle');
+            const descEl = document.getElementById('paymentVerifyDesc');
+            const amtGroup = document.getElementById('paymentVerifyAmountGroup');
+            const confirmBtn = document.getElementById('confirmPaymentSwitchBtn');
+
+            if (pendingSwitchTargetState === true) {
+                iconEl.style.background = "var(--success-light)";
+                iconEl.style.color = "var(--success)";
+                iconEl.innerHTML = '<i class="fas fa-check-circle"></i>';
+                titleEl.textContent = "Confirm Payment as Paid";
+                descEl.textContent = "Verify the final received amount before marking this customer as Paid.";
+                amtGroup.style.display = "block";
+                document.getElementById('verifyPaidAmountInput').value = document.getElementById('editAmount').value || 0;
+                confirmBtn.style.background = "var(--success)";
+                confirmBtn.textContent = "Verify & Mark Paid";
+            } else {
+                iconEl.style.background = "var(--warning-light)";
+                iconEl.style.color = "var(--warning)";
+                iconEl.innerHTML = '<i class="fas fa-undo-alt"></i>';
+                titleEl.textContent = "Revert Payment to Pending?";
+                descEl.textContent = "Are you sure you want to turn OFF the paid status and mark this record as Pending again?";
+                amtGroup.style.display = "none";
+                confirmBtn.style.background = "var(--warning)";
+                confirmBtn.textContent = "Yes, Mark Pending";
+            }
+
+            openBottomSheet('paymentVerifySheet');
+        }
+
+        function cancelPaymentSwitchVerification() {
+            closeBottomSheet('paymentVerifySheet');
+            updateEditPaymentSwitchUI(editVerifiedPaymentDone);
+        }
+
+        function confirmPaymentSwitchVerification() {
+            if (pendingSwitchTargetState === true) {
+                const verifiedAmt = parseInt(document.getElementById('verifyPaidAmountInput').value);
+                if (isNaN(verifiedAmt) || verifiedAmt < 0) {
+                    triggerCustomAlertNotice("Invalid Amount", "Please enter a valid payment amount.", false);
+                    return;
+                }
+                document.getElementById('editAmount').value = verifiedAmt;
+                editVerifiedPaymentDone = true;
+            } else {
+                editVerifiedPaymentDone = false;
+            }
+            closeBottomSheet('paymentVerifySheet');
+            updateEditPaymentSwitchUI(editVerifiedPaymentDone);
+        }
+
+        // Delete button triggered from left side of Edit Screen header
+        function openDeleteFromEditScreen() {
             document.getElementById('alertFeedbackNoticeBlock').style.display = 'none';
             document.getElementById('processingEngineStatusBlock').style.display = 'none';
             document.getElementById('confirmPromptBlock').style.display = 'block';
             openModalWindow('cloudActionProcessModal');
         }
 
-        function openPaymentConfirmationModal() {
-            const targetedUser = globalCachedDataObject.customers.find(u => u.id === activeRecordScopeId);
-            if(!targetedUser) return;
-            document.getElementById('confirmPaymentAmountInput').value = targetedUser.amount || 0;
-            openModalWindow('paymentConfirmModal');
-        }
-
-        async function executePaymentCompletion() {
-            const finalAmt = parseInt(document.getElementById('confirmPaymentAmountInput').value);
-            if(isNaN(finalAmt) || finalAmt < 0) {
-                triggerCustomAlertNotice("Validation Error", "Please enter a valid amount.", false);
-                return;
-            }
-            closeModalWindow('paymentConfirmModal');
-            closeCustomerDashboardScreen();
-
-            document.getElementById('processingEngineStatusBlock').style.display = 'flex';
-            document.getElementById('processingBoxLabel').textContent = "Updating payment status and amount...";
-            openModalWindow('cloudActionProcessModal');
-
-            const dataObject = JSON.parse(JSON.stringify(globalCachedDataObject));
-            const userObj = dataObject.customers.find(u => u.id === activeRecordScopeId);
-            if(userObj) {
-                const oldAmt = userObj.amount;
-                userObj.amount = finalAmt;
-                userObj.paymentDone = true;
-
-                if(!dataObject.history) dataObject.history = [];
-                dataObject.history.push({
-                    userId: userObj.id,
-                    type: 'Payment Completed',
-                    message: `Marked as paid. Amount adjusted from ₹${oldAmt} to ₹${finalAmt}`,
-                    timestamp: new Date().toISOString()
-                });
-
-                const success = await syncPayloadDataToGitHubCloud(dataObject, `Mark payment done for ${userObj.firstName}`);
-                closeModalWindow('cloudActionProcessModal');
-                if(success) {
-                    triggerCustomAlertNotice("Success", "Payment marked as completed successfully.", true);
-                } else {
-                    triggerCustomAlertNotice("Error", "Could not sync payment status to cloud.", false);
-                }
-            } else {
-                closeModalWindow('cloudActionProcessModal');
-            }
-        }
-
         function closeEditPaneScreen() { document.getElementById('editPaneScreen').style.display = 'none'; }
         function openModalWindow(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModalWindow(id) { document.getElementById(id).style.display = 'none'; }
+        function openBottomSheet(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeBottomSheet(id) { document.getElementById(id).style.display = 'none'; }
+        function handleOverlayClose(e, id) {
+            if (e.target.id === id) closeBottomSheet(id);
+        }
 
+        // ============================================================
+        // CLOUD SYNC & UPDATE OPERATIONS
+        // ============================================================
         async function loadCloudDataFeed() {
-            if(!CURRENT_SEASON) return;
+            if(!ACTIVE_VIEW_SESSION) return;
             const container = document.getElementById('dataList');
             container.innerHTML = '<p style="text-align:center; color: var(--text-muted); padding: 40px 0;"><i class="fas fa-circle-notch fa-spin"></i> Synchronizing ledger data...</p>';
             const res = await fetchCloudNetworkStorage();
@@ -1760,27 +2583,32 @@
                 const response = await fetch(API_BASE_URL, {
                     headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
                 });
-                if (response.status === 404) return { customers: [], history: [] };
+                if (response.status === 404) {
+                    currentSha = null;
+                    return { customers: [], history: [] };
+                }
                 if (!response.ok) throw new Error(`Data Stream Disconnected`);
                 const data = await response.json();
                 currentSha = data.sha;
                 return JSON.parse(decodeURIComponent(escape(atob(data.content))));
             } catch (err) {
-                document.getElementById('dataList').innerHTML = `<p style="color:var(--danger); text-align:center; padding:20px;">Cloud synchronization failure. Validate Token Access Arrays.</p>`;
+                document.getElementById('dataList').innerHTML = `<p style="color:var(--danger); text-align:center; padding:20px;">Cloud synchronization failure. Validate Token Access.</p>`;
                 return { customers: [], history: [] };
             }
         }
 
         async function syncPayloadDataToGitHubCloud(dataPackage, logMsg = "Routine structural update") {
             const rawBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(dataPackage, null, 2))));
-            const payload = { message: logMsg, content: rawBase64, sha: currentSha };
+            const payload = { message: logMsg, content: rawBase64 };
+            if (currentSha) payload.sha = currentSha;
+
             try {
                 const response = await fetch(API_BASE_URL, {
                     method: 'PUT',
                     headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-                if(!response.ok) throw new Error("Abort push operation matrix");
+                if(!response.ok) throw new Error("Abort push operation");
                 const res = await response.json();
                 currentSha = res.content.sha;
                 globalCachedDataObject = dataPackage;
@@ -1791,56 +2619,17 @@
             }
         }
 
-        async function commitNewUserCloudStorage() {
-            const date = document.getElementById('addDate').value;
-            const village = document.getElementById('addVillageInput').value;
-            const amount = parseInt(document.getElementById('addAmount').value);
-            const firstName = document.getElementById('addFirstName').value.trim();
-            const lastName = document.getElementById('addLastName').value.trim();
-            const number = document.getElementById('addNumber').value.trim() || "null";
-
-            closeAddWizardScreen();
-            
-            document.getElementById('confirmPromptBlock').style.display = 'none';
-            document.getElementById('alertFeedbackNoticeBlock').style.display = 'none';
-            document.getElementById('processingEngineStatusBlock').style.display = 'flex';
-            document.getElementById('processingBoxLabel').textContent = "Deploying customer profile node blocks...";
-            openModalWindow('cloudActionProcessModal');
-
-            const newId = '_' + Math.random().toString(36).substr(2, 9);
-            const newUserObj = { id: newId, firstName, lastName, number, amount, village, date, paymentDone: false };
-
-            const dataObject = JSON.parse(JSON.stringify(globalCachedDataObject));
-            if(!dataObject.customers) dataObject.customers = [];
-            if(!dataObject.history) dataObject.history = [];
-
-            dataObject.customers.push(newUserObj);
-            dataObject.history.push({
-                userId: newId, type: 'User Spawning',
-                message: `Initialization parameter created with balance: ₹${amount} allocated at ${village} sector`,
-                timestamp: new Date().toISOString()
-            });
-
-            const success = await syncPayloadDataToGitHubCloud(dataObject, `Construct structural customer node ${firstName}`);
-            closeModalWindow('cloudActionProcessModal');
-            
-            if(success) {
-                triggerCustomAlertNotice("Registration Successful", `Customer profile node for "${firstName} ${lastName}" has been created securely.`, true);
-            } else {
-                triggerCustomAlertNotice("Registration Error", "Failed to deploy new customer data element onto cloud nodes.", false);
-            }
-        }
-
         async function processDataUpdateOperation() {
             const editFn = document.getElementById('editFirstName').value.trim();
             const editLn = document.getElementById('editLastName').value.trim();
             const editNum = document.getElementById('editNumber').value.trim() || "null";
             const editVg = document.getElementById('editVillage').value;
-            const dt = document.getElementById('editDate').value;
+            const dt = document.getElementById('editDate').value; // Strictly YYYY-MM-DD backend
             const editAmt = parseInt(document.getElementById('editAmount').value);
+            const newPaymentStatus = editVerifiedPaymentDone;
             
             if(!editFn || !editLn || !editVg || !dt || isNaN(editAmt)) {
-                triggerCustomAlertNotice("Validation Error", "Please compile all mandatory text inputs.", false);
+                triggerCustomAlertNotice("Validation Error", "Please fill out all mandatory fields.", false);
                 return;
             }
 
@@ -1848,7 +2637,7 @@
             
             document.getElementById('confirmPromptBlock').style.display = 'none';
             document.getElementById('processingEngineStatusBlock').style.display = 'flex';
-            document.getElementById('processingBoxLabel').textContent = "Rewriting properties on database grid...";
+            document.getElementById('processingBoxLabel').textContent = "Updating customer record...";
             openModalWindow('cloudActionProcessModal');
 
             const dataObject = JSON.parse(JSON.stringify(globalCachedDataObject));
@@ -1858,12 +2647,15 @@
             const oldRecord = dataObject.customers[idx];
             let changesTextLog = [];
 
-            if(oldRecord.firstName !== editFn) changesTextLog.push(`First Name modified from "${oldRecord.firstName}" to "${editFn}"`);
-            if(oldRecord.lastName !== editLn) changesTextLog.push(`Last Name modified from "${oldRecord.lastName}" to "${editLn}"`);
-            if(oldRecord.number !== editNum) changesTextLog.push(`Mobile Number modified from "${oldRecord.number}" to "${editNum}"`);
+            if(oldRecord.firstName !== editFn) changesTextLog.push(`First Name changed from "${oldRecord.firstName}" to "${editFn}"`);
+            if(oldRecord.lastName !== editLn) changesTextLog.push(`Last Name changed from "${oldRecord.lastName}" to "${editLn}"`);
+            if(oldRecord.number !== editNum) changesTextLog.push(`Mobile Number updated`);
             if(oldRecord.village !== editVg) changesTextLog.push(`Village moved from ${oldRecord.village} to ${editVg}`);
-            if(oldRecord.date !== dt) changesTextLog.push(`Timeline date shifted from ${oldRecord.date} to ${dt}`);
-            if(oldRecord.amount !== editAmt) changesTextLog.push(`Amount modified from ₹${oldRecord.amount} to ₹${editAmt}`);
+            if(normalizeDateForInput(oldRecord.date) !== dt) changesTextLog.push(`Date changed from ${formatBackendDateToDDMMYYYY(oldRecord.date)} to ${formatBackendDateToDDMMYYYY(dt)}`);
+            if(oldRecord.amount !== editAmt) changesTextLog.push(`Amount updated from ₹${oldRecord.amount} to ₹${editAmt}`);
+            if(Boolean(oldRecord.paymentDone) !== newPaymentStatus) {
+                changesTextLog.push(newPaymentStatus ? `Payment marked as PAID (₹${editAmt})` : `Payment status reverted to PENDING`);
+            }
 
             if(changesTextLog.length > 0) {
                 oldRecord.firstName = editFn;
@@ -1872,21 +2664,22 @@
                 oldRecord.village = editVg;
                 oldRecord.date = dt;
                 oldRecord.amount = editAmt;
+                oldRecord.paymentDone = newPaymentStatus;
                 
                 if(!dataObject.history) dataObject.history = [];
                 dataObject.history.push({
                     userId: activeRecordScopeId,
-                    type: 'Standard Manual Updates',
+                    type: 'Record Updated',
                     message: changesTextLog.join('; '),
                     timestamp: new Date().toISOString()
                 });
 
-                const status = await syncPayloadDataToGitHubCloud(dataObject, `Update profile identities for ID: ${activeRecordScopeId}`);
+                const status = await syncPayloadDataToGitHubCloud(dataObject, `Update customer ID: ${activeRecordScopeId}`);
                 closeModalWindow('cloudActionProcessModal');
                 if(status) {
-                    triggerCustomAlertNotice("Updated Successfully", "The customer information profiles have been altered successfully.", true);
+                    triggerCustomAlertNotice("Updated Successfully", "Customer record and payment status have been updated.", true);
                 } else {
-                    triggerCustomAlertNotice("Update Failed", "An error occurred while saving modified profile parameters.", false);
+                    triggerCustomAlertNotice("Update Failed", "An error occurred while saving changes.", false);
                 }
             } else {
                 closeModalWindow('cloudActionProcessModal');
@@ -1895,23 +2688,52 @@
 
         async function commitDataPurgeExecution() {
             closeModalWindow('cloudActionProcessModal');
+            closeEditPaneScreen();
             
             document.getElementById('confirmPromptBlock').style.display = 'none';
             document.getElementById('processingEngineStatusBlock').style.display = 'flex';
-            document.getElementById('processingBoxLabel').textContent = "Dropping entity from system arrays... [NOTE: Old season records remain fully preserved]";
+            document.getElementById('processingBoxLabel').textContent = "Deleting customer record...";
             openModalWindow('cloudActionProcessModal');
             
             const dataObject = JSON.parse(JSON.stringify(globalCachedDataObject));
             dataObject.customers = (dataObject.customers || []).filter(u => u.id !== activeRecordScopeId);
             dataObject.history = (dataObject.history || []).filter(h => h.userId !== activeRecordScopeId);
 
-            const status = await syncPayloadDataToGitHubCloud(dataObject, `Purged profile registry ID: ${activeRecordScopeId}`);
+            const status = await syncPayloadDataToGitHubCloud(dataObject, `Deleted customer ID: ${activeRecordScopeId}`);
             closeModalWindow('cloudActionProcessModal');
             if(status) {
-                triggerCustomAlertNotice("Deleted", "Customer entry dropped from standard records database.", true);
+                triggerCustomAlertNotice("Deleted", "Customer entry removed from database.", true);
             } else {
-                triggerCustomAlertNotice("Error", "Could not execute destructive data clear on servers.", false);
+                triggerCustomAlertNotice("Error", "Could not delete record from server.", false);
             }
+        }
+
+        function triggerCustomAlertNotice(title, body, isSuccess, callback = null) {
+            document.getElementById('confirmPromptBlock').style.display = 'none';
+            document.getElementById('processingEngineStatusBlock').style.display = 'none';
+            
+            const iconBox = document.getElementById('alertIconSphere');
+            if (isSuccess) {
+                iconBox.style.background = 'var(--success-light)';
+                iconBox.style.color = 'var(--success)';
+                iconBox.innerHTML = '<i class="fas fa-check-circle"></i>';
+            } else {
+                iconBox.style.background = 'var(--danger-light)';
+                iconBox.style.color = 'var(--danger)';
+                iconBox.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+            }
+            
+            document.getElementById('alertHeaderTitle').textContent = title;
+            document.getElementById('alertBodyParagraph').textContent = body;
+            
+            const dismissBtn = document.getElementById('alertFeedbackDismissBtn');
+            dismissBtn.onclick = () => {
+                closeModalWindow('cloudActionProcessModal');
+                if(callback) callback();
+            };
+            
+            document.getElementById('alertFeedbackNoticeBlock').style.display = 'block';
+            openModalWindow('cloudActionProcessModal');
         }
     </script>
 </body>
